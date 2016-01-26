@@ -272,6 +272,9 @@
   :config
   (add-hook 'cider-mode-hook 'eldoc-mode))
 
+(use-package erlang
+  :ensure t)
+
 (use-package ido
   :ensure t
   :config
