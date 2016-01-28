@@ -114,6 +114,9 @@
 
 (define-key 'help-command (kbd "C-i") #'info-display-manual)
 
+;; misc useful keybindings
+(global-set-key (kbd "s-<") #'beginning-of-buffer)
+(global-set-key (kbd "s->") #'end-of-buffer)
 
 ;; smart tab behavior - indent or complete
 (setq tab-always-indent 'complete)
