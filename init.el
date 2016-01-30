@@ -163,6 +163,12 @@
   :ensure t
   :bind ("C-=" . er/expand-region))
 
+(use-package elisp-slime-nav
+  :ensure t
+  :config
+  (dolist (hook '(emacs-lisp-mode-hook ielm-mode-hook))
+    (add-hook hook #'elisp-slime-nav-mode)))
+
 (use-package paredit
   :ensure t
   :config
