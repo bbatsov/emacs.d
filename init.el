@@ -337,6 +337,13 @@
   :ensure t
   :bind ("s-i" . imenu-anywhere))
 
+(use-package flyspell
+  :config
+  (setq ispell-program-name "aspell" ; use aspell instead of ispell
+        ispell-extra-args '("--sug-mode=ultra"))
+  (add-hook 'text-mode-hook #'flyspell-mode)
+  (add-hook 'prog-mode #'flyspell-prog-mode))
+
 (use-package flycheck
   :ensure t
   :config
