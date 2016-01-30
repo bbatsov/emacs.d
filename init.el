@@ -174,6 +174,11 @@
   :config
   (show-paren-mode +1))
 
+(use-package abbrev
+  :config
+  (setq save-abbrevs 'silently)
+  (setq-default abbrev-mode t))
+
 (use-package uniquify
   :config
   (setq uniquify-buffer-name-style 'forward)
@@ -330,7 +335,7 @@
 
 (use-package imenu-anywhere
   :ensure t
-  :bind ("C-c i" . imenu-anywhere))
+  :bind ("s-i" . imenu-anywhere))
 
 (use-package flycheck
   :ensure t
@@ -368,7 +373,8 @@
          ([remap move-beginning-of-line] . crux-move-beginning-of-line)
          ([(shift return)] . crux-smart-open-line)
          ([(control shift return)] . crux-smart-open-line-above)
-         ([remap kill-whole-line] . crux-kill-whole-line)))
+         ([remap kill-whole-line] . crux-kill-whole-line)
+         ("C-c i" . crux-ispell-word-then-abbrev)))
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
