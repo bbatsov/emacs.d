@@ -150,6 +150,9 @@
          ;; ("s-m f" . magit-log-buffer-file)
          ;; ("s-m b" . magit-blame)
 
+(use-package ag
+  :ensure t)
+
 (use-package projectile
   :ensure t
   :bind ("s-p" . projectile-command-map)
