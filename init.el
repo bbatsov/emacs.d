@@ -430,6 +430,12 @@
         `((".*" . ,temporary-file-directory)))
   (setq undo-tree-auto-save-history t))
 
+(when (eq system-type 'windows-nt)
+  (set-default-font "Source Code Pro 12")
+  (add-to-list 'exec-path "C:/Program Files/Git/bin")
+  (add-to-list 'exec-path "C:/Program Files/Git/mingw64/bin")
+  (setenv "PATH" (concat "C:/Program Files/Git/bin;" "C:/Program Files/Git/mingw64/bin;" (getenv "PATH"))))
+
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
