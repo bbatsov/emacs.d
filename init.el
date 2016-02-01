@@ -203,7 +203,9 @@
   :ensure t
   :config
   (add-hook 'emacs-lisp-mode-hook #'paredit-mode)
+  ;; enable in the *scratch* buffer
   (add-hook 'lisp-interaction-mode-hook #'paredit-mode)
+  (add-hook 'ielm-mode-hook #'paredit-mode)
   (add-hook 'lisp-mode-hook #'paredit-mode))
 
 (use-package paren
@@ -319,7 +321,8 @@
 (use-package cider
   :ensure t
   :config
-  (add-hook 'cider-mode-hook 'eldoc-mode))
+  (add-hook 'cider-mode-hook 'eldoc-mode)
+  (add-hook 'cider-repl-mode-hook #'paredit-mode))
 
 (use-package erlang
   :ensure t)
