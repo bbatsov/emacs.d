@@ -158,6 +158,15 @@
 (require 'use-package)
 (setq use-package-verbose t)
 
+(use-package lisp-mode
+  :config
+  (add-hook 'emacs-lisp-mode-hook #'eldoc-mode)
+  (add-hook 'lisp-interaction-mode-hook #'eldoc-mode))
+
+(use-package ielm
+  :config
+  (add-hook 'ielm-mode-hook #'eldoc-mode))
+
 (use-package zenburn-theme
   :ensure t
   :config
