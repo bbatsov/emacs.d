@@ -184,11 +184,6 @@
   :ensure t
   :bind (("C-x g" . magit-status)))
 
-         ;; ("s-m m" . magit-status)
-         ;; ("s-m l" . magit-log)
-         ;; ("s-m f" . magit-log-buffer-file)
-         ;; ("s-m b" . magit-blame)
-
 (use-package ag
   :ensure t)
 
