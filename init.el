@@ -427,6 +427,11 @@
          ([remap kill-whole-line] . crux-kill-whole-line)
          ("C-c i" . crux-ispell-word-then-abbrev)))
 
+(use-package aggressive-indent
+  :ensure t
+  :config
+  (global-aggressive-indent-mode +1))
+
 (use-package undo-tree
   :ensure t
   :config
