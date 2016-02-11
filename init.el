@@ -38,8 +38,9 @@
 ;; keep the installed packages in .emacs.d
 (setq package-user-dir (expand-file-name "elpa" user-emacs-directory))
 (package-initialize)
-;; update the package metadata
-(package-refresh-contents)
+;; update the package metadata is the local cache is missing
+(unless package-archive-contents
+  (package-refresh-contents))
 
 (setq user-full-name "Bozhidar Batsov"
       user-mail-address "bozhidar@batsov.com")
