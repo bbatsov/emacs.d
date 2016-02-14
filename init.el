@@ -422,7 +422,7 @@ Start `ielm' if it's not already running."
          ("C-M-z" . crux-indent-defun)
          ("C-c u" . crux-view-url)
          ("C-c e" . crux-eval-and-replace)
-         ("C-c s" . crux-swap-windows)
+         ("C-c w" . crux-swap-windows)
          ("C-c D" . crux-delete-file-and-buffer)
          ("C-c r" . crux-rename-buffer-and-file)
          ("C-c t" . crux-visit-term-buffer)
