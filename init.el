@@ -392,7 +392,8 @@ Start `ielm' if it's not already running."
 
 (use-package imenu-anywhere
   :ensure t
-  :bind ("s-i" . imenu-anywhere))
+  :bind (("C-c i" . imenu-anywhere)
+         ("s-i" . imenu-anywhere)))
 
 (use-package flyspell
   :config
@@ -440,7 +441,7 @@ Start `ielm' if it's not already running."
          ([(shift return)] . crux-smart-open-line)
          ([(control shift return)] . crux-smart-open-line-above)
          ([remap kill-whole-line] . crux-kill-whole-line)
-         ("C-c i" . crux-ispell-word-then-abbrev)))
+         ("C-c s" . crux-ispell-word-then-abbrev)))
 
 (use-package aggressive-indent
   :ensure t
