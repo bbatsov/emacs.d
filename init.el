@@ -460,7 +460,9 @@ Start `ielm' if it's not already running."
   (set-frame-font "Source Code Pro 12")
   (add-to-list 'exec-path "C:/Program Files/Git/bin")
   (add-to-list 'exec-path "C:/Program Files/Git/mingw64/bin")
-  (setenv "PATH" (concat "C:/Program Files/Git/bin;" "C:/Program Files/Git/mingw64/bin;" (getenv "PATH"))))
+  (setenv "PATH" (concat "C:/Program Files/Git/bin;" "C:/Program Files/Git/mingw64/bin;" (getenv "PATH")))
+  ;; needed for arc-mode
+  (add-to-list 'exec-path "C:/Program Files/7-Zip"))
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
