@@ -329,6 +329,15 @@ Start `ielm' if it's not already running."
   (setq whitespace-line-column 80) ;; limit line length
   (setq whitespace-style '(face tabs empty trailing lines-tail)))
 
+(use-package inf-ruby
+  :ensure t
+  :config
+  (add-hook 'ruby-mode-hook #'inf-ruby-minor-mode))
+
+(use-package ruby-mode
+  :config
+  (add-hook 'ruby-mode-hook #'subword-mode))
+
 (use-package clojure-mode
   :ensure t
   :config
