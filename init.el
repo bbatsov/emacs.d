@@ -467,6 +467,15 @@ Start `ielm' if it's not already running."
   (setq undo-tree-auto-save-history t))
 
 (when (eq system-type 'windows-nt)
+  (setq w32-pass-lwindow-to-system nil)
+  (setq w32-lwindow-modifier 'super) ; Left Windows key
+
+  (setq w32-pass-rwindow-to-system nil)
+  (setq w32-rwindow-modifier 'super) ; Right Windows key
+
+  (setq w32-pass-apps-to-system nil)
+  (setq w32-apps-modifier 'hyper) ; Menu/App key
+
   (set-frame-font "Source Code Pro 12")
   (add-to-list 'exec-path "C:/Program Files/Git/bin")
   (add-to-list 'exec-path "C:/Program Files/Git/mingw64/bin")
