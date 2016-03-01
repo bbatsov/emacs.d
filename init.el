@@ -206,6 +206,9 @@ Start `ielm' if it's not already running."
   :config
   (projectile-global-mode +1))
 
+(use-package pt
+  :ensure t)
+
 (use-package expand-region
   :ensure t
   :bind ("C-=" . er/expand-region))
