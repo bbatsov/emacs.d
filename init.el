@@ -174,7 +174,8 @@ Start `ielm' if it's not already running."
   (define-key emacs-lisp-mode-map (kbd "C-c C-z") #'bozhidar-visit-ielm)
   (define-key emacs-lisp-mode-map (kbd "C-c C-c") #'eval-defun)
   (define-key emacs-lisp-mode-map (kbd "C-c C-b") #'eval-buffer)
-  (add-hook 'lisp-interaction-mode-hook #'eldoc-mode))
+  (add-hook 'lisp-interaction-mode-hook #'eldoc-mode)
+  (add-hook 'eval-expression-minibuffer-setup-hook #'eldoc-mode))
 
 (use-package ielm
   :config
