@@ -171,6 +171,7 @@ Start `ielm' if it's not already running."
     (crux-start-or-switch-to 'ielm "*ielm*"))
 
   (add-hook 'emacs-lisp-mode-hook #'eldoc-mode)
+  (add-hook 'emacs-lisp-mode-hook #'rainbow-delimiters-mode)
   (define-key emacs-lisp-mode-map (kbd "C-c C-z") #'bozhidar-visit-ielm)
   (define-key emacs-lisp-mode-map (kbd "C-c C-c") #'eval-defun)
   (define-key emacs-lisp-mode-map (kbd "C-c C-b") #'eval-buffer)
@@ -179,7 +180,8 @@ Start `ielm' if it's not already running."
 
 (use-package ielm
   :config
-  (add-hook 'ielm-mode-hook #'eldoc-mode))
+  (add-hook 'ielm-mode-hook #'eldoc-mode)
+  (add-hook 'ielm-mode-hook #'rainbow-delimiters-mode))
 
 (use-package zenburn-theme
   :ensure t
@@ -355,7 +357,8 @@ Start `ielm' if it's not already running."
   :config
   (add-hook 'cider-mode-hook #'eldoc-mode)
   (add-hook 'cider-repl-mode-hook #'eldoc-mode)
-  (add-hook 'cider-repl-mode-hook #'paredit-mode))
+  (add-hook 'cider-repl-mode-hook #'paredit-mode)
+  (add-hook 'cider-repl-mode-hook #'rainbow-delimiters-mode))
 
 (use-package erlang
   :ensure t)
