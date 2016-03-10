@@ -466,6 +466,11 @@ Start `ielm' if it's not already running."
   :config
   (global-aggressive-indent-mode +1))
 
+(use-package which-key
+  :ensure t
+  :config
+  (which-key-mode +1))
+
 (use-package undo-tree
   :ensure t
   :config
