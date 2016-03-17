@@ -152,6 +152,7 @@
 (global-set-key (kbd "s-<") #'beginning-of-buffer)
 (global-set-key (kbd "s->") #'end-of-buffer)
 (global-set-key (kbd "s-q") #'fill-paragraph)
+(global-set-key (kbd "s-x") #'execute-extended-command)
 
 ;; smart tab behavior - indent or complete
 (setq tab-always-indent 'complete)
