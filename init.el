@@ -195,7 +195,9 @@ Start `ielm' if it's not already running."
 (use-package avy
   :ensure t
   :bind (("s-." . avy-goto-word-or-subword-1)
-         ("s-," . avy-goto-char)))
+         ("s-," . avy-goto-char))
+  :config
+  (setq avy-background t))
 
 (use-package magit
   :ensure t
