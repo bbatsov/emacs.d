@@ -335,6 +335,11 @@ Start `ielm' if it's not already running."
 (use-package rainbow-delimiters
   :ensure t)
 
+(use-package rainbow-mode
+  :ensure t
+  :config
+  (add-hook 'prog-mode-hook #'rainbow-mode))
+
 (use-package whitespace
   :init
   (dolist (hook '(prog-mode-hook text-mode-hook))
