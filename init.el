@@ -474,6 +474,13 @@ Start `ielm' if it's not already running."
   :config
   (global-aggressive-indent-mode +1))
 
+(use-package diff-hl
+  :ensure t
+  :config
+  (global-diff-hl-mode +1)
+  (add-hook 'dired-mode-hook 'diff-hl-dired-mode)
+  (add-hook 'magit-post-refresh-hook 'diff-hl-magit-post-refresh))
+
 (use-package which-key
   :ensure t
   :config
