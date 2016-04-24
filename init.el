@@ -509,9 +509,18 @@ Start `ielm' if it's not already running."
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
+ '(package-selected-packages
+   (quote
+    (rainbow-mode ztree zop-to-char zenburn-theme yasnippet yaml-mode which-key use-package super-save smex rainbow-delimiters pt projectile paredit noflet multiple-cursors move-text markdown-mode magit inflections inf-ruby inf-clojure imenu-anywhere ido-ubiquitous hydra flycheck flx-ido expand-region exec-path-from-shell evil erlang elisp-slime-nav edn easy-kill crux company cider avy anzu aggressive-indent ag)))
  '(safe-local-variable-values
    (quote
-    ((bug-reference-bug-regexp . "#\\(?2:[[:digit:]]+\\)")))))
+    ((checkdoc-package-keywords-flag)
+     (eval when
+           (require
+            (quote rainbow-mode)
+            nil t)
+           (rainbow-mode 1))
+     (bug-reference-bug-regexp . "#\\(?2:[[:digit:]]+\\)")))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
