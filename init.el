@@ -379,7 +379,11 @@ Start `ielm' if it's not already running."
   (add-hook 'elixir-mode #'subword-mode))
 
 (use-package erlang
-  :ensure t)
+  :ensure t
+  :config
+  (when (eq system-type 'windows-nt)
+    (setq erlang-root-dir "C:/Program Files/erl7.2")
+    (add-to-list 'exec-path "C:/Program Files/erl7.2/bin")))
 
 (use-package ido
   :ensure t
