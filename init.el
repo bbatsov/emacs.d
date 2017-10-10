@@ -398,7 +398,7 @@ Start `ielm' if it's not already running."
         ido-auto-merge-work-directories-length -1)
   (ido-mode +1))
 
-(use-package ido-ubiquitous
+(use-package ido-completing-read+
   :ensure t
   :config
   (ido-ubiquitous-mode +1))
