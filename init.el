@@ -506,6 +506,9 @@ Start `ielm' if it's not already running."
         `((".*" . ,temporary-file-directory)))
   (setq undo-tree-auto-save-history t))
 
+(when (string= system-name "Bozhidars-MacBook.local")
+  (setq mac-right-command-modifier 'control))
+
 (when (eq system-type 'windows-nt)
   (setq w32-pass-lwindow-to-system nil)
   (setq w32-lwindow-modifier 'super) ; Left Windows key
