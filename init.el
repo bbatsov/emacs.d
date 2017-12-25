@@ -145,12 +145,6 @@
 ;; align code in a pretty way
 (global-set-key (kbd "C-x \\") #'align-regexp)
 
-;; extend the help commands
-(define-key 'help-command (kbd "C-f") #'find-function)
-(define-key 'help-command (kbd "C-k") #'find-function-on-key)
-(define-key 'help-command (kbd "C-v") #'find-variable)
-(define-key 'help-command (kbd "C-l") #'find-library)
-
 (define-key 'help-command (kbd "C-i") #'info-display-manual)
 
 ;; misc useful keybindings
@@ -506,7 +500,6 @@ Start `ielm' if it's not already running."
   (global-set-key (kbd "C-c j") 'counsel-git-grep)
   (global-set-key (kbd "C-c k") 'counsel-ag)
   (global-set-key (kbd "C-x l") 'counsel-locate)
-  (global-set-key (kbd "C-S-o") 'counsel-rhythmbox)
   (define-key minibuffer-local-map (kbd "C-r") 'counsel-minibuffer-history))
 
 (when (string= system-name "Bozhidars-MacBook.local")
