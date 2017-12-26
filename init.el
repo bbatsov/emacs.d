@@ -502,9 +502,6 @@ Start `ielm' if it's not already running."
   (global-set-key (kbd "C-x l") 'counsel-locate)
   (define-key minibuffer-local-map (kbd "C-r") 'counsel-minibuffer-history))
 
-(when (string= system-name "Bozhidars-MacBook.local")
-  (setq mac-right-command-modifier 'control))
-
 (when (eq system-type 'windows-nt)
   (setq w32-pass-lwindow-to-system nil)
   (setq w32-lwindow-modifier 'super) ; Left Windows key
