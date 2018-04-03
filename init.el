@@ -363,6 +363,7 @@ Start `ielm' if it's not already running."
 (use-package cider
   :ensure t
   :config
+  (setq nrepl-log-messages t)
   (add-hook 'cider-mode-hook #'eldoc-mode)
   (add-hook 'cider-repl-mode-hook #'eldoc-mode)
   (add-hook 'cider-repl-mode-hook #'paredit-mode)
