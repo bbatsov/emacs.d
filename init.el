@@ -476,7 +476,7 @@ Start `ielm' if it's not already running."
 (use-package ivy
   :ensure t
   :config
-    (ivy-mode 1)
+  (ivy-mode 1)
   (setq ivy-use-virtual-buffers t)
   (setq enable-recursive-minibuffers t)
   (global-set-key (kbd "C-c C-r") 'ivy-resume)
