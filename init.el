@@ -482,6 +482,12 @@ Start `ielm' if it's not already running."
   (global-set-key (kbd "C-c C-r") 'ivy-resume)
   (global-set-key (kbd "<f6>") 'ivy-resume))
 
+(use-package ace-window
+  :ensure t
+  :config
+  (global-set-key (kbd "s-w") 'ace-window)
+  (global-set-key [remap other-window] 'ace-window))
+
 (use-package swiper
   :ensure t
   :config
