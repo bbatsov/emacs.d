@@ -395,6 +395,11 @@ Start `ielm' if it's not already running."
   :config
   (global-company-mode))
 
+(use-package hl-todo
+  :ensure t
+  :config
+  (global-hl-todo-mode))
+
 (use-package zop-to-char
   :ensure t
   :bind (("M-z" . zop-up-to-char)
