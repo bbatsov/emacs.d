@@ -202,6 +202,10 @@ Start `ielm' if it's not already running."
   :ensure t
   :bind (("C-x g" . magit-status)))
 
+(use-package git-timemachine
+  :ensure t
+  :bind (("s-g" . git-timemachine)))
+
 (use-package ag
   :ensure t)
 
