@@ -211,9 +211,10 @@ Start `ielm' if it's not already running."
 
 (use-package projectile
   :ensure t
-  :bind ("s-p" . projectile-command-map)
-  :config
+  :init
   (setq projectile-completion-system 'ivy)
+  :config
+  (define-key projectile-mode-map (kbd "s-p") 'projectile-command-map)
   (projectile-global-mode +1))
 
 (use-package pt
