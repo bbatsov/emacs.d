@@ -356,6 +356,7 @@ Start `ielm' if it's not already running."
 
 (use-package ruby-mode
   :config
+  (setq ruby-insert-encoding-magic-comment nil)
   (add-hook 'ruby-mode-hook #'subword-mode))
 
 (use-package clojure-mode
