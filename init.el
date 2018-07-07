@@ -388,7 +388,12 @@ Start `ielm' if it's not already running."
     (add-to-list 'exec-path "C:/Program Files/erl7.2/bin")))
 
 (use-package markdown-mode
-  :ensure t)
+  :ensure t
+  :config
+  ;; TODO: Remove after https://github.com/jrblevin/markdown-mode/pull/335/files is merged
+  (cl-delete-if (lambda (element) (equal (cdr element) 'markdown-mode)) auto-mode-alist)
+  (add-to-list 'auto-mode-alist '("\\.md\\'" . gfm-mode))
+  (add-to-list 'auto-mode-alist '("\\.markdown\\'" . gfm-mode)))
 
 (use-package yaml-mode
   :ensure t)
