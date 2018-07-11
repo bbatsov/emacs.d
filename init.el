@@ -215,7 +215,7 @@ Start `ielm' if it's not already running."
   (setq projectile-completion-system 'ivy)
   :config
   (define-key projectile-mode-map (kbd "s-p") 'projectile-command-map)
-  (projectile-global-mode +1))
+  (projectile-mode +1))
 
 (use-package pt
   :ensure t)
