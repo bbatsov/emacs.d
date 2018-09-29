@@ -446,6 +446,8 @@ Start `ielm' if it's not already running."
 (use-package super-save
   :ensure t
   :config
+  ;; add integration with ace-window
+  (add-to-list 'super-save-triggers 'ace-window)
   (super-save-mode +1))
 
 (use-package crux
