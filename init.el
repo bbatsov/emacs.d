@@ -395,6 +395,11 @@ Start `ielm' if it's not already running."
   (add-to-list 'auto-mode-alist '("\\.md\\'" . gfm-mode))
   (add-to-list 'auto-mode-alist '("\\.markdown\\'" . gfm-mode)))
 
+(use-package adoc-mode
+  :ensure t
+  :config
+  (add-to-list 'auto-mode-alist '("\\.adoc\\'" . adoc-mode)))
+
 (use-package yaml-mode
   :ensure t)
 
