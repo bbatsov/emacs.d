@@ -389,9 +389,10 @@ Start `ielm' if it's not already running."
 
 (use-package markdown-mode
   :ensure t
+  :mode (("\\.md\\'" . gfm-mode)
+         ("\\.markdown\\'" . gfm-mode))
   :config
-  (add-to-list 'auto-mode-alist '("\\.md\\'" . gfm-mode))
-  (add-to-list 'auto-mode-alist '("\\.markdown\\'" . gfm-mode)))
+  (setq markdown-fontify-code-blocks-natively t))
 
 (use-package adoc-mode
   :ensure t
