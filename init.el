@@ -374,6 +374,9 @@ Start `ielm' if it's not already running."
   (add-hook 'cider-repl-mode-hook #'paredit-mode)
   (add-hook 'cider-repl-mode-hook #'rainbow-delimiters-mode))
 
+(use-package flycheck-joker
+  :ensure t)
+
 (use-package elixir-mode
   :ensure t
   :config
