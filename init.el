@@ -397,8 +397,7 @@ Start `ielm' if it's not already running."
 
 (use-package adoc-mode
   :ensure t
-  :config
-  (add-to-list 'auto-mode-alist '("\\.adoc\\'" . adoc-mode)))
+  :mode "\\.adoc\\'")
 
 (use-package yaml-mode
   :ensure t)
