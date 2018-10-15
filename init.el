@@ -259,7 +259,6 @@ Start `ielm' if it's not already running."
   (setq uniquify-ignore-buffers-re "^\\*"))
 
 ;; saveplace remembers your location in a file when saving files
-(require 'saveplace)
 (use-package saveplace
   :config
   (setq save-place-file (expand-file-name "saveplace" bozhidar-savefile-dir))
