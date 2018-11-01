@@ -162,87 +162,15 @@
 (require 'use-package)
 (setq use-package-verbose t)
 
-(use-package lisp-mode
-  :config
-  (defun bozhidar-visit-ielm ()
-    "Switch to default `ielm' buffer.
-Start `ielm' if it's not already running."
-    (interactive)
-    (crux-start-or-switch-to 'ielm "*ielm*"))
-
-  (add-hook 'emacs-lisp-mode-hook #'eldoc-mode)
-  (add-hook 'emacs-lisp-mode-hook #'rainbow-delimiters-mode)
-  (define-key emacs-lisp-mode-map (kbd "C-c C-z") #'bozhidar-visit-ielm)
-  (define-key emacs-lisp-mode-map (kbd "C-c C-c") #'eval-defun)
-  (define-key emacs-lisp-mode-map (kbd "C-c C-b") #'eval-buffer)
-  (add-hook 'lisp-interaction-mode-hook #'eldoc-mode)
-  (add-hook 'eval-expression-minibuffer-setup-hook #'eldoc-mode))
-
-(use-package ielm
-  :config
-  (add-hook 'ielm-mode-hook #'eldoc-mode)
-  (add-hook 'ielm-mode-hook #'rainbow-delimiters-mode))
-
-(use-package zenburn-theme
-  :ensure t
-  :config
-  (load-theme 'zenburn t))
-
-;; highlight the current line
-(global-hl-line-mode +1)
-
-(use-package avy
-  :ensure t
-  :bind (("s-." . avy-goto-word-or-subword-1)
-         ("s-," . avy-goto-char))
-  :config
-  (setq avy-background t))
-
-(use-package magit
-  :ensure t
-  :bind (("C-x g" . magit-status)))
-
-(use-package git-timemachine
-  :ensure t
-  :bind (("s-g" . git-timemachine)))
-
-(use-package ag
-  :ensure t)
-
-(use-package projectile
-  :ensure t
-  :init
-  (setq projectile-completion-system 'ivy)
-  :config
-  (define-key projectile-mode-map (kbd "s-p") 'projectile-command-map)
-  (projectile-mode +1))
-
-(use-package pt
-  :ensure t)
-
-(use-package expand-region
-  :ensure t
-  :bind ("C-=" . er/expand-region))
-
-(use-package elisp-slime-nav
-  :ensure t
-  :config
-  (dolist (hook '(emacs-lisp-mode-hook ielm-mode-hook))
-    (add-hook hook #'elisp-slime-nav-mode)))
-
-(use-package paredit
-  :ensure t
-  :config
-  (add-hook 'emacs-lisp-mode-hook #'paredit-mode)
-  ;; enable in the *scratch* buffer
-  (add-hook 'lisp-interaction-mode-hook #'paredit-mode)
-  (add-hook 'ielm-mode-hook #'paredit-mode)
-  (add-hook 'lisp-mode-hook #'paredit-mode)
-  (add-hook 'eval-expression-minibuffer-setup-hook #'paredit-mode))
-
+;;; built-in packages
 (use-package paren
   :config
   (show-paren-mode +1))
+
+;; highlight the current line
+(use-package hl-line
+  :config
+  (global-hl-line-mode +1))
 
 (use-package abbrev
   :config
@@ -306,6 +234,82 @@ Start `ielm' if it's not already running."
 
   ;; enable some really cool extensions like C-x C-j(dired-jump)
   (require 'dired-x))
+
+(use-package lisp-mode
+  :config
+  (defun bozhidar-visit-ielm ()
+    "Switch to default `ielm' buffer.
+Start `ielm' if it's not already running."
+    (interactive)
+    (crux-start-or-switch-to 'ielm "*ielm*"))
+
+  (add-hook 'emacs-lisp-mode-hook #'eldoc-mode)
+  (add-hook 'emacs-lisp-mode-hook #'rainbow-delimiters-mode)
+  (define-key emacs-lisp-mode-map (kbd "C-c C-z") #'bozhidar-visit-ielm)
+  (define-key emacs-lisp-mode-map (kbd "C-c C-c") #'eval-defun)
+  (define-key emacs-lisp-mode-map (kbd "C-c C-b") #'eval-buffer)
+  (add-hook 'lisp-interaction-mode-hook #'eldoc-mode)
+  (add-hook 'eval-expression-minibuffer-setup-hook #'eldoc-mode))
+
+(use-package ielm
+  :config
+  (add-hook 'ielm-mode-hook #'eldoc-mode)
+  (add-hook 'ielm-mode-hook #'rainbow-delimiters-mode))
+
+;;; third-party packages
+(use-package zenburn-theme
+  :ensure t
+  :config
+  (load-theme 'zenburn t))
+
+(use-package avy
+  :ensure t
+  :bind (("s-." . avy-goto-word-or-subword-1)
+         ("s-," . avy-goto-char))
+  :config
+  (setq avy-background t))
+
+(use-package magit
+  :ensure t
+  :bind (("C-x g" . magit-status)))
+
+(use-package git-timemachine
+  :ensure t
+  :bind (("s-g" . git-timemachine)))
+
+(use-package ag
+  :ensure t)
+
+(use-package projectile
+  :ensure t
+  :init
+  (setq projectile-completion-system 'ivy)
+  :config
+  (define-key projectile-mode-map (kbd "s-p") 'projectile-command-map)
+  (projectile-mode +1))
+
+(use-package pt
+  :ensure t)
+
+(use-package expand-region
+  :ensure t
+  :bind ("C-=" . er/expand-region))
+
+(use-package elisp-slime-nav
+  :ensure t
+  :config
+  (dolist (hook '(emacs-lisp-mode-hook ielm-mode-hook))
+    (add-hook hook #'elisp-slime-nav-mode)))
+
+(use-package paredit
+  :ensure t
+  :config
+  (add-hook 'emacs-lisp-mode-hook #'paredit-mode)
+  ;; enable in the *scratch* buffer
+  (add-hook 'lisp-interaction-mode-hook #'paredit-mode)
+  (add-hook 'ielm-mode-hook #'paredit-mode)
+  (add-hook 'lisp-mode-hook #'paredit-mode)
+  (add-hook 'eval-expression-minibuffer-setup-hook #'paredit-mode))
 
 (use-package anzu
   :ensure t
