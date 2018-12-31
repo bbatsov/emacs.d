@@ -393,6 +393,11 @@ Start `ielm' if it's not already running."
     (setq erlang-root-dir "C:/Program Files/erl7.2")
     (add-to-list 'exec-path "C:/Program Files/erl7.2/bin")))
 
+(use-package haskell-mode
+  :ensure t
+  :config
+  (add-hook 'haskell-mode #'subword-mode))
+
 (use-package markdown-mode
   :ensure t
   :mode (("\\.md\\'" . gfm-mode)
