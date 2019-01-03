@@ -514,20 +514,11 @@ Start `ielm' if it's not already running."
         `((".*" . ,temporary-file-directory)))
   (setq undo-tree-auto-save-history t))
 
-;; needed to tweak the matching algorithm used by ivy
-(use-package flx
-  :ensure t)
-
 (use-package ivy
   :ensure t
   :config
   (ivy-mode 1)
   (setq ivy-use-virtual-buffers t)
-  ;; use flx matching instead of the default
-  ;; see https://oremacs.com/2016/01/06/ivy-flx/ for details
-  (setq ivy-re-builders-alist
-        '((t . ivy--regex-fuzzy)))
-  (setq ivy-initial-inputs-alist nil)
   (setq enable-recursive-minibuffers t)
   (global-set-key (kbd "C-c C-r") 'ivy-resume)
   (global-set-key (kbd "<f6>") 'ivy-resume))
