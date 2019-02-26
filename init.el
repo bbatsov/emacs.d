@@ -38,6 +38,10 @@
 ;; keep the installed packages in .emacs.d
 (setq package-user-dir (expand-file-name "elpa" user-emacs-directory))
 (package-initialize)
+
+(require 'use-package-ensure)
+(setq use-package-always-ensure t)
+
 ;; update the package metadata is the local cache is missing
 (unless package-archive-contents
   (package-refresh-contents))
@@ -258,51 +262,41 @@ Start `ielm' if it's not already running."
 
 ;;; third-party packages
 (use-package zenburn-theme
-  :ensure t
   :config
   (load-theme 'zenburn t))
 
 (use-package avy
-  :ensure t
   :bind (("s-." . avy-goto-word-or-subword-1)
          ("s-," . avy-goto-char))
   :config
   (setq avy-background t))
 
 (use-package magit
-  :ensure t
   :bind (("C-x g" . magit-status)))
 
 (use-package git-timemachine
-  :ensure t
   :bind (("s-g" . git-timemachine)))
 
-(use-package ag
-  :ensure t)
+(use-package ag)
 
 (use-package projectile
-  :ensure t
   :init
   (setq projectile-completion-system 'ivy)
   :config
   (define-key projectile-mode-map (kbd "s-p") 'projectile-command-map)
   (projectile-mode +1))
 
-(use-package pt
-  :ensure t)
+(use-package pt)
 
 (use-package expand-region
-  :ensure t
   :bind ("C-=" . er/expand-region))
 
 (use-package elisp-slime-nav
-  :ensure t
   :config
   (dolist (hook '(emacs-lisp-mode-hook ielm-mode-hook))
     (add-hook hook #'elisp-slime-nav-mode)))
 
 (use-package paredit
-  :ensure t
   :config
   (add-hook 'emacs-lisp-mode-hook #'paredit-mode)
   ;; enable in the *scratch* buffer
@@ -312,34 +306,28 @@ Start `ielm' if it's not already running."
   (add-hook 'eval-expression-minibuffer-setup-hook #'paredit-mode))
 
 (use-package anzu
-  :ensure t
   :bind (("M-%" . anzu-query-replace)
          ("C-M-%" . anzu-query-replace-regexp))
   :config
   (global-anzu-mode))
 
 (use-package easy-kill
-  :ensure t
   :config
   (global-set-key [remap kill-ring-save] 'easy-kill))
 
 (use-package exec-path-from-shell
-  :ensure t
   :config
   (when (memq window-system '(mac ns))
     (exec-path-from-shell-initialize)))
 
 (use-package move-text
-  :ensure t
   :bind
   (([(meta shift up)] . move-text-up)
    ([(meta shift down)] . move-text-down)))
 
-(use-package rainbow-delimiters
-  :ensure t)
+(use-package rainbow-delimiters)
 
 (use-package rainbow-mode
-  :ensure t
   :config
   (add-hook 'prog-mode-hook #'rainbow-mode))
 
@@ -353,7 +341,6 @@ Start `ielm' if it's not already running."
   (setq whitespace-style '(face tabs empty trailing lines-tail)))
 
 (use-package inf-ruby
-  :ensure t
   :config
   (add-hook 'ruby-mode-hook #'inf-ruby-minor-mode))
 
@@ -363,14 +350,12 @@ Start `ielm' if it's not already running."
   (add-hook 'ruby-mode-hook #'subword-mode))
 
 (use-package clojure-mode
-  :ensure t
   :config
   (add-hook 'clojure-mode-hook #'paredit-mode)
   (add-hook 'clojure-mode-hook #'subword-mode)
   (add-hook 'clojure-mode-hook #'rainbow-delimiters-mode))
 
 (use-package cider
-  :ensure t
   :config
   (setq nrepl-log-messages t)
   (add-hook 'cider-mode-hook #'eldoc-mode)
@@ -378,45 +363,36 @@ Start `ielm' if it's not already running."
   (add-hook 'cider-repl-mode-hook #'paredit-mode)
   (add-hook 'cider-repl-mode-hook #'rainbow-delimiters-mode))
 
-(use-package flycheck-joker
-  :ensure t)
+(use-package flycheck-joker)
 
 (use-package elixir-mode
-  :ensure t
   :config
   (add-hook 'elixir-mode #'subword-mode))
 
 (use-package erlang
-  :ensure t
   :config
   (when (eq system-type 'windows-nt)
     (setq erlang-root-dir "C:/Program Files/erl7.2")
     (add-to-list 'exec-path "C:/Program Files/erl7.2/bin")))
 
 (use-package haskell-mode
-  :ensure t
   :config
   (add-hook 'haskell-mode #'subword-mode))
 
 (use-package markdown-mode
-  :ensure t
   :mode (("\\.md\\'" . gfm-mode)
          ("\\.markdown\\'" . gfm-mode))
   :config
   (setq markdown-fontify-code-blocks-natively t))
 
 (use-package adoc-mode
-  :ensure t
   :mode "\\.adoc\\'")
 
-(use-package yaml-mode
-  :ensure t)
+(use-package yaml-mode)
 
-(use-package cask-mode
-  :ensure t)
+(use-package cask-mode)
 
 (use-package company
-  :ensure t
   :config
   (setq company-idle-delay 0.5)
   (setq company-show-numbers t)
@@ -429,18 +405,15 @@ Start `ielm' if it's not already running."
   (global-company-mode))
 
 (use-package hl-todo
-  :ensure t
   :config
   (setq hl-todo-highlight-punctuation ":")
   (global-hl-todo-mode))
 
 (use-package zop-to-char
-  :ensure t
   :bind (("M-z" . zop-up-to-char)
          ("M-Z" . zop-to-char)))
 
 (use-package imenu-anywhere
-  :ensure t
   :bind (("C-c i" . imenu-anywhere)
          ("s-i" . imenu-anywhere)))
 
@@ -454,19 +427,16 @@ Start `ielm' if it's not already running."
   (add-hook 'prog-mode-hook #'flyspell-prog-mode))
 
 (use-package flycheck
-  :ensure t
   :config
   (add-hook 'after-init-hook #'global-flycheck-mode))
 
 (use-package super-save
-  :ensure t
   :config
   ;; add integration with ace-window
   (add-to-list 'super-save-triggers 'ace-window)
   (super-save-mode +1))
 
 (use-package crux
-  :ensure t
   :bind (("C-c o" . crux-open-with)
          ("M-o" . crux-smart-open-line)
          ("C-c n" . crux-cleanup-buffer-or-region)
@@ -495,19 +465,16 @@ Start `ielm' if it's not already running."
          ("C-c s" . crux-ispell-word-then-abbrev)))
 
 (use-package diff-hl
-  :ensure t
   :config
   (global-diff-hl-mode +1)
   (add-hook 'dired-mode-hook 'diff-hl-dired-mode)
   (add-hook 'magit-post-refresh-hook 'diff-hl-magit-post-refresh))
 
 (use-package which-key
-  :ensure t
   :config
   (which-key-mode +1))
 
 (use-package undo-tree
-  :ensure t
   :config
   ;; autosave the undo-tree history
   (setq undo-tree-history-directory-alist
@@ -515,7 +482,6 @@ Start `ielm' if it's not already running."
   (setq undo-tree-auto-save-history t))
 
 (use-package ivy
-  :ensure t
   :config
   (ivy-mode 1)
   (setq ivy-use-virtual-buffers t)
@@ -524,18 +490,15 @@ Start `ielm' if it's not already running."
   (global-set-key (kbd "<f6>") 'ivy-resume))
 
 (use-package ace-window
-  :ensure t
   :config
   (global-set-key (kbd "s-w") 'ace-window)
   (global-set-key [remap other-window] 'ace-window))
 
 (use-package swiper
-  :ensure t
   :config
   (global-set-key "\C-s" 'swiper))
 
 (use-package counsel
-  :ensure t
   :config
   (global-set-key (kbd "M-x") 'counsel-M-x)
   (global-set-key (kbd "C-x C-f") 'counsel-find-file)
@@ -552,7 +515,6 @@ Start `ielm' if it's not already running."
 
 ;; temporarily highlight changes from yanking, etc
 (use-package volatile-highlights
-  :ensure t
   :config
   (volatile-highlights-mode +1))
 
