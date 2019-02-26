@@ -42,6 +42,11 @@
 (unless package-archive-contents
   (package-refresh-contents))
 
+;; it seems that you have too many :ensure t
+;; adding following two lines you save lines 
+(require 'use-package-ensure)
+(setq use-package-always-ensure t)
+
 (setq user-full-name "Bozhidar Batsov"
       user-mail-address "bozhidar@batsov.com")
 
@@ -206,8 +211,7 @@ Start `ielm' if it's not already running."
   :ensure t
   :bind (("s-g" . git-timemachine)))
 
-(use-package ag
-  :ensure t)
+(use-package ag)
 
 (use-package projectile
   :ensure t
@@ -217,8 +221,7 @@ Start `ielm' if it's not already running."
   (define-key projectile-mode-map (kbd "s-p") 'projectile-command-map)
   (projectile-global-mode +1))
 
-(use-package pt
-  :ensure t)
+(use-package pt)
 
 (use-package expand-region
   :ensure t
@@ -332,8 +335,7 @@ Start `ielm' if it's not already running."
   (([(meta shift up)] . move-text-up)
    ([(meta shift down)] . move-text-down)))
 
-(use-package rainbow-delimiters
-  :ensure t)
+(use-package rainbow-delimiters)
 
 (use-package rainbow-mode
   :ensure t
@@ -375,43 +377,34 @@ Start `ielm' if it's not already running."
   (add-hook 'cider-repl-mode-hook #'rainbow-delimiters-mode))
 
 (use-package elixir-mode
-  :ensure t
   :config
   (add-hook 'elixir-mode #'subword-mode))
 
 (use-package erlang
-  :ensure t
   :config
   (when (eq system-type 'windows-nt)
     (setq erlang-root-dir "C:/Program Files/erl7.2")
     (add-to-list 'exec-path "C:/Program Files/erl7.2/bin")))
 
-(use-package markdown-mode
-  :ensure t)
+(use-package markdown-mode)
 
-(use-package yaml-mode
-  :ensure t)
+(use-package yaml-mode)
 
-(use-package cask-mode
-  :ensure t)
+(use-package cask-mode)
 
 (use-package company
-  :ensure t
   :config
   (global-company-mode))
 
 (use-package hl-todo
-  :ensure t
   :config
   (global-hl-todo-mode))
 
 (use-package zop-to-char
-  :ensure t
   :bind (("M-z" . zop-up-to-char)
          ("M-Z" . zop-to-char)))
 
 (use-package imenu-anywhere
-  :ensure t
   :bind (("C-c i" . imenu-anywhere)
          ("s-i" . imenu-anywhere)))
 
@@ -425,17 +418,14 @@ Start `ielm' if it's not already running."
   (add-hook 'prog-mode-hook #'flyspell-prog-mode))
 
 (use-package flycheck
-  :ensure t
   :config
   (add-hook 'after-init-hook #'global-flycheck-mode))
 
 (use-package super-save
-  :ensure t
   :config
   (super-save-mode +1))
 
 (use-package crux
-  :ensure t
   :bind (("C-c o" . crux-open-with)
          ("M-o" . crux-smart-open-line)
          ("C-c n" . crux-cleanup-buffer-or-region)
@@ -464,19 +454,16 @@ Start `ielm' if it's not already running."
          ("C-c s" . crux-ispell-word-then-abbrev)))
 
 (use-package diff-hl
-  :ensure t
   :config
   (global-diff-hl-mode +1)
   (add-hook 'dired-mode-hook 'diff-hl-dired-mode)
   (add-hook 'magit-post-refresh-hook 'diff-hl-magit-post-refresh))
 
 (use-package which-key
-  :ensure t
   :config
   (which-key-mode +1))
 
 (use-package undo-tree
-  :ensure t
   :config
   ;; autosave the undo-tree history
   (setq undo-tree-history-directory-alist
@@ -484,7 +471,6 @@ Start `ielm' if it's not already running."
   (setq undo-tree-auto-save-history t))
 
 (use-package ivy
-  :ensure t
   :config
   (ivy-mode 1)
   (setq ivy-use-virtual-buffers t)
@@ -493,18 +479,15 @@ Start `ielm' if it's not already running."
   (global-set-key (kbd "<f6>") 'ivy-resume))
 
 (use-package ace-window
-  :ensure t
   :config
   (global-set-key (kbd "s-w") 'ace-window)
   (global-set-key [remap other-window] 'ace-window))
 
 (use-package swiper
-  :ensure t
   :config
   (global-set-key "\C-s" 'swiper))
 
 (use-package counsel
-  :ensure t
   :config
   (global-set-key (kbd "M-x") 'counsel-M-x)
   (global-set-key (kbd "C-x C-f") 'counsel-find-file)
@@ -521,7 +504,6 @@ Start `ielm' if it's not already running."
 
 ;; temporarily highlight changes from yanking, etc
 (use-package volatile-highlights
-  :ensure t
   :config
   (volatile-highlights-mode +1))
 
