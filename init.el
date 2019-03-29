@@ -396,7 +396,9 @@ Start `ielm' if it's not already running."
 (use-package haskell-mode
   :ensure t
   :config
-  (add-hook 'haskell-mode #'subword-mode))
+  (add-hook 'haskell-mode-hook #'subword-mode)
+  (add-hook 'haskell-mode-hook #'interactive-haskell-mode)
+  (add-hook 'haskell-mode-hook #'haskell-doc-mode))
 
 (use-package markdown-mode
   :ensure t
