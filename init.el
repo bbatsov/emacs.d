@@ -405,7 +405,13 @@ Start `ielm' if it's not already running."
   :mode (("\\.md\\'" . gfm-mode)
          ("\\.markdown\\'" . gfm-mode))
   :config
-  (setq markdown-fontify-code-blocks-natively t))
+  (setq markdown-fontify-code-blocks-natively t)
+  :preface
+  (defun jekyll-insert-post-url ()
+    (interactive)
+    (let* ((files (remove "." (mapcar #'file-name-sans-extension (directory-files "."))))
+           (selected-file (completing-read "Select article: " files nil t)))
+      (insert (format "{%% post_url %s %%}" selected-file)))))
 
 (use-package adoc-mode
   :ensure t
