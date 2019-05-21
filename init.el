@@ -167,6 +167,10 @@
   :config
   (show-paren-mode +1))
 
+(use-package elec-pair
+  :config
+  (electric-pair-mode +1))
+
 ;; highlight the current line
 (use-package hl-line
   :config
