@@ -411,6 +411,12 @@ Start `ielm' if it's not already running."
   :config
   (setq markdown-fontify-code-blocks-natively t)
   :preface
+  (defun jekyll-insert-image-url ()
+    (interactive)
+    (let* ((files (directory-files "../assets/images"))
+           (selected-file (completing-read "Select image: " files nil t)))
+      (insert (format "![%s](/assets/images/%s)" selected-file selected-file))))
+
   (defun jekyll-insert-post-url ()
     (interactive)
     (let* ((files (remove "." (mapcar #'file-name-sans-extension (directory-files "."))))
