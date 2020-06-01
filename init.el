@@ -618,3 +618,4 @@ Start `ielm' if it's not already running."
   (load custom-file))
 
 ;;; init.el ends here
+(put 'erase-buffer 'disabled nil)
