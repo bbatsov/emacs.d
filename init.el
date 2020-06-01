@@ -571,6 +571,20 @@ Start `ielm' if it's not already running."
   (global-set-key (kbd "C-x l") 'counsel-locate)
   (define-key minibuffer-local-map (kbd "C-r") 'counsel-minibuffer-history))
 
+;; super useful for demos
+(use-package keycast
+  :ensure t)
+
+(use-package gif-screencast
+  :ensure t
+  :config
+  ;; To shut up the shutter sound of `screencapture' (see `gif-screencast-command').
+  (setq gif-screencast-args '("-x"))
+  ;; Optional: Used to crop the capture to the Emacs frame.
+  (setq gif-screencast-cropping-program "mogrify")
+  ;; Optional: Required to crop captured images.
+  (setq gif-screencast-capture-format "ppm"))
+
 ;; temporarily highlight changes from yanking, etc
 (use-package volatile-highlights
   :ensure t
