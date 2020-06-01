@@ -410,6 +410,13 @@ Start `ielm' if it's not already running."
   (add-hook 'haskell-mode-hook #'interactive-haskell-mode)
   (add-hook 'haskell-mode-hook #'haskell-doc-mode))
 
+(use-package web-mode
+  :config
+  (add-to-list 'auto-mode-alist '("\\.html?\\'" . web-mode))
+  (add-to-list 'auto-mode-alist '("\\.erb\\'" . web-mode))
+  (add-to-list 'auto-mode-alist '("\\.hbs\\'" . web-mode))
+  :ensure t)
+
 (use-package markdown-mode
   :ensure t
   :mode (("\\.md\\'" . gfm-mode)
