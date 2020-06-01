@@ -55,6 +55,9 @@
 ;; warn when opening files bigger than 100MB
 (setq large-file-warning-threshold 100000000)
 
+;; quit Emacs directly even if there are running processes
+(setq confirm-kill-processes nil)
+
 (defconst bozhidar-savefile-dir (expand-file-name "savefile" user-emacs-directory))
 
 ;; create the savefile dir if it doesn't exist
