@@ -294,7 +294,7 @@ Start `ielm' if it's not already running."
   :ensure t
   :init
   (setq projectile-completion-system 'ivy)
-  (setq projectile-project-search-path '("~/projects/" "~/work/"))
+  (setq projectile-project-search-path '("~/projects/" "~/toptal/"))
   :config
   (define-key projectile-mode-map (kbd "s-p") 'projectile-command-map)
   (projectile-mode +1))
