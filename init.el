@@ -498,6 +498,9 @@ Start `ielm' if it's not already running."
   :config
   (add-hook 'after-init-hook #'global-flycheck-mode))
 
+(use-package flycheck-eldev
+  :ensure t)
+
 (use-package super-save
   :ensure t
   :config
