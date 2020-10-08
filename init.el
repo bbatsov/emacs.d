@@ -617,7 +617,7 @@ Start `ielm' if it's not already running."
   (volatile-highlights-mode +1))
 
 ;; WSL-specific setup
-(when (getenv "WSLENV")
+(when (and (eq system-type 'gnu/linux) (getenv "WSLENV"))
   ;; (set-frame-font "DejaVu Sans Mono 28")
 
   ;; Teach Emacs how to open links in your default Windows browser
