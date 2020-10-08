@@ -613,6 +613,18 @@ Start `ielm' if it's not already running."
   :config
   (volatile-highlights-mode +1))
 
+;; WSL-specific setup
+(when (getenv "WSLENV")
+  ;; Teach Emacs how to open links in your default Windows browser
+  (let ((cmd-exe "/mnt/c/Windows/System32/cmd.exe")
+        (cmd-args '("/c" "start")))
+    (when (file-exists-p cmd-exe)
+      (setq browse-url-generic-program  cmd-exe
+            browse-url-generic-args     cmd-args
+            browse-url-browser-function 'browse-url-generic
+            search-web-default-browser 'browse-url-generic))))
+
+;; Windows-specific setup
 (when (eq system-type 'windows-nt)
   (setq w32-pass-lwindow-to-system nil)
   (setq w32-lwindow-modifier 'super) ; Left Windows key
