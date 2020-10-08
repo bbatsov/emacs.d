@@ -162,6 +162,9 @@
 ;; smart tab behavior - indent or complete
 (setq tab-always-indent 'complete)
 
+;; enable some commands that are disabled by default
+(put 'erase-buffer 'disabled nil)
+
 (unless (package-installed-p 'use-package)
   (package-install 'use-package))
 
@@ -649,4 +652,3 @@ Start `ielm' if it's not already running."
   (load custom-file))
 
 ;;; init.el ends here
-(put 'erase-buffer 'disabled nil)
