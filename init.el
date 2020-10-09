@@ -558,7 +558,8 @@ Start `ielm' if it's not already running."
   ;; autosave the undo-tree history
   (setq undo-tree-history-directory-alist
         `((".*" . ,temporary-file-directory)))
-  (setq undo-tree-auto-save-history t))
+  (setq undo-tree-auto-save-history t)
+  (global-undo-tree-mode +1))
 
 (use-package ivy
   :ensure t
