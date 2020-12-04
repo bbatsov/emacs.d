@@ -92,6 +92,9 @@
 ;; enable y/n answers
 (fset 'yes-or-no-p 'y-or-n-p)
 
+;; maximize the initial frame automatically
+(add-to-list 'initial-frame-alist '(fullscreen . maximized))
+
 ;; more useful frame title, that show either a file or a
 ;; buffer name (if the buffer isn't visiting a file)
 (setq frame-title-format
