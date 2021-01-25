@@ -299,8 +299,7 @@ Start `ielm' if it's not already running."
 (use-package projectile
   :ensure t
   :init
-  (setq projectile-completion-system 'ivy)
-  (setq projectile-project-search-path '("~/projects/" "~/toptal/"))
+  (setq projectile-project-search-path '("~/projects/" "~/work/"))
   :config
   ;; I typically use this keymap prefix on macOS
   (define-key projectile-mode-map (kbd "s-p") 'projectile-command-map)
