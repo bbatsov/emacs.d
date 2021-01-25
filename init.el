@@ -621,7 +621,7 @@ Start `ielm' if it's not already running."
 
 ;; WSL-specific setup
 (when (and (eq system-type 'gnu/linux) (getenv "WSLENV"))
-  ;; (set-frame-font "DejaVu Sans Mono 28")
+  (set-frame-font "DejaVu Sans Mono 28")
 
   ;; Teach Emacs how to open links in your default Windows browser
   (let ((cmd-exe "/mnt/c/Windows/System32/cmd.exe")
