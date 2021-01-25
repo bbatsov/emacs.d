@@ -460,6 +460,17 @@ Start `ielm' if it's not already running."
 (use-package cask-mode
   :ensure t)
 
+(use-package selectrum
+  :ensure t
+  :config
+  (selectrum-mode +1))
+
+(use-package selectrum-prescient
+  :ensure t
+  :config
+  (selectrum-prescient-mode +1)
+  (prescient-persist-mode +1))
+
 (use-package company
   :ensure t
   :config
@@ -563,41 +574,41 @@ Start `ielm' if it's not already running."
   (setq undo-tree-auto-save-history t)
   (global-undo-tree-mode +1))
 
-(use-package ivy
-  :ensure t
-  :config
-  (ivy-mode 1)
-  (setq ivy-use-virtual-buffers t)
-  (setq enable-recursive-minibuffers t)
-  (global-set-key (kbd "C-c C-r") 'ivy-resume)
-  (global-set-key (kbd "<f6>") 'ivy-resume))
+;; (use-package ivy
+;;   :ensure t
+;;   :config
+;;   (ivy-mode 1)
+;;   (setq ivy-use-virtual-buffers t)
+;;   (setq enable-recursive-minibuffers t)
+;;   (global-set-key (kbd "C-c C-r") 'ivy-resume)
+;;   (global-set-key (kbd "<f6>") 'ivy-resume))
+;;
+;; (use-package swiper
+;;   :ensure t
+;;   :config
+;;   (global-set-key "\C-s" 'swiper))
+;;
+;; (use-package counsel
+;;   :ensure t
+;;   :config
+;;   (global-set-key (kbd "M-x") 'counsel-M-x)
+;;   (global-set-key (kbd "C-x C-f") 'counsel-find-file)
+;;   (global-set-key (kbd "<f1> f") 'counsel-describe-function)
+;;   (global-set-key (kbd "<f1> v") 'counsel-describe-variable)
+;;   (global-set-key (kbd "<f1> l") 'counsel-find-library)
+;;   (global-set-key (kbd "<f2> i") 'counsel-info-lookup-symbol)
+;;   (global-set-key (kbd "<f2> u") 'counsel-unicode-char)
+;;   (global-set-key (kbd "C-c g") 'counsel-git)
+;;   (global-set-key (kbd "C-c j") 'counsel-git-grep)
+;;   (global-set-key (kbd "C-c a") 'counsel-ag)
+;;   (global-set-key (kbd "C-x l") 'counsel-locate)
+;;   (define-key minibuffer-local-map (kbd "C-r") 'counsel-minibuffer-history))
 
 (use-package ace-window
   :ensure t
   :config
   (global-set-key (kbd "s-w") 'ace-window)
   (global-set-key [remap other-window] 'ace-window))
-
-(use-package swiper
-  :ensure t
-  :config
-  (global-set-key "\C-s" 'swiper))
-
-(use-package counsel
-  :ensure t
-  :config
-  (global-set-key (kbd "M-x") 'counsel-M-x)
-  (global-set-key (kbd "C-x C-f") 'counsel-find-file)
-  (global-set-key (kbd "<f1> f") 'counsel-describe-function)
-  (global-set-key (kbd "<f1> v") 'counsel-describe-variable)
-  (global-set-key (kbd "<f1> l") 'counsel-find-library)
-  (global-set-key (kbd "<f2> i") 'counsel-info-lookup-symbol)
-  (global-set-key (kbd "<f2> u") 'counsel-unicode-char)
-  (global-set-key (kbd "C-c g") 'counsel-git)
-  (global-set-key (kbd "C-c j") 'counsel-git-grep)
-  (global-set-key (kbd "C-c a") 'counsel-ag)
-  (global-set-key (kbd "C-x l") 'counsel-locate)
-  (define-key minibuffer-local-map (kbd "C-r") 'counsel-minibuffer-history))
 
 ;; super useful for demos
 (use-package keycast
