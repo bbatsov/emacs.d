@@ -283,6 +283,7 @@ Start `ielm' if it's not already running."
   :config
   (diminish 'abbrev-mode)
   (diminish 'flyspell-mode)
+  (diminish 'flyspell-prog-mode)
   (diminish 'eldoc-mode))
 
 (use-package avy
@@ -369,14 +370,13 @@ Start `ielm' if it's not already running."
    ([(meta shift down)] . move-text-down)))
 
 (use-package rainbow-delimiters
-  :ensure t
-  :config
-  (diminish 'rainbow-delimiters-mode))
+  :ensure t)
 
 (use-package rainbow-mode
   :ensure t
   :config
-  (add-hook 'prog-mode-hook #'rainbow-mode))
+  (add-hook 'prog-mode-hook #'rainbow-mode)
+  (diminish 'rainbow-mode))
 
 (use-package whitespace
   :init
