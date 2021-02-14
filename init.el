@@ -278,6 +278,9 @@ Start `ielm' if it's not already running."
   :config
   (load-theme 'zenburn t))
 
+(use-package diminish
+  :ensure t)
+
 (use-package avy
   :ensure t
   :bind (("s-." . avy-goto-word-or-subword-1)
@@ -319,7 +322,8 @@ Start `ielm' if it's not already running."
   :ensure t
   :config
   (dolist (hook '(emacs-lisp-mode-hook ielm-mode-hook))
-    (add-hook hook #'elisp-slime-nav-mode)))
+    (add-hook hook #'elisp-slime-nav-mode))
+  (diminish 'elisp-slime-nav-mode))
 
 (use-package paredit
   :ensure t
@@ -329,7 +333,8 @@ Start `ielm' if it's not already running."
   (add-hook 'lisp-interaction-mode-hook #'paredit-mode)
   (add-hook 'ielm-mode-hook #'paredit-mode)
   (add-hook 'lisp-mode-hook #'paredit-mode)
-  (add-hook 'eval-expression-minibuffer-setup-hook #'paredit-mode))
+  (add-hook 'eval-expression-minibuffer-setup-hook #'paredit-mode)
+  (diminish 'paredit-mode "()"))
 
 (use-package anzu
   :ensure t
@@ -482,7 +487,8 @@ Start `ielm' if it's not already running."
   ;; invert the navigation direction if the the completion popup-isearch-match
   ;; is displayed on top (happens near the bottom of windows)
   (setq company-tooltip-flip-when-above t)
-  (global-company-mode))
+  (global-company-mode)
+  (diminish 'company-mode))
 
 (use-package hl-todo
   :ensure t
@@ -522,7 +528,8 @@ Start `ielm' if it's not already running."
   :config
   ;; add integration with ace-window
   (add-to-list 'super-save-triggers 'ace-window)
-  (super-save-mode +1))
+  (super-save-mode +1)
+  (diminish 'super-save-mode))
 
 (use-package crux
   :ensure t
@@ -572,7 +579,8 @@ Start `ielm' if it's not already running."
   (setq undo-tree-history-directory-alist
         `((".*" . ,temporary-file-directory)))
   (setq undo-tree-auto-save-history t)
-  (global-undo-tree-mode +1))
+  (global-undo-tree-mode +1)
+  (diminish 'undo-tree-mode))
 
 ;; (use-package ivy
 ;;   :ensure t
