@@ -279,7 +279,11 @@ Start `ielm' if it's not already running."
   (load-theme 'zenburn t))
 
 (use-package diminish
-  :ensure t)
+  :ensure t
+  :config
+  (diminish 'abbrev-mode)
+  (diminish 'flyspell-mode)
+  (diminish 'eldoc-mode))
 
 (use-package avy
   :ensure t
@@ -361,7 +365,9 @@ Start `ielm' if it's not already running."
    ([(meta shift down)] . move-text-down)))
 
 (use-package rainbow-delimiters
-  :ensure t)
+  :ensure t
+  :config
+  (diminish 'rainbow-delimiters-mode))
 
 (use-package rainbow-mode
   :ensure t
@@ -570,7 +576,8 @@ Start `ielm' if it's not already running."
 (use-package which-key
   :ensure t
   :config
-  (which-key-mode +1))
+  (which-key-mode +1)
+  (diminish 'which-key-mode))
 
 (use-package undo-tree
   :ensure t
@@ -636,7 +643,8 @@ Start `ielm' if it's not already running."
 (use-package volatile-highlights
   :ensure t
   :config
-  (volatile-highlights-mode +1))
+  (volatile-highlights-mode +1)
+  (diminish 'volatile-highlights-mode))
 
 ;; WSL-specific setup
 (when (and (eq system-type 'gnu/linux) (getenv "WSLENV"))
