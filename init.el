@@ -290,7 +290,9 @@ Start `ielm' if it's not already running."
   :bind (("s-." . avy-goto-word-or-subword-1)
          ("s-," . avy-goto-char)
          ("C-c ." . avy-goto-word-or-subword-1)
-         ("C-c ," . avy-goto-char))
+         ("C-c ," . avy-goto-char)
+         ("M-g f" . avy-goto-line)
+         ("M-g w" . avy-goto-word-or-subword-1))
   :config
   (setq avy-background t))
 
