@@ -400,9 +400,21 @@ Start `ielm' if it's not already running."
 (use-package clojure-mode
   :ensure t
   :config
+  ;; teach clojure-mode about some macros that I use on projects like
+  ;; nREPL and Orchard
+  (define-clojure-indent
+    (returning 1)
+    (testing-dynamic 1)
+    (testing-print 1))
   (add-hook 'clojure-mode-hook #'paredit-mode)
   (add-hook 'clojure-mode-hook #'subword-mode)
   (add-hook 'clojure-mode-hook #'rainbow-delimiters-mode))
+
+(use-package inf-clojure
+  :ensure t
+  :config
+  (add-hook 'inf-clojure-mode-hook #'paredit-mode)
+  (add-hook 'inf-clojure-mode-hook #'rainbow-delimiters-mode))
 
 (use-package cider
   :ensure t
