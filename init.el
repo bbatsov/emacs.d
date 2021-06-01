@@ -635,6 +635,15 @@ Start `ielm' if it's not already running."
   (global-set-key (kbd "s-w") 'ace-window)
   (global-set-key [remap other-window] 'ace-window))
 
+(use-package vterm
+  :ensure t
+  :config
+  (setq vterm-shell "/bin/bash")
+  ;; macOS
+  (global-set-key (kbd "s-v") 'vterm)
+  ;; Linux
+  (global-set-key (kbd "C-c v") 'vterm))
+
 ;; super useful for demos
 (use-package keycast
   :ensure t)
