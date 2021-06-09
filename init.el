@@ -183,6 +183,11 @@
   :config
   (electric-pair-mode +1))
 
+(use-package calendar
+  :config
+  ;; weeks in Bulgaria start on Monday
+  (setq calendar-week-start-day 1))
+
 ;; highlight the current line
 (use-package hl-line
   :config
