@@ -151,6 +151,9 @@
 ;; replace buffer-menu with ibuffer
 (global-set-key (kbd "C-x C-b") #'ibuffer)
 
+;; Start proced in a similar manner to dired
+(global-set-key (kbd "C-x p") #'proced)
+
 ;; align code in a pretty way
 (global-set-key (kbd "C-x \\") #'align-regexp)
 
