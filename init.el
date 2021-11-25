@@ -475,9 +475,12 @@ Start `ielm' if it's not already running."
 
   (defun jekyll-insert-post-url ()
     (interactive)
-    (let* ((files (remove "." (mapcar #'file-name-sans-extension (directory-files "."))))
-           (selected-file (completing-read "Select article: " files nil t)))
-      (insert (format "{%% post_url %s %%}" selected-file)))))
+    (let* ((project-root (projectile-project-root))
+           (posts-dir (expand-file-name "_posts" project-root))
+           (default-directory posts-dir))
+      (let* ((files (remove "." (mapcar #'file-name-sans-extension (directory-files "."))))
+             (selected-file (completing-read "Select article: " files nil t)))
+        (insert (format "{%% post_url %s %%}" selected-file))))))
 
 (use-package adoc-mode
   :ensure t
