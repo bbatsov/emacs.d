@@ -171,6 +171,8 @@
 ;; enable some commands that are disabled by default
 (put 'erase-buffer 'disabled nil)
 
+(setq find-function-C-source-directory "~/projects/emacs")
+
 (unless (package-installed-p 'use-package)
   (package-install 'use-package))
 
@@ -685,8 +687,15 @@ Start `ielm' if it's not already running."
   (diminish 'volatile-highlights-mode))
 
 ;; WSL-specific setup
-(when (and (eq system-type 'gnu/linux) (getenv "WSLENV"))
-  (set-frame-font "DejaVu Sans Mono 28")
+(when (and (eq system-type 'gnu/linux)
+           (getenv "WSLENV"))
+
+  ;; pgtk is only available in Emacs 29+
+  ;; without it Emacs fonts don't scale properly on
+  ;; HiDPI display
+  (if (< emacs-major-version 29)
+      (set-frame-font "DejaVu Sans Mono 28")
+    (set-frame-font "DejaVu Sans Mono 14"))
 
   ;; Teach Emacs how to open links in your default Windows browser
   (let ((cmd-exe "/mnt/c/Windows/System32/cmd.exe")
