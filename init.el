@@ -694,8 +694,8 @@ Start `ielm' if it's not already running."
   ;; without it Emacs fonts don't scale properly on
   ;; HiDPI display
   (if (< emacs-major-version 29)
-      (set-frame-font "DejaVu Sans Mono 28")
-    (set-frame-font "DejaVu Sans Mono 14"))
+      (set-frame-font "Cascadia Code 28")
+    (set-frame-font "Cascadia Code 14"))
 
   ;; Teach Emacs how to open links in your default Windows browser
   (let ((cmd-exe "/mnt/c/Windows/System32/cmd.exe")
