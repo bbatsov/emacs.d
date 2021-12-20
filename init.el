@@ -84,6 +84,9 @@
       scroll-conservatively 100000
       scroll-preserve-screen-position 1)
 
+(when (fboundp 'pixel-scroll-precision-mode)
+  (pixel-scroll-precision-mode t))
+
 ;; mode line settings
 (line-number-mode t)
 (column-number-mode t)
