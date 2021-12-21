@@ -2,7 +2,7 @@
 ;;
 ;; Copyright (c) 2016-2021 Bozhidar Batsov
 ;;
-;; Author: Bozhidar Batsov <bozhidar@batsov.com>
+;; Author: Bozhidar Batsov <bozhidar@batsov.dev>
 ;; URL: https://github.com/bbatsov/emacs.d
 ;; Keywords: convenience
 
