@@ -87,6 +87,17 @@
 (when (fboundp 'pixel-scroll-precision-mode)
   (pixel-scroll-precision-mode t))
 
+;; let's pick a nice font
+(cond
+ ((find-font (font-spec :name "Cascadia Code"))
+  (set-frame-font "Cascadia Code-14"))
+ ((find-font (font-spec :name "Menlo"))
+  (set-frame-font "Menlo-14"))
+ ((find-font (font-spec :name "DejaVu Sans Mono"))
+  (set-frame-font "DejaVu Sans Mono-14"))
+ ((find-font (font-spec :name "Inconsolata"))
+  (set-frame-font "Inconsolata-14")))
+
 ;; mode line settings
 (line-number-mode t)
 (column-number-mode t)
@@ -659,14 +670,14 @@ Start `ielm' if it's not already running."
   (global-set-key (kbd "s-w") 'ace-window)
   (global-set-key [remap other-window] 'ace-window))
 
-(use-package vterm
-  :ensure t
-  :config
-  (setq vterm-shell "/bin/bash")
-  ;; macOS
-  (global-set-key (kbd "s-v") 'vterm)
-  ;; Linux
-  (global-set-key (kbd "C-c v") 'vterm))
+;; (use-package vterm
+;;   :ensure t
+;;   :config
+;;   (setq vterm-shell "/bin/bash")
+;;   ;; macOS
+;;   (global-set-key (kbd "s-v") 'vterm)
+;;   ;; Linux
+;;   (global-set-key (kbd "C-c v") 'vterm))
 
 ;; super useful for demos
 (use-package keycast
@@ -696,9 +707,8 @@ Start `ielm' if it's not already running."
   ;; pgtk is only available in Emacs 29+
   ;; without it Emacs fonts don't scale properly on
   ;; HiDPI display
-  (if (< emacs-major-version 29)
-      (set-frame-font "Cascadia Code 28")
-    (set-frame-font "Cascadia Code 14"))
+  (when (< emacs-major-version 29)
+    (set-frame-font "Cascadia Code 28"))
 
   ;; Teach Emacs how to open links in your default Windows browser
   (let ((cmd-exe "/mnt/c/Windows/System32/cmd.exe")
