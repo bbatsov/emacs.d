@@ -279,6 +279,15 @@
   ;; enable some really cool extensions like C-x C-j(dired-jump)
   (require 'dired-x))
 
+(use-package whitespace
+  :init
+  (dolist (hook '(prog-mode-hook text-mode-hook))
+    (add-hook hook #'whitespace-mode))
+  (add-hook 'before-save-hook #'whitespace-cleanup)
+  :config
+  (setq whitespace-line-column 80) ;; limit line length
+  (setq whitespace-style '(face tabs empty trailing lines-tail)))
+
 (use-package lisp-mode
   :config
   (defun bozhidar-visit-ielm ()
@@ -401,15 +410,6 @@ Start `ielm' if it's not already running."
   :config
   (add-hook 'prog-mode-hook #'rainbow-mode)
   (diminish 'rainbow-mode))
-
-(use-package whitespace
-  :init
-  (dolist (hook '(prog-mode-hook text-mode-hook))
-    (add-hook hook #'whitespace-mode))
-  (add-hook 'before-save-hook #'whitespace-cleanup)
-  :config
-  (setq whitespace-line-column 80) ;; limit line length
-  (setq whitespace-style '(face tabs empty trailing lines-tail)))
 
 (use-package evil
   :ensure t
