@@ -411,6 +411,10 @@ Start `ielm' if it's not already running."
   (setq whitespace-line-column 80) ;; limit line length
   (setq whitespace-style '(face tabs empty trailing lines-tail)))
 
+(use-package evil
+  :ensure t
+  :bind (("C-z" . evil-local-mode)))
+
 (use-package inf-ruby
   :ensure t
   :config
