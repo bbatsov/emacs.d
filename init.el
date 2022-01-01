@@ -434,6 +434,7 @@ Start `ielm' if it's not already running."
     (returning 1)
     (testing-dynamic 1)
     (testing-print 1))
+
   (add-hook 'clojure-mode-hook #'paredit-mode)
   (add-hook 'clojure-mode-hook #'subword-mode)
   (add-hook 'clojure-mode-hook #'rainbow-delimiters-mode))
