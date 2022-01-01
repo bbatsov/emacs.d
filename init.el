@@ -670,6 +670,7 @@ Start `ielm' if it's not already running."
   (global-set-key (kbd "s-w") 'ace-window)
   (global-set-key [remap other-window] 'ace-window))
 
+;; FIXME: Figure out why the vterm module stopped compiling properly
 ;; (use-package vterm
 ;;   :ensure t
 ;;   :config
