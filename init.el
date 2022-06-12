@@ -474,6 +474,32 @@ Start `ielm' if it's not already running."
   (add-hook 'haskell-mode-hook #'interactive-haskell-mode)
   (add-hook 'haskell-mode-hook #'haskell-doc-mode))
 
+(use-package rust-mode
+  :ensure t)
+
+(use-package eglot
+  :ensure t)
+
+;;;; OCaml support
+
+(use-package tuareg
+  :ensure t)
+
+;; Merlin configuration
+(use-package merlin
+  :ensure t
+  :config
+  (add-hook 'tuareg-mode-hook #'merlin-mode)
+  (add-hook 'merlin-mode-hook #'company-mode))
+
+;; utop configuration
+(use-package utop
+  :ensure t
+  :config
+  (add-hook 'tuareg-mode-hook #'utop-minor-mode))
+
+;;;; Markup languages support
+
 (use-package web-mode
   :ensure t
   :custom
