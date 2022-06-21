@@ -485,12 +485,19 @@ Start `ielm' if it's not already running."
 (use-package tuareg
   :ensure t)
 
+(use-package flycheck-ocaml
+  :ensure t
+  :config
+  (flycheck-ocaml-setup))
+
 ;; Merlin configuration
 (use-package merlin
   :ensure t
   :config
   (add-hook 'tuareg-mode-hook #'merlin-mode)
-  (add-hook 'merlin-mode-hook #'company-mode))
+  (add-hook 'merlin-mode-hook #'company-mode)
+  ;; we're using flycheck instead
+  (setq merlin-error-after-save nil))
 
 ;; utop configuration
 (use-package utop
