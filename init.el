@@ -495,6 +495,9 @@ Start `ielm' if it's not already running."
 (use-package tuareg
   :ensure t)
 
+(use-package dune
+  :ensure t)
+
 (use-package flycheck-ocaml
   :ensure t
   :config
