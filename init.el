@@ -185,7 +185,17 @@
 ;; enable some commands that are disabled by default
 (put 'erase-buffer 'disabled nil)
 
+;; make it possible to navigate to the C source of Emacs functions
 (setq find-function-C-source-directory "~/projects/emacs")
+
+;; auto-create missing folders
+(defun er-auto-create-missing-dirs ()
+  "Make missing parent directories automatically."
+  (let ((target-dir (file-name-directory buffer-file-name)))
+    (unless (file-exists-p target-dir)
+      (make-directory target-dir t))))
+
+(add-to-list 'find-file-not-found-functions #'er-auto-create-missing-dirs)
 
 (unless (package-installed-p 'use-package)
   (package-install 'use-package))
