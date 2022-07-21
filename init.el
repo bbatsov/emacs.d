@@ -515,6 +515,7 @@ Start `ielm' if it's not already running."
 ;; utop configuration
 (use-package utop
   :ensure t
+  :mode (("\\.ocamlinit\\'" . tuareg-mode))
   :config
   (add-hook 'tuareg-mode-hook #'utop-minor-mode))
 
