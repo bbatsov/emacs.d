@@ -523,14 +523,13 @@ Start `ielm' if it's not already running."
 
 (use-package web-mode
   :ensure t
+  :mode (("\\.html?\\'" . web-mode)
+         ("\\.erb\\'" . web-mode)
+         ("\\.hbs\\'" . web-mode))
   :custom
   (web-mode-markup-indent-offset 2)
   (web-mode-css-indent-offset 2)
-  (web-mode-code-indent-offset 2)
-  :config
-  (add-to-list 'auto-mode-alist '("\\.html?\\'" . web-mode))
-  (add-to-list 'auto-mode-alist '("\\.erb\\'" . web-mode))
-  (add-to-list 'auto-mode-alist '("\\.hbs\\'" . web-mode)))
+  (web-mode-code-indent-offset 2))
 
 (use-package markdown-mode
   :ensure t
