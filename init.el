@@ -499,11 +499,6 @@ Start `ielm' if it's not already running."
 (use-package dune
   :ensure t)
 
-(use-package flycheck-ocaml
-  :ensure t
-  :config
-  (flycheck-ocaml-setup))
-
 ;; Merlin configuration
 (use-package merlin
   :ensure t
@@ -516,6 +511,12 @@ Start `ielm' if it's not already running."
 (use-package merlin-eldoc
   :ensure t
   :hook ((tuareg-mode) . merlin-eldoc-setup))
+
+;; This uses Merlin internally
+(use-package flycheck-ocaml
+  :ensure t
+  :config
+  (flycheck-ocaml-setup))
 
 ;; utop configuration
 (use-package utop
