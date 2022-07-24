@@ -493,7 +493,8 @@ Start `ielm' if it's not already running."
 ;;;; OCaml support
 
 (use-package tuareg
-  :ensure t)
+  :ensure t
+  :mode (("\\.ocamlinit\\'" . tuareg-mode)))
 
 (use-package dune
   :ensure t)
@@ -519,7 +520,6 @@ Start `ielm' if it's not already running."
 ;; utop configuration
 (use-package utop
   :ensure t
-  :mode (("\\.ocamlinit\\'" . tuareg-mode))
   :config
   (add-hook 'tuareg-mode-hook #'utop-minor-mode))
 
