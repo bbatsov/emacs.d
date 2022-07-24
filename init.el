@@ -512,6 +512,10 @@ Start `ielm' if it's not already running."
   ;; we're using flycheck instead
   (setq merlin-error-after-save nil))
 
+(use-package merlin-eldoc
+  :ensure t
+  :hook ((tuareg-mode) . merlin-eldoc-setup))
+
 ;; utop configuration
 (use-package utop
   :ensure t
