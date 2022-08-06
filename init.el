@@ -421,9 +421,9 @@ Start `ielm' if it's not already running."
   (add-hook 'prog-mode-hook #'rainbow-mode)
   (diminish 'rainbow-mode))
 
-(use-package evil
-  :ensure t
-  :bind (("C-z" . evil-local-mode)))
+;; (use-package evil
+;;   :ensure t
+;;   :bind (("C-z" . evil-local-mode)))
 
 (use-package inf-ruby
   :ensure t
