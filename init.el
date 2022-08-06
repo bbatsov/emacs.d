@@ -791,7 +791,7 @@ Start `ielm' if it's not already running."
   (setq w32-pass-apps-to-system nil)
   (setq w32-apps-modifier 'hyper) ; Menu/App key
 
-  (set-frame-font "Source Code Pro 12")
+  (set-frame-font "Cascadia Code 14")
   (add-to-list 'exec-path "C:/Program Files/Git/bin")
   (add-to-list 'exec-path "C:/Program Files/Git/mingw64/bin")
   (setenv "PATH" (concat "C:/Program Files/Git/bin;" "C:/Program Files/Git/mingw64/bin;" (getenv "PATH")))
