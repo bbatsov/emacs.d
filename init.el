@@ -662,7 +662,11 @@ Start `ielm' if it's not already running."
   (add-hook 'after-init-hook #'global-flycheck-mode))
 
 (use-package flycheck-eldev
-  :ensure t)
+  :ensure t
+  :config
+  (setq flycheck-eldev-whitelist
+        '("~/projects/cider"
+          "~/projects/projectile")))
 
 (use-package super-save
   :ensure t
