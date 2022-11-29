@@ -354,7 +354,7 @@ Start `ielm' if it's not already running."
 (use-package projectile
   :ensure t
   :init
-  (setq projectile-project-search-path '("~/projects/" "~/work/"))
+  (setq projectile-project-search-path '("~/projects/" "~/work/" "~/playground"))
   :config
   ;; I typically use this keymap prefix on macOS
   (define-key projectile-mode-map (kbd "s-p") 'projectile-command-map)
