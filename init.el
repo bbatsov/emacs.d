@@ -254,9 +254,9 @@
         savehist-file (expand-file-name "savehist" bozhidar-savefile-dir))
   (savehist-mode +1))
 
-(use-package desktop
-  :config
-  (desktop-save-mode +1))
+;; (use-package desktop
+;;   :config
+;;   (desktop-save-mode +1))
 
 (use-package recentf
   :config
