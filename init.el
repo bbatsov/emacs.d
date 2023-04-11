@@ -217,6 +217,11 @@
   ;; weeks in Bulgaria start on Monday
   (setq calendar-week-start-day 1))
 
+(use-package dictionary
+  :bind (("C-c l" . dictionary-lookup-definition))
+  :config
+  (setq dictionary-server "dict.org"))
+
 ;; highlight the current line
 (use-package hl-line
   :config
