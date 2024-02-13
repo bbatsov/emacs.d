@@ -735,7 +735,7 @@ Start `ielm' if it's not already running."
   :ensure t
   :config
   (setq hl-todo-highlight-punctuation ":")
-  (global-hl-todo-mode))
+  (global-hl-todo-mode +1))
 
 (use-package zop-to-char
   :ensure t
