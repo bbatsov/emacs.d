@@ -574,6 +574,9 @@ Start `ielm' if it's not already running."
 (use-package cask-mode
   :ensure t)
 
+(use-package eask-mode
+  :ensure t)
+
 ;; Enable rich annotations using the Marginalia package
 (use-package marginalia
   :ensure t
