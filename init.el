@@ -217,6 +217,22 @@
   ;; weeks in Bulgaria start on Monday
   (setq calendar-week-start-day 1))
 
+(use-package time
+  :config
+  ;; TZs to display with `world-clock'
+  (setq world-clock-list
+      '(("America/Los_Angeles" "Seattle")
+        ("America/New_York" "New York")
+        ("America/Sao_Paulo" "Sao Paulo")
+        ("America/Argentina/Buenos_Aires" "Buenos Aires")
+        ("Europe/London" "London")
+        ("Europe/Paris" "Paris")
+        ("Europe/Sofia" "Sofia")
+        ("Asia/Istanbul" "Istanbul")
+        ("Israel" "Tel Aviv")
+        ("Asia/Calcutta" "Bangalore")
+        ("Asia/Tokyo" "Tokyo"))))
+
 (use-package dictionary
   :bind (("C-c l" . dictionary-lookup-definition))
   :config
