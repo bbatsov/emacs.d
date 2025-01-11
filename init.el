@@ -43,7 +43,7 @@
   (package-refresh-contents))
 
 (setq user-full-name "Bozhidar Batsov"
-      user-mail-address "bozhidar@batsov.com")
+      user-mail-address "bozhidar@batsov.dev")
 
 ;; Always load newest byte code
 (setq load-prefer-newer t)
