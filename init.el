@@ -201,6 +201,8 @@
   (package-install 'use-package))
 
 (require 'use-package)
+
+(setq use-package-always-ensure t)
 (setq use-package-verbose t)
 
 ;;; built-in packages
@@ -338,12 +340,10 @@ Start `ielm' if it's not already running."
 
 ;;; third-party packages
 (use-package zenburn-theme
-  :ensure t
   :config
   (load-theme 'zenburn t))
 
 (use-package diminish
-  :ensure t
   :config
   (diminish 'abbrev-mode)
   (diminish 'flyspell-mode)
@@ -351,7 +351,6 @@ Start `ielm' if it's not already running."
   (diminish 'eldoc-mode))
 
 (use-package avy
-  :ensure t
   :bind (("s-." . avy-goto-word-or-subword-1)
          ("s-," . avy-goto-char)
          ("C-c ." . avy-goto-word-or-subword-1)
@@ -362,18 +361,14 @@ Start `ielm' if it's not already running."
   (setq avy-background t))
 
 (use-package magit
-  :ensure t
   :bind (("C-x g" . magit-status)))
 
 (use-package git-timemachine
-  :ensure t
   :bind (("s-g" . git-timemachine)))
 
-(use-package ag
-  :ensure t)
+(use-package ag)
 
 (use-package projectile
-  :ensure t
   :init
   (setq projectile-project-search-path '("~/projects/" "~/work/" "~/playground"))
   :config
@@ -384,22 +379,18 @@ Start `ielm' if it's not already running."
   (global-set-key (kbd "C-c p") 'projectile-command-map)
   (projectile-mode +1))
 
-(use-package pt
-  :ensure t)
+(use-package pt)
 
 (use-package expand-region
-  :ensure t
   :bind ("C-=" . er/expand-region))
 
 (use-package elisp-slime-nav
-  :ensure t
   :config
   (dolist (hook '(emacs-lisp-mode-hook ielm-mode-hook))
     (add-hook hook #'elisp-slime-nav-mode))
   (diminish 'elisp-slime-nav-mode))
 
 (use-package paredit
-  :ensure t
   :config
   (define-key paredit-mode-map (kbd "RET") nil)
   (add-hook 'emacs-lisp-mode-hook #'paredit-mode)
@@ -411,34 +402,28 @@ Start `ielm' if it's not already running."
   (diminish 'paredit-mode "()"))
 
 (use-package anzu
-  :ensure t
   :bind (("M-%" . anzu-query-replace)
          ("C-M-%" . anzu-query-replace-regexp))
   :config
   (global-anzu-mode))
 
 (use-package easy-kill
-  :ensure t
   :config
   (global-set-key [remap kill-ring-save] 'easy-kill))
 
 (use-package exec-path-from-shell
-  :ensure t
   :config
   (when (memq window-system '(mac ns))
     (exec-path-from-shell-initialize)))
 
 (use-package move-text
-  :ensure t
   :bind
   (([(meta shift up)] . move-text-up)
    ([(meta shift down)] . move-text-down)))
 
-(use-package rainbow-delimiters
-  :ensure t)
+(use-package rainbow-delimiters)
 
 (use-package rainbow-mode
-  :ensure t
   :config
   (add-hook 'prog-mode-hook #'rainbow-mode)
   (diminish 'rainbow-mode))
@@ -448,7 +433,6 @@ Start `ielm' if it's not already running."
 ;;   :bind (("C-z" . evil-local-mode)))
 
 (use-package inf-ruby
-  :ensure t
   :config
   (add-hook 'ruby-mode-hook #'inf-ruby-minor-mode))
 
@@ -458,7 +442,6 @@ Start `ielm' if it's not already running."
   (add-hook 'ruby-mode-hook #'subword-mode))
 
 (use-package clojure-mode
-  :ensure t
   :config
   ;; teach clojure-mode about some macros that I use on projects like
   ;; nREPL and Orchard
@@ -472,58 +455,47 @@ Start `ielm' if it's not already running."
   (add-hook 'clojure-mode-hook #'rainbow-delimiters-mode))
 
 (use-package inf-clojure
-  :ensure t
   :config
   (add-hook 'inf-clojure-mode-hook #'paredit-mode)
   (add-hook 'inf-clojure-mode-hook #'rainbow-delimiters-mode))
 
 (use-package cider
-  :ensure t
   :config
   (setq nrepl-log-messages t)
   (add-hook 'cider-repl-mode-hook #'paredit-mode)
   (add-hook 'cider-repl-mode-hook #'rainbow-delimiters-mode))
 
-(use-package flycheck-joker
-  :ensure t)
+(use-package flycheck-joker)
 
 (use-package elixir-mode
-  :ensure t
   :config
   (add-hook 'elixir-mode #'subword-mode))
 
 (use-package erlang
-  :ensure t
   :config
   (when (eq system-type 'windows-nt)
     (setq erlang-root-dir "C:/Program Files/erl7.2")
     (add-to-list 'exec-path "C:/Program Files/erl7.2/bin")))
 
 (use-package haskell-mode
-  :ensure t
   :config
   (add-hook 'haskell-mode-hook #'subword-mode)
   (add-hook 'haskell-mode-hook #'interactive-haskell-mode)
   (add-hook 'haskell-mode-hook #'haskell-doc-mode))
 
-(use-package rust-mode
-  :ensure t)
+(use-package rust-mode)
 
-(use-package eglot
-  :ensure t)
+(use-package eglot)
 
 ;;;; OCaml support
 
 (use-package tuareg
-  :ensure t
   :mode (("\\.ocamlinit\\'" . tuareg-mode)))
 
-(use-package dune
-  :ensure t)
+(use-package dune)
 
 ;; Merlin configuration
 (use-package merlin
-  :ensure t
   :config
   (add-hook 'tuareg-mode-hook #'merlin-mode)
   ;; (add-hook 'merlin-mode-hook #'company-mode)
@@ -531,25 +503,21 @@ Start `ielm' if it's not already running."
   (setq merlin-error-after-save nil))
 
 (use-package merlin-eldoc
-  :ensure t
   :hook ((tuareg-mode) . merlin-eldoc-setup))
 
 ;; This uses Merlin internally
 (use-package flycheck-ocaml
-  :ensure t
   :config
   (flycheck-ocaml-setup))
 
 ;; utop configuration
 (use-package utop
-  :ensure t
   :config
   (add-hook 'tuareg-mode-hook #'utop-minor-mode))
 
 ;;;; Markup languages support
 
 (use-package web-mode
-  :ensure t
   :mode (("\\.html?\\'" . web-mode)
          ("\\.erb\\'" . web-mode)
          ("\\.hbs\\'" . web-mode))
@@ -559,7 +527,6 @@ Start `ielm' if it's not already running."
   (web-mode-code-indent-offset 2))
 
 (use-package markdown-mode
-  :ensure t
   :mode (("\\.md\\'" . gfm-mode)
          ("\\.markdown\\'" . gfm-mode))
   :config
@@ -581,21 +548,17 @@ Start `ielm' if it's not already running."
         (insert (format "{%% post_url %s %%}" selected-file))))))
 
 (use-package adoc-mode
-  :ensure t
   :mode "\\.adoc\\'")
 
-(use-package yaml-mode
-  :ensure t)
+(use-package yaml-mode)
 
-(use-package cask-mode
-  :ensure t)
+(use-package cask-mode)
 
-(use-package eask-mode
-  :ensure t)
+;; Eask is the successor of Cask
+(use-package eask-mode)
 
 ;; Enable rich annotations using the Marginalia package
 (use-package marginalia
-  :ensure t
   ;; Either bind `marginalia-cycle' globally or only in the minibuffer
   :bind (("M-A" . marginalia-cycle)
          :map minibuffer-local-map
@@ -610,7 +573,6 @@ Start `ielm' if it's not already running."
 
 ;; Enable vertico
 (use-package vertico
-  :ensure t
   :init
   (vertico-mode)
 
@@ -656,7 +618,6 @@ Start `ielm' if it's not already running."
 
 ;; use the `orderless' completion style.
 (use-package orderless
-  :ensure t
   :init
   ;; Configure a custom style dispatcher (see the Consult wiki)
   ;; (setq orderless-style-dispatchers '(+orderless-dispatch)
@@ -666,7 +627,6 @@ Start `ielm' if it's not already running."
         completion-category-overrides '((file (styles partial-completion)))))
 
 (use-package consult
-  :ensure t
   :bind (
          ;; C-x bindings (ctl-x-map)
          ("C-x M-:" . consult-complex-command)     ;; orig. repeat-complex-command
@@ -703,7 +663,6 @@ Start `ielm' if it's not already running."
          ("M-s u" . consult-focus-lines)))
 
 (use-package corfu
-  :ensure t
   ;; Optional customizations
   :custom
   (corfu-cycle t)                ;; Enable cycling for `corfu-next/previous'
@@ -751,19 +710,16 @@ Start `ielm' if it's not already running."
 ;;   (diminish 'company-mode))
 
 (use-package hl-todo
-  :ensure t
   :config
   (setq hl-todo-highlight-punctuation ":")
   (global-hl-todo-mode +1))
 
 (use-package zop-to-char
-  :ensure t
   :bind (("M-z" . zop-up-to-char)
          ("M-Z" . zop-to-char)))
 
 ;; TODO: can be removed in favor of consult
 (use-package imenu-anywhere
-  :ensure t
   :bind (("C-c i" . imenu-anywhere)
          ("s-i" . imenu-anywhere)))
 
@@ -777,19 +733,16 @@ Start `ielm' if it's not already running."
   (add-hook 'prog-mode-hook #'flyspell-prog-mode))
 
 (use-package flycheck
-  :ensure t
   :config
   (add-hook 'after-init-hook #'global-flycheck-mode))
 
 (use-package flycheck-eldev
-  :ensure t
   :config
   (setq flycheck-eldev-whitelist
         '("~/projects/cider"
           "~/projects/projectile")))
 
 (use-package super-save
-  :ensure t
   :config
   ;; add integration with ace-window
   (add-to-list 'super-save-triggers 'ace-window)
@@ -797,7 +750,6 @@ Start `ielm' if it's not already running."
   (diminish 'super-save-mode))
 
 (use-package crux
-  :ensure t
   :bind (("C-c o" . crux-open-with)
          ("M-o" . crux-smart-open-line)
          ("C-c n" . crux-cleanup-buffer-or-region)
@@ -826,20 +778,17 @@ Start `ielm' if it's not already running."
          ("C-c s" . crux-ispell-word-then-abbrev)))
 
 (use-package diff-hl
-  :ensure t
   :config
   (global-diff-hl-mode +1)
   (add-hook 'dired-mode-hook 'diff-hl-dired-mode)
   (add-hook 'magit-post-refresh-hook 'diff-hl-magit-post-refresh))
 
 (use-package which-key
-  :ensure t
   :config
   (which-key-mode +1)
   (diminish 'which-key-mode))
 
 (use-package undo-tree
-  :ensure t
   :config
   ;; autosave the undo-tree history
   (setq undo-tree-history-directory-alist
@@ -849,7 +798,6 @@ Start `ielm' if it's not already running."
   (diminish 'undo-tree-mode))
 
 (use-package ace-window
-  :ensure t
   :config
   (global-set-key (kbd "s-w") 'ace-window)
   (global-set-key [remap other-window] 'ace-window))
@@ -865,11 +813,9 @@ Start `ielm' if it's not already running."
 ;;   (global-set-key (kbd "C-c v") 'vterm))
 
 ;; super useful for demos
-(use-package keycast
-  :ensure t)
+(use-package keycast)
 
 (use-package gif-screencast
-  :ensure t
   :config
   ;; To shut up the shutter sound of `screencapture' (see `gif-screencast-command').
   (setq gif-screencast-args '("-x"))
@@ -880,7 +826,6 @@ Start `ielm' if it's not already running."
 
 ;; temporarily highlight changes from yanking, etc
 (use-package volatile-highlights
-  :ensure t
   :config
   (volatile-highlights-mode +1)
   (diminish 'volatile-highlights-mode))
