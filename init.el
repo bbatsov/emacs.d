@@ -1,6 +1,6 @@
 ;;; init.el --- Bozhidar's Emacs configuration
 ;;
-;; Copyright (c) 2016-2023 Bozhidar Batsov
+;; Copyright (c) 2016-2025 Bozhidar Batsov
 ;;
 ;; Author: Bozhidar Batsov <bozhidar@batsov.dev>
 ;; URL: https://github.com/bbatsov/emacs.d
