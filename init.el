@@ -380,8 +380,6 @@ Start `ielm' if it's not already running."
   (global-set-key (kbd "C-c p") 'projectile-command-map)
   (projectile-mode +1))
 
-(use-package pt)
-
 (use-package expand-region
   :bind ("C-=" . er/expand-region))
 
