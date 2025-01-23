@@ -321,7 +321,7 @@
   (setq whitespace-line-column 80) ;; limit line length
   (setq whitespace-style '(face tabs empty trailing lines-tail)))
 
-(use-package lisp-mode
+(use-package elisp-mode
   :config
   (defun bozhidar-visit-ielm ()
     "Switch to default `ielm' buffer.
