@@ -364,7 +364,8 @@ Start `ielm' if it's not already running."
   :bind (("C-x g" . magit-status)))
 
 (use-package git-timemachine
-  :bind (("s-g" . git-timemachine)))
+  :bind (("C-c g" . git-timemachine)
+         ("s-g" . git-timemachine)))
 
 (use-package ag)
 
