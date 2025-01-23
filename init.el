@@ -461,6 +461,7 @@ Start `ielm' if it's not already running."
 (use-package cider
   :config
   (setq nrepl-log-messages t)
+  (setq cider-download-java-sources t)
   (add-hook 'cider-repl-mode-hook #'paredit-mode)
   (add-hook 'cider-repl-mode-hook #'rainbow-delimiters-mode))
 
