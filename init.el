@@ -103,6 +103,9 @@
 (column-number-mode t)
 (size-indication-mode t)
 
+;; built-in and fastest option these days
+(global-display-line-numbers-mode 1)
+
 ;; enable y/n answers
 (fset 'yes-or-no-p 'y-or-n-p)
 
