@@ -341,7 +341,22 @@ Start `ielm' if it's not already running."
 ;;; third-party packages
 (use-package zenburn-theme
   :config
-  (load-theme 'zenburn t))
+  ;(load-theme 'zenburn t)
+  )
+
+(use-package catppuccin-theme
+  :config
+  ;; or 'latte, 'macchiato, or 'mocha
+  (setq catppuccin-flavor 'macchiato)
+  (load-theme 'catppuccin t)
+  )
+
+(defun nuke-loaded-themes ()
+  "Nuke all loaded themes."
+  (interactive)
+  (dolist (theme custom-enabled-themes)
+    (disable-theme theme))
+  (message "Themes nuked"))
 
 (use-package diminish
   :config
