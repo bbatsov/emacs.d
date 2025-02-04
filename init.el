@@ -249,11 +249,13 @@
   (global-hl-line-mode +1))
 
 (use-package abbrev
+  :ensure nil
   :config
   (setq save-abbrevs 'silently)
   (setq-default abbrev-mode t))
 
 (use-package uniquify
+  :ensure nil
   :config
   (setq uniquify-buffer-name-style 'forward)
   (setq uniquify-separator "/")
@@ -300,6 +302,7 @@
   (windmove-default-keybindings))
 
 (use-package dired
+  :ensure nil
   :config
   ;; dired - reuse current buffer by pressing 'a'
   (put 'dired-find-alternate-file 'disabled nil)
@@ -325,6 +328,7 @@
   (setq whitespace-style '(face tabs empty trailing lines-tail)))
 
 (use-package elisp-mode
+  :ensure nil
   :config
   (defun bozhidar-visit-ielm ()
     "Switch to default `ielm' buffer.
