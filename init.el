@@ -324,25 +324,6 @@
   (setq whitespace-line-column 80) ;; limit line length
   (setq whitespace-style '(face tabs empty trailing lines-tail)))
 
-(use-package elisp-mode
-  :ensure nil
-  :config
-  (defun bozhidar-visit-ielm ()
-    "Switch to default `ielm' buffer.
-Start `ielm' if it's not already running."
-    (interactive)
-    (require 'crux)
-    (crux-start-or-switch-to 'ielm "*ielm*"))
-
-  (add-hook 'emacs-lisp-mode-hook #'rainbow-delimiters-mode)
-  (define-key emacs-lisp-mode-map (kbd "C-c C-z") #'bozhidar-visit-ielm)
-  (define-key emacs-lisp-mode-map (kbd "C-c C-c") #'eval-defun)
-  (define-key emacs-lisp-mode-map (kbd "C-c C-b") #'eval-buffer))
-
-(use-package ielm
-  :config
-  (add-hook 'ielm-mode-hook #'rainbow-delimiters-mode))
-
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; third-party packages
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -726,6 +707,30 @@ Start `ielm' if it's not already running."
 ;;;;; Programming modes
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
+(use-package elisp-mode
+  :ensure nil ; not a real package
+  :config
+  (defun bozhidar-visit-ielm ()
+    "Switch to default `ielm' buffer.
+Start `ielm' if it's not already running."
+    (interactive)
+    (require 'crux)
+    (crux-start-or-switch-to 'ielm "*ielm*"))
+
+  (add-hook 'emacs-lisp-mode-hook #'rainbow-delimiters-mode)
+  (define-key emacs-lisp-mode-map (kbd "C-c C-z") #'bozhidar-visit-ielm)
+  (define-key emacs-lisp-mode-map (kbd "C-c C-c") #'eval-defun)
+  (define-key emacs-lisp-mode-map (kbd "C-c C-b") #'eval-buffer))
+
+(use-package ielm
+  :config
+  (add-hook 'ielm-mode-hook #'rainbow-delimiters-mode))
+
+;; Eask is the successor of Cask
+(use-package eask-mode)
+
+(use-package eglot)
+
 (use-package inf-ruby
   :config
   (add-hook 'ruby-mode-hook #'inf-ruby-minor-mode))
@@ -779,8 +784,6 @@ Start `ielm' if it's not already running."
   (add-hook 'haskell-mode-hook #'haskell-doc-mode))
 
 (use-package rust-mode)
-
-(use-package eglot)
 
 ;;;; OCaml support
 
@@ -845,10 +848,9 @@ Start `ielm' if it's not already running."
 (use-package adoc-mode
   :mode "\\.adoc\\'")
 
+;; TODO: Consider removing this, now that there's a built yaml-ts-mode
+;; or replacing with yaml-pro
 (use-package yaml-mode)
-
-;; Eask is the successor of Cask
-(use-package eask-mode)
 
 ;; WSL-specific setup
 (when (and (eq system-type 'gnu/linux)
