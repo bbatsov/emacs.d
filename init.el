@@ -343,13 +343,17 @@ Start `ielm' if it's not already running."
   :config
   (add-hook 'ielm-mode-hook #'rainbow-delimiters-mode))
 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; third-party packages
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (use-package treesit-auto
   :custom
   (treesit-auto-install 'prompt)
   :config
   (treesit-auto-add-to-auto-mode-alist 'all)
   (global-treesit-auto-mode))
+
+;;; color themes
 
 (use-package zenburn-theme
   :config
@@ -370,6 +374,8 @@ Start `ielm' if it's not already running."
   (dolist (theme custom-enabled-themes)
     (disable-theme theme))
   (message "Themes nuked"))
+
+;;; general purpose utilities
 
 (use-package diminish
   :config
@@ -459,129 +465,121 @@ Start `ielm' if it's not already running."
 ;;   :ensure t
 ;;   :bind (("C-z" . evil-local-mode)))
 
-(use-package inf-ruby
+(use-package hl-todo
   :config
-  (add-hook 'ruby-mode-hook #'inf-ruby-minor-mode))
+  (setq hl-todo-highlight-punctuation ":")
+  (global-hl-todo-mode +1))
 
-(use-package ruby-mode
-  :config
-  (setq ruby-insert-encoding-magic-comment nil)
-  (add-hook 'ruby-mode-hook #'subword-mode))
+(use-package zop-to-char
+  :bind (("M-z" . zop-up-to-char)
+         ("M-Z" . zop-to-char)))
 
-(use-package clojure-mode
-  :config
-  ;; teach clojure-mode about some macros that I use on projects like
-  ;; nREPL and Orchard
-  (define-clojure-indent
-    (returning 1)
-    (testing-dynamic 1)
-    (testing-print 1))
-
-  (add-hook 'clojure-mode-hook #'paredit-mode)
-  (add-hook 'clojure-mode-hook #'subword-mode)
-  (add-hook 'clojure-mode-hook #'rainbow-delimiters-mode))
-
-(use-package inf-clojure
-  :config
-  (add-hook 'inf-clojure-mode-hook #'paredit-mode)
-  (add-hook 'inf-clojure-mode-hook #'rainbow-delimiters-mode))
-
-(use-package cider
-  :config
-  (setq nrepl-log-messages t)
-  (setq cider-download-java-sources t)
-  (add-hook 'cider-repl-mode-hook #'paredit-mode)
-  (add-hook 'cider-repl-mode-hook #'rainbow-delimiters-mode))
-
-(use-package flycheck-joker)
-
-(use-package elixir-mode
-  :config
-  (add-hook 'elixir-mode #'subword-mode))
-
-(use-package erlang
+(use-package flyspell
   :config
   (when (eq system-type 'windows-nt)
-    (setq erlang-root-dir "C:/Program Files/erl7.2")
-    (add-to-list 'exec-path "C:/Program Files/erl7.2/bin")))
+    (add-to-list 'exec-path "C:/Program Files (x86)/Aspell/bin/"))
+  (setq ispell-program-name "aspell" ; use aspell instead of ispell
+        ispell-extra-args '("--sug-mode=ultra"))
+  (add-hook 'text-mode-hook #'flyspell-mode)
+  (add-hook 'prog-mode-hook #'flyspell-prog-mode))
 
-(use-package haskell-mode
+(use-package flycheck
   :config
-  (add-hook 'haskell-mode-hook #'subword-mode)
-  (add-hook 'haskell-mode-hook #'interactive-haskell-mode)
-  (add-hook 'haskell-mode-hook #'haskell-doc-mode))
+  (add-hook 'after-init-hook #'global-flycheck-mode))
 
-(use-package rust-mode)
-
-(use-package eglot)
-
-;;;; OCaml support
-
-(use-package tuareg
-  :mode (("\\.ocamlinit\\'" . tuareg-mode)))
-
-(use-package dune)
-
-;; Merlin configuration
-(use-package merlin
+(use-package flycheck-eldev
   :config
-  (add-hook 'tuareg-mode-hook #'merlin-mode)
-  ;; (add-hook 'merlin-mode-hook #'company-mode)
-  ;; we're using flycheck instead
-  (setq merlin-error-after-save nil))
+  (setq flycheck-eldev-whitelist
+        '("~/projects/cider"
+          "~/projects/projectile")))
 
-(use-package merlin-eldoc
-  :hook ((tuareg-mode) . merlin-eldoc-setup))
-
-;; This uses Merlin internally
-(use-package flycheck-ocaml
+(use-package super-save
   :config
-  (flycheck-ocaml-setup))
+  ;; add integration with ace-window
+  (add-to-list 'super-save-triggers 'ace-window)
+  (super-save-mode +1)
+  (diminish 'super-save-mode))
 
-;; utop configuration
-(use-package utop
+(use-package crux
+  :bind (("C-c o" . crux-open-with)
+         ("M-o" . crux-smart-open-line)
+         ("C-c n" . crux-cleanup-buffer-or-region)
+         ("C-c f" . crux-recentf-find-file)
+         ("C-M-z" . crux-indent-defun)
+         ("C-c u" . crux-view-url)
+         ("C-c e" . crux-eval-and-replace)
+         ("C-c w" . crux-swap-windows)
+         ("C-c D" . crux-delete-file-and-buffer)
+         ("C-c r" . crux-rename-buffer-and-file)
+         ("C-c t" . crux-visit-term-buffer)
+         ("C-c k" . crux-kill-other-buffers)
+         ("C-c TAB" . crux-indent-rigidly-and-copy-to-clipboard)
+         ("C-c I" . crux-find-user-init-file)
+         ("C-c S" . crux-find-shell-init-file)
+         ("s-r" . crux-recentf-find-file)
+         ("s-j" . crux-top-join-line)
+         ("C-^" . crux-top-join-line)
+         ("s-k" . crux-kill-whole-line)
+         ("C-<backspace>" . crux-kill-line-backwards)
+         ("s-o" . crux-smart-open-line-above)
+         ([remap move-beginning-of-line] . crux-move-beginning-of-line)
+         ([(shift return)] . crux-smart-open-line)
+         ([(control shift return)] . crux-smart-open-line-above)
+         ([remap kill-whole-line] . crux-kill-whole-line)
+         ("C-c s" . crux-ispell-word-then-abbrev)))
+
+(use-package diff-hl
   :config
-  (add-hook 'tuareg-mode-hook #'utop-minor-mode))
+  (global-diff-hl-mode +1)
+  (add-hook 'dired-mode-hook 'diff-hl-dired-mode)
+  (add-hook 'magit-post-refresh-hook 'diff-hl-magit-post-refresh))
 
-;;;; Markup languages support
-
-(use-package web-mode
-  :mode (("\\.html?\\'" . web-mode)
-         ("\\.erb\\'" . web-mode)
-         ("\\.hbs\\'" . web-mode))
-  :custom
-  (web-mode-markup-indent-offset 2)
-  (web-mode-css-indent-offset 2)
-  (web-mode-code-indent-offset 2))
-
-(use-package markdown-mode
-  :mode (("\\.md\\'" . gfm-mode)
-         ("\\.markdown\\'" . gfm-mode))
+(use-package which-key
   :config
-  (setq markdown-fontify-code-blocks-natively t)
-  :preface
-  (defun jekyll-insert-image-url ()
-    (interactive)
-    (let* ((files (directory-files "../assets/images"))
-           (selected-file (completing-read "Select image: " files nil t)))
-      (insert (format "![%s](/assets/images/%s)" selected-file selected-file))))
+  (which-key-mode +1)
+  (diminish 'which-key-mode))
 
-  (defun jekyll-insert-post-url ()
-    (interactive)
-    (let* ((project-root (projectile-project-root))
-           (posts-dir (expand-file-name "_posts" project-root))
-           (default-directory posts-dir))
-      (let* ((files (remove "." (mapcar #'file-name-sans-extension (directory-files "."))))
-             (selected-file (completing-read "Select article: " files nil t)))
-        (insert (format "{%% post_url %s %%}" selected-file))))))
+(use-package undo-tree
+  :config
+  ;; autosave the undo-tree history
+  (setq undo-tree-history-directory-alist
+        `((".*" . ,temporary-file-directory)))
+  (setq undo-tree-auto-save-history t)
+  (global-undo-tree-mode +1)
+  (diminish 'undo-tree-mode))
 
-(use-package adoc-mode
-  :mode "\\.adoc\\'")
+(use-package ace-window
+  :config
+  (global-set-key (kbd "s-w") 'ace-window)
+  (global-set-key [remap other-window] 'ace-window))
 
-(use-package yaml-mode)
+;; FIXME: Figure out why the vterm module stopped compiling properly
+;; (use-package vterm
+;;   :ensure t
+;;   :config
+;;   (setq vterm-shell "/bin/bash")
+;;   ;; macOS
+;;   (global-set-key (kbd "s-v") 'vterm)
+;;   ;; Linux
+;;   (global-set-key (kbd "C-c v") 'vterm))
 
-;; Eask is the successor of Cask
-(use-package eask-mode)
+;; super useful for demos
+(use-package keycast)
+
+(use-package gif-screencast
+  :config
+  ;; To shut up the shutter sound of `screencapture' (see `gif-screencast-command').
+  (setq gif-screencast-args '("-x"))
+  ;; Optional: Used to crop the capture to the Emacs frame.
+  (setq gif-screencast-cropping-program "mogrify")
+  ;; Optional: Required to crop captured images.
+  (setq gif-screencast-capture-format "ppm"))
+
+;; temporarily highlight changes from yanking, etc
+(use-package volatile-highlights
+  :config
+  (volatile-highlights-mode +1)
+  (diminish 'volatile-highlights-mode))
 
 ;;;;; Completion setup
 
@@ -724,121 +722,133 @@ Start `ielm' if it's not already running."
   :custom
   (dabbrev-ignored-buffer-regexps '("\\.\\(?:pdf\\|jpe?g\\|png\\)\\'")))
 
-(use-package hl-todo
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;; Programming modes
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(use-package inf-ruby
   :config
-  (setq hl-todo-highlight-punctuation ":")
-  (global-hl-todo-mode +1))
+  (add-hook 'ruby-mode-hook #'inf-ruby-minor-mode))
 
-(use-package zop-to-char
-  :bind (("M-z" . zop-up-to-char)
-         ("M-Z" . zop-to-char)))
+(use-package ruby-mode
+  :config
+  (setq ruby-insert-encoding-magic-comment nil)
+  (add-hook 'ruby-mode-hook #'subword-mode))
 
-(use-package flyspell
+(use-package clojure-mode
+  :config
+  ;; teach clojure-mode about some macros that I use on projects like
+  ;; nREPL and Orchard
+  (define-clojure-indent
+    (returning 1)
+    (testing-dynamic 1)
+    (testing-print 1))
+
+  (add-hook 'clojure-mode-hook #'paredit-mode)
+  (add-hook 'clojure-mode-hook #'subword-mode)
+  (add-hook 'clojure-mode-hook #'rainbow-delimiters-mode))
+
+(use-package inf-clojure
+  :config
+  (add-hook 'inf-clojure-mode-hook #'paredit-mode)
+  (add-hook 'inf-clojure-mode-hook #'rainbow-delimiters-mode))
+
+(use-package cider
+  :config
+  (setq nrepl-log-messages t)
+  (setq cider-download-java-sources t)
+  (add-hook 'cider-repl-mode-hook #'paredit-mode)
+  (add-hook 'cider-repl-mode-hook #'rainbow-delimiters-mode))
+
+(use-package flycheck-joker)
+
+(use-package elixir-mode
+  :config
+  (add-hook 'elixir-mode #'subword-mode))
+
+(use-package erlang
   :config
   (when (eq system-type 'windows-nt)
-    (add-to-list 'exec-path "C:/Program Files (x86)/Aspell/bin/"))
-  (setq ispell-program-name "aspell" ; use aspell instead of ispell
-        ispell-extra-args '("--sug-mode=ultra"))
-  (add-hook 'text-mode-hook #'flyspell-mode)
-  (add-hook 'prog-mode-hook #'flyspell-prog-mode))
+    (setq erlang-root-dir "C:/Program Files/erl7.2")
+    (add-to-list 'exec-path "C:/Program Files/erl7.2/bin")))
 
-(use-package flycheck
+(use-package haskell-mode
   :config
-  (add-hook 'after-init-hook #'global-flycheck-mode))
+  (add-hook 'haskell-mode-hook #'subword-mode)
+  (add-hook 'haskell-mode-hook #'interactive-haskell-mode)
+  (add-hook 'haskell-mode-hook #'haskell-doc-mode))
 
-(use-package flycheck-eldev
+(use-package rust-mode)
+
+(use-package eglot)
+
+;;;; OCaml support
+
+(use-package tuareg
+  :mode (("\\.ocamlinit\\'" . tuareg-mode)))
+
+(use-package dune)
+
+;; Merlin configuration
+(use-package merlin
   :config
-  (setq flycheck-eldev-whitelist
-        '("~/projects/cider"
-          "~/projects/projectile")))
+  (add-hook 'tuareg-mode-hook #'merlin-mode)
+  ;; (add-hook 'merlin-mode-hook #'company-mode)
+  ;; we're using flycheck instead
+  (setq merlin-error-after-save nil))
 
-(use-package super-save
+(use-package merlin-eldoc
+  :hook ((tuareg-mode) . merlin-eldoc-setup))
+
+;; This uses Merlin internally
+(use-package flycheck-ocaml
   :config
-  ;; add integration with ace-window
-  (add-to-list 'super-save-triggers 'ace-window)
-  (super-save-mode +1)
-  (diminish 'super-save-mode))
+  (flycheck-ocaml-setup))
 
-(use-package crux
-  :bind (("C-c o" . crux-open-with)
-         ("M-o" . crux-smart-open-line)
-         ("C-c n" . crux-cleanup-buffer-or-region)
-         ("C-c f" . crux-recentf-find-file)
-         ("C-M-z" . crux-indent-defun)
-         ("C-c u" . crux-view-url)
-         ("C-c e" . crux-eval-and-replace)
-         ("C-c w" . crux-swap-windows)
-         ("C-c D" . crux-delete-file-and-buffer)
-         ("C-c r" . crux-rename-buffer-and-file)
-         ("C-c t" . crux-visit-term-buffer)
-         ("C-c k" . crux-kill-other-buffers)
-         ("C-c TAB" . crux-indent-rigidly-and-copy-to-clipboard)
-         ("C-c I" . crux-find-user-init-file)
-         ("C-c S" . crux-find-shell-init-file)
-         ("s-r" . crux-recentf-find-file)
-         ("s-j" . crux-top-join-line)
-         ("C-^" . crux-top-join-line)
-         ("s-k" . crux-kill-whole-line)
-         ("C-<backspace>" . crux-kill-line-backwards)
-         ("s-o" . crux-smart-open-line-above)
-         ([remap move-beginning-of-line] . crux-move-beginning-of-line)
-         ([(shift return)] . crux-smart-open-line)
-         ([(control shift return)] . crux-smart-open-line-above)
-         ([remap kill-whole-line] . crux-kill-whole-line)
-         ("C-c s" . crux-ispell-word-then-abbrev)))
-
-(use-package diff-hl
+;; utop configuration
+(use-package utop
   :config
-  (global-diff-hl-mode +1)
-  (add-hook 'dired-mode-hook 'diff-hl-dired-mode)
-  (add-hook 'magit-post-refresh-hook 'diff-hl-magit-post-refresh))
+  (add-hook 'tuareg-mode-hook #'utop-minor-mode))
 
-(use-package which-key
+;;;; Markup languages support
+
+(use-package web-mode
+  :mode (("\\.html?\\'" . web-mode)
+         ("\\.erb\\'" . web-mode)
+         ("\\.hbs\\'" . web-mode))
+  :custom
+  (web-mode-markup-indent-offset 2)
+  (web-mode-css-indent-offset 2)
+  (web-mode-code-indent-offset 2))
+
+(use-package markdown-mode
+  :mode (("\\.md\\'" . gfm-mode)
+         ("\\.markdown\\'" . gfm-mode))
   :config
-  (which-key-mode +1)
-  (diminish 'which-key-mode))
+  (setq markdown-fontify-code-blocks-natively t)
+  :preface
+  (defun jekyll-insert-image-url ()
+    (interactive)
+    (let* ((files (directory-files "../assets/images"))
+           (selected-file (completing-read "Select image: " files nil t)))
+      (insert (format "![%s](/assets/images/%s)" selected-file selected-file))))
 
-(use-package undo-tree
-  :config
-  ;; autosave the undo-tree history
-  (setq undo-tree-history-directory-alist
-        `((".*" . ,temporary-file-directory)))
-  (setq undo-tree-auto-save-history t)
-  (global-undo-tree-mode +1)
-  (diminish 'undo-tree-mode))
+  (defun jekyll-insert-post-url ()
+    (interactive)
+    (let* ((project-root (projectile-project-root))
+           (posts-dir (expand-file-name "_posts" project-root))
+           (default-directory posts-dir))
+      (let* ((files (remove "." (mapcar #'file-name-sans-extension (directory-files "."))))
+             (selected-file (completing-read "Select article: " files nil t)))
+        (insert (format "{%% post_url %s %%}" selected-file))))))
 
-(use-package ace-window
-  :config
-  (global-set-key (kbd "s-w") 'ace-window)
-  (global-set-key [remap other-window] 'ace-window))
+(use-package adoc-mode
+  :mode "\\.adoc\\'")
 
-;; FIXME: Figure out why the vterm module stopped compiling properly
-;; (use-package vterm
-;;   :ensure t
-;;   :config
-;;   (setq vterm-shell "/bin/bash")
-;;   ;; macOS
-;;   (global-set-key (kbd "s-v") 'vterm)
-;;   ;; Linux
-;;   (global-set-key (kbd "C-c v") 'vterm))
+(use-package yaml-mode)
 
-;; super useful for demos
-(use-package keycast)
-
-(use-package gif-screencast
-  :config
-  ;; To shut up the shutter sound of `screencapture' (see `gif-screencast-command').
-  (setq gif-screencast-args '("-x"))
-  ;; Optional: Used to crop the capture to the Emacs frame.
-  (setq gif-screencast-cropping-program "mogrify")
-  ;; Optional: Required to crop captured images.
-  (setq gif-screencast-capture-format "ppm"))
-
-;; temporarily highlight changes from yanking, etc
-(use-package volatile-highlights
-  :config
-  (volatile-highlights-mode +1)
-  (diminish 'volatile-highlights-mode))
+;; Eask is the successor of Cask
+(use-package eask-mode)
 
 ;; WSL-specific setup
 (when (and (eq system-type 'gnu/linux)
