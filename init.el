@@ -585,8 +585,6 @@ Start `ielm' if it's not already running."
 
 (use-package yaml-mode)
 
-(use-package cask-mode)
-
 ;; Eask is the successor of Cask
 (use-package eask-mode)
 
