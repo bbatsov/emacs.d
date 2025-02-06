@@ -298,11 +298,6 @@
         recentf-auto-cleanup 'never)
   (recentf-mode +1))
 
-(use-package windmove
-  :config
-  ;; use shift + arrow keys to switch between visible buffers
-  (windmove-default-keybindings))
-
 (use-package dired
   :ensure nil
   :config
