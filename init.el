@@ -678,6 +678,7 @@ Start `ielm' if it's not already running."
          ("M-g k" . consult-global-mark)
          ("M-g i" . consult-imenu)
          ("M-g I" . consult-imenu-multi)
+         ("s-i" . consult-imenu)
          ;; M-s bindings (search-map)
          ("M-s f" . consult-find)
          ("M-s F" . consult-locate)
@@ -745,11 +746,6 @@ Start `ielm' if it's not already running."
 (use-package zop-to-char
   :bind (("M-z" . zop-up-to-char)
          ("M-Z" . zop-to-char)))
-
-;; TODO: can be removed in favor of consult
-(use-package imenu-anywhere
-  :bind (("C-c i" . imenu-anywhere)
-         ("s-i" . imenu-anywhere)))
 
 (use-package flyspell
   :config
