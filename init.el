@@ -200,6 +200,8 @@
 
 (add-to-list 'find-file-not-found-functions #'er-auto-create-missing-dirs)
 
+;;; use-package setup
+
 (unless (package-installed-p 'use-package)
   (package-install 'use-package))
 
@@ -334,6 +336,7 @@
     "Switch to default `ielm' buffer.
 Start `ielm' if it's not already running."
     (interactive)
+    (require 'crux)
     (crux-start-or-switch-to 'ielm "*ielm*"))
 
   (add-hook 'emacs-lisp-mode-hook #'rainbow-delimiters-mode)
@@ -346,6 +349,13 @@ Start `ielm' if it's not already running."
   (add-hook 'ielm-mode-hook #'rainbow-delimiters-mode))
 
 ;;; third-party packages
+(use-package treesit-auto
+  :custom
+  (treesit-auto-install 'prompt)
+  :config
+  (treesit-auto-add-to-auto-mode-alist 'all)
+  (global-treesit-auto-mode))
+
 (use-package zenburn-theme
   :config
   ;(load-theme 'zenburn t)
@@ -356,6 +366,7 @@ Start `ielm' if it's not already running."
   ;; or 'latte, 'macchiato, or 'mocha
   (setq catppuccin-flavor 'macchiato)
   (load-theme 'catppuccin t)
+  (set-face-attribute 'font-lock-doc-face nil :foreground (catppuccin-color 'green))
   )
 
 (defun nuke-loaded-themes ()
@@ -578,6 +589,8 @@ Start `ielm' if it's not already running."
 
 ;; Eask is the successor of Cask
 (use-package eask-mode)
+
+;;;;; Completion setup
 
 ;; Enable rich annotations using the Marginalia package
 (use-package marginalia
