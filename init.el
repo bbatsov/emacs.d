@@ -346,6 +346,7 @@
   ;; or 'latte, 'macchiato, or 'mocha
   (setq catppuccin-flavor 'macchiato)
   (load-theme 'catppuccin t)
+  ;; by default the theme uses the same face as for comments, which is wrong IMO
   (set-face-attribute 'font-lock-doc-face nil :foreground (catppuccin-color 'green))
   )
 
