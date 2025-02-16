@@ -818,6 +818,7 @@ Start `ielm' if it's not already running."
 
 (use-package web-mode
   :mode (("\\.html?\\'" . web-mode)
+         ("\\.ejs\\'" . web-mode)
          ("\\.erb\\'" . web-mode)
          ("\\.hbs\\'" . web-mode))
   :custom
