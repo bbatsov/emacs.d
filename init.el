@@ -443,9 +443,16 @@
   (add-hook 'prog-mode-hook #'rainbow-mode)
   (diminish 'rainbow-mode))
 
-;; (use-package evil
-;;   :ensure t
-;;   :bind (("C-z" . evil-local-mode)))
+(use-package evil
+  :config
+  (evil-set-leader 'normal (kbd "SPC"))
+  (evil-define-key 'normal 'global (kbd "<leader>ff") 'projectile-find-file)
+  (evil-define-key 'normal 'global (kbd "<leader>fd") 'projectile-find-dir)
+
+  (evil-define-key 'normal 'global (kbd "<leader>pp") 'projectile-switch-project)
+  (evil-define-key 'normal 'global (kbd "<leader>pd") 'projectile-discover-projects-in-search-path)
+  ;(evil-mode +1)
+  :bind (("s-z" . evil-local-mode)))
 
 (use-package hl-todo
   :config
