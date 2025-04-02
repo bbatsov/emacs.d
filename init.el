@@ -715,6 +715,19 @@
 ;;;;; Programming modes
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
+(use-package copilot
+  :vc (:url "https://github.com/copilot-emacs/copilot.el"
+            :rev :newest
+            :branch "main")
+  :config
+  (defun boz-copilot-tab ()
+    "Use Copilot for completion if available, otherwise fallback to indent."
+    (interactive)
+    (or (copilot-accept-completion)
+        (indent-for-tab-command)))
+
+  (define-key copilot-mode-map (kbd "<tab>") #'boz-copilot-tab))
+
 (use-package elisp-mode
   :ensure nil ; not a real package
   :config
