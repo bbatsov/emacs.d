@@ -806,33 +806,49 @@ Start `ielm' if it's not already running."
 
 (use-package rust-mode)
 
+(use-package fsharp-mode
+  :defer t)
+
+(use-package eglot-fsharp
+  :after fsharp-mode
+  :config
+  (add-hook 'fsharp-mode-hook #'eglot-ensure))
+
+
 ;;;; OCaml support
 
-(use-package tuareg
-  :mode (("\\.ocamlinit\\'" . tuareg-mode)))
-
-(use-package dune)
-
-;; Merlin configuration
-(use-package merlin
+(use-package neocaml
+  :vc (:url "https://github.com/bbatsov/neocaml" :rev :newest)
   :config
-  (add-hook 'tuareg-mode-hook #'merlin-mode)
-  ;; (add-hook 'merlin-mode-hook #'company-mode)
-  ;; we're using flycheck instead
-  (setq merlin-error-after-save nil))
+  (add-to-list 'eglot-server-programs '((neocaml-mode :language-id "ocaml") . ("ocamllsp")))
+  (add-hook 'neocaml-mode-hook #'neocaml-repl-minor-mode)
+  (setq neocaml--debug 'font-lock))
 
-(use-package merlin-eldoc
-  :hook ((tuareg-mode) . merlin-eldoc-setup))
+;; (use-package tuareg
+;;   :mode (("\\.ocamlinit\\'" . tuareg-mode)))
 
-;; This uses Merlin internally
-(use-package flycheck-ocaml
-  :config
-  (flycheck-ocaml-setup))
+;; (use-package dune)
 
-;; utop configuration
-(use-package utop
-  :config
-  (add-hook 'tuareg-mode-hook #'utop-minor-mode))
+;; ;; Merlin configuration
+;; (use-package merlin
+;;   :config
+;;   (add-hook 'tuareg-mode-hook #'merlin-mode)
+;;   ;; (add-hook 'merlin-mode-hook #'company-mode)
+;;   ;; we're using flycheck instead
+;;   (setq merlin-error-after-save nil))
+
+;; (use-package merlin-eldoc
+;;   :hook ((tuareg-mode) . merlin-eldoc-setup))
+
+;; ;; This uses Merlin internally
+;; (use-package flycheck-ocaml
+;;   :config
+;;   (flycheck-ocaml-setup))
+
+;; ;; utop configuration
+;; (use-package utop
+;;   :config
+;;   (add-hook 'tuareg-mode-hook #'utop-minor-mode))
 
 ;;;; Markup languages support
 
