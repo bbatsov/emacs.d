@@ -867,6 +867,7 @@ Start `ielm' if it's not already running."
          ("\\.markdown\\'" . gfm-mode))
   :config
   (setq markdown-fontify-code-blocks-natively t)
+  (setq markdown-spaces-after-code-fence 0)
   :preface
   (defun jekyll-insert-image-url ()
     (interactive)
