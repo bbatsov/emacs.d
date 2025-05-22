@@ -210,6 +210,9 @@
 (setq use-package-always-ensure t)
 (setq use-package-verbose t)
 
+;; seems using the built-in transient can mess up magit
+(use-package transient)
+
 ;;; built-in packages
 (use-package paren
   :config
@@ -716,17 +719,13 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (use-package copilot
-  :vc (:url "https://github.com/copilot-emacs/copilot.el"
-            :rev :newest
-            :branch "main")
-  :config
-  (defun boz-copilot-tab ()
-    "Use Copilot for completion if available, otherwise fallback to indent."
-    (interactive)
-    (or (copilot-accept-completion)
-        (indent-for-tab-command)))
-
-  (define-key copilot-mode-map (kbd "<tab>") #'boz-copilot-tab))
+  :bind (:map copilot-completion-map
+              ("<tab>" . 'copilot-accept-completion)
+              ("TAB" . 'copilot-accept-completion)
+              ("C-TAB" . 'copilot-accept-completion-by-word)
+              ("C-<tab>" . 'copilot-accept-completion-by-word)
+              ("C-n" . 'copilot-next-completion)
+              ("C-p" . 'copilot-previous-completion)))
 
 (use-package elisp-mode
   :ensure nil ; not a real package
