@@ -200,6 +200,24 @@
 
 (add-to-list 'find-file-not-found-functions #'er-auto-create-missing-dirs)
 
+;; make keyboard-quite a bit smarter
+(define-advice keyboard-quit
+    (:around (quit) quit-current-context)
+  "Quit the current context.
+
+When there is an active minibuffer and we are not inside it close
+it.  When we are inside the minibuffer use the regular
+`minibuffer-keyboard-quit' which quits any active region before
+exiting.  When there is no minibuffer `keyboard-quit' unless we
+are defining or executing a macro."
+  (if (active-minibuffer-window)
+      (if (minibufferp)
+          (minibuffer-keyboard-quit)
+        (abort-recursive-edit))
+    (unless (or defining-kbd-macro
+                executing-kbd-macro)
+      (funcall-interactively quit))))
+
 ;;; use-package setup
 
 (unless (package-installed-p 'use-package)
