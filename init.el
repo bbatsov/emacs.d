@@ -200,7 +200,7 @@
 
 (add-to-list 'find-file-not-found-functions #'er-auto-create-missing-dirs)
 
-;; make keyboard-quite a bit smarter
+;; make keyboard-quit a bit smarter
 (define-advice keyboard-quit
     (:around (quit) quit-current-context)
   "Quit the current context.
