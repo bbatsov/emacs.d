@@ -417,8 +417,11 @@ are defining or executing a macro."
   (global-set-key (kbd "C-c p") 'projectile-command-map)
   (projectile-mode +1))
 
-(use-package expand-region
-  :bind ("C-=" . er/expand-region))
+;; expand-region, tree-sitter edition
+(use-package expreg
+  :ensure t
+  :bind (("C-=" . expreg-expand)
+         ("C--" . expreg-contract)))
 
 (use-package elisp-slime-nav
   :config
