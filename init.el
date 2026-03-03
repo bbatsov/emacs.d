@@ -901,8 +901,7 @@ Start `ielm' if it's not already running."
              (selected-file (completing-read "Select article: " files nil t)))
         (insert (format "{%% post_url %s %%}" selected-file))))))
 
-(use-package adoc-mode
-  :mode "\\.adoc\\'")
+(use-package asciidoc-mode)
 
 ;; TODO: Consider removing this, now that there's a built yaml-ts-mode
 ;; or replacing with yaml-pro
