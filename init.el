@@ -839,7 +839,7 @@ Start `ielm' if it's not already running."
   :config
   (add-to-list 'eglot-server-programs '((neocaml-mode :language-id "ocaml") . ("ocamllsp")))
   (add-hook 'neocaml-mode-hook #'neocaml-repl-minor-mode)
-  (setq neocaml--debug 'font-lock))
+  (setq neocaml--debug nil))
 
 ;; (use-package tuareg
 ;;   :mode (("\\.ocamlinit\\'" . tuareg-mode)))
