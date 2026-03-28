@@ -366,10 +366,15 @@ are defining or executing a macro."
   :config
   ;; or 'latte, 'macchiato, or 'mocha
   (setq catppuccin-flavor 'macchiato)
-  (load-theme 'catppuccin t)
+  ;(load-theme 'catppuccin t)
   ;; by default the theme uses the same face as for comments, which is wrong IMO
   (set-face-attribute 'font-lock-doc-face nil :foreground (catppuccin-color 'green))
   )
+
+(use-package tokyo-themes
+  :vc (:url "https://github.com/bbatsov/emacs-tokyo-themes" :rev :newest)
+  :config
+  (load-theme 'tokyo-storm t))
 
 (defun nuke-loaded-themes ()
   "Nuke all loaded themes."
