@@ -107,7 +107,7 @@
 (global-display-line-numbers-mode 1)
 
 ;; enable y/n answers
-(fset 'yes-or-no-p 'y-or-n-p)
+(setq use-short-answers t)
 
 ;; maximize the initial frame automatically
 (add-to-list 'initial-frame-alist '(fullscreen . maximized))
@@ -167,9 +167,6 @@
 
 ;; replace buffer-menu with ibuffer
 (global-set-key (kbd "C-x C-b") #'ibuffer)
-
-;; Start proced in a similar manner to dired
-(global-set-key (kbd "C-x p") #'proced)
 
 ;; align code in a pretty way
 (global-set-key (kbd "C-x \\") #'align-regexp)
@@ -367,8 +364,6 @@ are defining or executing a macro."
   ;; or 'latte, 'macchiato, or 'mocha
   (setq catppuccin-flavor 'macchiato)
   ;(load-theme 'catppuccin t)
-  ;; by default the theme uses the same face as for comments, which is wrong IMO
-  (set-face-attribute 'font-lock-doc-face nil :foreground (catppuccin-color 'green))
   )
 
 (use-package tokyo-themes
@@ -397,7 +392,7 @@ are defining or executing a macro."
          ("s-," . avy-goto-char)
          ("C-c ." . avy-goto-word-or-subword-1)
          ("C-c ," . avy-goto-char)
-         ("M-g f" . avy-goto-line)
+         ("M-g l" . avy-goto-line)
          ("M-g w" . avy-goto-word-or-subword-1))
   :config
   (setq avy-background t))
@@ -731,14 +726,7 @@ are defining or executing a macro."
   :init
   (global-corfu-mode))
 
-;; Use Dabbrev with Corfu!
-(use-package dabbrev
-  ;; Swap M-/ and C-M-/
-  :bind (("M-/" . dabbrev-completion)
-         ("C-M-/" . dabbrev-expand))
-  ;; Other useful Dabbrev configurations.
-  :custom
-  (dabbrev-ignored-buffer-regexps '("\\.\\(?:pdf\\|jpe?g\\|png\\)\\'")))
+
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;;; Programming modes
@@ -746,12 +734,12 @@ are defining or executing a macro."
 
 (use-package copilot
   :bind (:map copilot-completion-map
-              ("<tab>" . 'copilot-accept-completion)
-              ("TAB" . 'copilot-accept-completion)
-              ("C-TAB" . 'copilot-accept-completion-by-word)
-              ("C-<tab>" . 'copilot-accept-completion-by-word)
-              ("C-n" . 'copilot-next-completion)
-              ("C-p" . 'copilot-previous-completion)))
+              ("<tab>" . copilot-accept-completion)
+              ("TAB" . copilot-accept-completion)
+              ("C-TAB" . copilot-accept-completion-by-word)
+              ("C-<tab>" . copilot-accept-completion-by-word)
+              ("C-n" . copilot-next-completion)
+              ("C-p" . copilot-previous-completion)))
 
 (use-package elisp-mode
   :ensure nil ; not a real package
@@ -815,7 +803,7 @@ Start `ielm' if it's not already running."
 
 (use-package elixir-mode
   :config
-  (add-hook 'elixir-mode #'subword-mode))
+  (add-hook 'elixir-mode-hook #'subword-mode))
 
 (use-package erlang
   :config
@@ -831,14 +819,9 @@ Start `ielm' if it's not already running."
 
 (use-package rust-mode)
 
-(use-package fsharp-mode
-  :defer t)
-
-(use-package eglot-fsharp
-  :after fsharp-mode
-  :config
-  (add-hook 'fsharp-mode-hook #'eglot-ensure))
-
+(use-package fsharp-ts-mode
+  :defer t
+  (add-hook 'fsharp-ts-mode-hook #'eglot-ensure))
 
 ;;;; OCaml support
 
