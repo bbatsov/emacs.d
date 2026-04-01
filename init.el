@@ -793,9 +793,7 @@ Start `ielm' if it's not already running."
 
 (use-package flycheck-joker)
 
-(use-package elixir-mode
-  :config
-  (add-hook 'elixir-mode-hook #'subword-mode))
+(add-hook 'elixir-ts-mode-hook #'subword-mode)
 
 (use-package erlang
   :config
@@ -808,8 +806,6 @@ Start `ielm' if it's not already running."
   (add-hook 'haskell-mode-hook #'subword-mode)
   (add-hook 'haskell-mode-hook #'interactive-haskell-mode)
   (add-hook 'haskell-mode-hook #'haskell-doc-mode))
-
-(use-package rust-mode)
 
 (use-package fsharp-ts-mode
   :defer t
@@ -886,9 +882,6 @@ Start `ielm' if it's not already running."
 
 (use-package asciidoc-mode)
 
-;; TODO: Consider removing this, now that there's a built yaml-ts-mode
-;; or replacing with yaml-pro
-(use-package yaml-mode)
 
 ;; WSL-specific setup
 (when (and (eq system-type 'gnu/linux)
