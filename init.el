@@ -537,8 +537,7 @@ are defining or executing a macro."
 (use-package diff-hl
   :config
   (global-diff-hl-mode +1)
-  (add-hook 'dired-mode-hook 'diff-hl-dired-mode)
-  (add-hook 'magit-post-refresh-hook 'diff-hl-magit-post-refresh))
+  (add-hook 'dired-mode-hook 'diff-hl-dired-mode))
 
 (use-package which-key
   :config
