@@ -215,13 +215,6 @@ are defining or executing a macro."
                 executing-kbd-macro)
       (funcall-interactively quit))))
 
-;;; use-package setup
-
-(unless (package-installed-p 'use-package)
-  (package-install 'use-package))
-
-(require 'use-package)
-
 (setq use-package-always-ensure t)
 (setq use-package-verbose t)
 
