@@ -397,8 +397,6 @@ are defining or executing a macro."
   :bind (("C-c g" . git-timemachine)
          ("s-g" . git-timemachine)))
 
-(use-package ag)
-
 (use-package projectile
   :init
   (setq projectile-project-search-path '("~/projects/" "~/work/" "~/playground"))
