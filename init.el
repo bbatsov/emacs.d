@@ -289,7 +289,7 @@ are defining or executing a macro."
   :config
   (setq save-place-file (expand-file-name "saveplace" bozhidar-savefile-dir))
   ;; activate it for all buffers
-  (setq-default save-place t))
+  (save-place-mode +1))
 
 (use-package savehist
   :config
