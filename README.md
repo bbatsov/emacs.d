@@ -6,6 +6,8 @@ people to use it directly and I won't be accepting pull requests
 
 I'm putting it here mostly as a source of inspiration. :-)
 
+The config usually targets the latest stable Emacs release (currently Emacs 30).
+
 In the unlikely event that you'd like to use my setup directly you can do so like this:
 
 ``` shellsession
