@@ -425,6 +425,7 @@ are defining or executing a macro."
 (use-package paredit
   :config
   (define-key paredit-mode-map (kbd "RET") nil)
+  (add-hook 'paredit-mode-hook (lambda () (electric-pair-local-mode -1)))
   (add-hook 'emacs-lisp-mode-hook #'paredit-mode)
   ;; enable in the *scratch* buffer
   (add-hook 'lisp-interaction-mode-hook #'paredit-mode)
