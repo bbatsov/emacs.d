@@ -794,6 +794,7 @@ Start `ielm' if it's not already running."
 
 (use-package fsharp-ts-mode
   :defer t
+  :config
   (add-hook 'fsharp-ts-mode-hook #'eglot-ensure))
 
 ;;;; OCaml support
