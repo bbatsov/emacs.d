@@ -348,16 +348,10 @@ are defining or executing a macro."
 ;;; color themes
 
 (use-package zenburn-theme
-  :config
-  ;(load-theme 'zenburn t)
-  )
+  :defer t)
 
 (use-package catppuccin-theme
-  :config
-  ;; or 'latte, 'macchiato, or 'mocha
-  (setq catppuccin-flavor 'macchiato)
-  ;(load-theme 'catppuccin t)
-  )
+  :defer t)
 
 (use-package tokyo-themes
   :vc (:url "https://github.com/bbatsov/emacs-tokyo-themes" :rev :newest)
