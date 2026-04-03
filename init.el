@@ -93,6 +93,9 @@
 ;; repeat-mode - press the last key to repeat commands without the prefix
 (repeat-mode 1)
 
+;; wrapped lines respect the indentation of the original line
+(global-visual-wrap-prefix-mode 1)
+
 ;; let's pick a nice font
 (cond
  ((find-font (font-spec :name "Cascadia Code"))
