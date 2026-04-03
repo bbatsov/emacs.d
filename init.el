@@ -96,6 +96,9 @@
 ;; wrapped lines respect the indentation of the original line
 (global-visual-wrap-prefix-mode 1)
 
+;; live visual feedback when writing regexps in the minibuffer
+(minibuffer-regexp-mode 1)
+
 ;; let's pick a nice font
 (cond
  ((find-font (font-spec :name "Cascadia Code"))
