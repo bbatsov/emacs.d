@@ -230,7 +230,9 @@ are defining or executing a macro."
 ;;; built-in packages
 (use-package paren
   :config
-  (show-paren-mode +1))
+  (show-paren-mode +1)
+  ;; show matching paren context when it's offscreen
+  (setq show-paren-context-when-offscreen 'overlay))
 
 (use-package elec-pair
   :config
