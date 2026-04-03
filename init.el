@@ -38,7 +38,7 @@
 ;; keep the installed packages in .emacs.d
 (setq package-user-dir (expand-file-name "elpa" user-emacs-directory))
 (package-initialize)
-;; update the package metadata is the local cache is missing
+;; update the package metadata if the local cache is missing
 (unless package-archive-contents
   (package-refresh-contents))
 
@@ -360,6 +360,7 @@ are defining or executing a macro."
 
 ;;; general purpose utilities
 
+;; diminish - hide minor modes from the mode line
 (use-package diminish
   :config
   (diminish 'abbrev-mode)
@@ -367,6 +368,7 @@ are defining or executing a macro."
   (diminish 'flyspell-prog-mode)
   (diminish 'eldoc-mode))
 
+;; avy - jump to visible text using a char-based decision tree
 (use-package avy
   :bind (("s-." . avy-goto-word-or-subword-1)
          ("s-," . avy-goto-char)
@@ -380,6 +382,7 @@ are defining or executing a macro."
 (use-package magit
   :bind (("C-x g" . magit-status)))
 
+;; git-timemachine - step through git revisions of a file
 (use-package git-timemachine
   :bind (("C-c g" . git-timemachine)
          ("s-g" . git-timemachine)))
@@ -401,14 +404,17 @@ are defining or executing a macro."
   :bind (("C-=" . expreg-expand)
          ("C--" . expreg-contract)))
 
+;; elisp-slime-nav - M-. / M-, navigation for Elisp definitions
 (use-package elisp-slime-nav
   :config
   (dolist (hook '(emacs-lisp-mode-hook ielm-mode-hook))
     (add-hook hook #'elisp-slime-nav-mode))
   (diminish 'elisp-slime-nav-mode))
 
+;; paredit - structural editing for s-expressions
 (use-package paredit
   :config
+  ;; paredit steals RET for auto-newline-and-indent, which is annoying
   (define-key paredit-mode-map (kbd "RET") nil)
   (add-hook 'paredit-mode-hook (lambda () (electric-pair-local-mode -1)))
   (add-hook 'emacs-lisp-mode-hook #'paredit-mode)
@@ -419,28 +425,35 @@ are defining or executing a macro."
   (add-hook 'eval-expression-minibuffer-setup-hook #'paredit-mode)
   (diminish 'paredit-mode "()"))
 
+;; anzu - show total search matches and current position in mode line
 (use-package anzu
   :bind (("M-%" . anzu-query-replace)
          ("C-M-%" . anzu-query-replace-regexp))
   :config
   (global-anzu-mode))
 
+;; easy-kill - enhanced M-w with easy selection of nearby things
 (use-package easy-kill
   :config
   (global-set-key [remap kill-ring-save] 'easy-kill))
 
+;; exec-path-from-shell - sync PATH and env vars from the shell on macOS
 (use-package exec-path-from-shell
   :config
+  ;; only needed for GUI Emacs on macOS, where the shell env isn't inherited
   (when (memq window-system '(mac ns))
     (exec-path-from-shell-initialize)))
 
+;; move-text - move current line or region up/down
 (use-package move-text
   :bind
   (([(meta shift up)] . move-text-up)
    ([(meta shift down)] . move-text-down)))
 
+;; rainbow-delimiters - colorize nested parentheses by depth
 (use-package rainbow-delimiters)
 
+;; rainbow-mode - colorize color strings like #ff0000 and rgb(...)
 (use-package rainbow-mode
   :config
   (add-hook 'prog-mode-hook #'rainbow-mode)
@@ -457,11 +470,13 @@ are defining or executing a macro."
   ;(evil-mode +1)
   :bind (("s-z" . evil-local-mode)))
 
+;; hl-todo - highlight TODO, FIXME, etc. in comments
 (use-package hl-todo
   :config
   (setq hl-todo-highlight-punctuation ":")
   (global-hl-todo-mode +1))
 
+;; zop-to-char - visual zap-to-char with preview
 (use-package zop-to-char
   :bind (("M-z" . zop-up-to-char)
          ("M-Z" . zop-to-char)))
@@ -471,6 +486,7 @@ are defining or executing a macro."
   (when (eq system-type 'windows-nt)
     (add-to-list 'exec-path "C:/Program Files (x86)/Aspell/bin/"))
   (setq ispell-program-name "aspell" ; use aspell instead of ispell
+        ;; ultra mode trades suggestion quality for speed
         ispell-extra-args '("--sug-mode=ultra"))
   (add-hook 'text-mode-hook #'flyspell-mode)
   (add-hook 'prog-mode-hook #'flyspell-prog-mode))
@@ -479,12 +495,14 @@ are defining or executing a macro."
   :config
   (add-hook 'after-init-hook #'global-flycheck-mode))
 
+;; flycheck-eldev - flycheck support for Eldev-based Emacs Lisp projects
 (use-package flycheck-eldev
   :config
   (setq flycheck-eldev-whitelist
         '("~/projects/cider"
           "~/projects/projectile")))
 
+;; super-save - auto-save buffers when they lose focus or you switch away
 (use-package super-save
   :config
   ;; add integration with ace-window
@@ -492,6 +510,7 @@ are defining or executing a macro."
   (super-save-mode +1)
   (diminish 'super-save-mode))
 
+;; crux - a collection of useful interactive commands
 (use-package crux
   :bind (("C-c o" . crux-open-with)
          ("M-o" . crux-smart-open-line)
@@ -520,16 +539,19 @@ are defining or executing a macro."
          ([remap kill-whole-line] . crux-kill-whole-line)
          ("C-c s" . crux-ispell-word-then-abbrev)))
 
+;; diff-hl - highlight uncommitted changes in the fringe
 (use-package diff-hl
   :config
   (global-diff-hl-mode +1)
   (add-hook 'dired-mode-hook 'diff-hl-dired-mode))
 
+;; which-key - show available keybindings in a popup
 (use-package which-key
   :config
   (which-key-mode +1)
   (diminish 'which-key-mode))
 
+;; undo-tree - visualize and navigate undo history as a tree
 (use-package undo-tree
   :config
   ;; autosave the undo-tree history
@@ -539,6 +561,7 @@ are defining or executing a macro."
   (global-undo-tree-mode +1)
   (diminish 'undo-tree-mode))
 
+;; ace-window - quickly switch between windows using number labels
 (use-package ace-window
   :config
   (global-set-key (kbd "s-w") 'ace-window)
@@ -554,9 +577,10 @@ are defining or executing a macro."
 ;;   ;; Linux
 ;;   (global-set-key (kbd "C-c v") 'vterm))
 
-;; super useful for demos
+;; keycast - display current command and its keybinding in the mode line
 (use-package keycast)
 
+;; gif-screencast - record GIF screencasts directly from Emacs
 (use-package gif-screencast
   :config
   ;; To shut up the shutter sound of `screencapture' (see `gif-screencast-command').
@@ -709,6 +733,7 @@ are defining or executing a macro."
 ;;;;; Programming modes
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
+;; copilot - GitHub Copilot integration
 (use-package copilot
   :bind (:map copilot-completion-map
               ("<tab>" . copilot-accept-completion)
@@ -742,12 +767,14 @@ Start `ielm' if it's not already running."
 
 (use-package eglot)
 
+;; inf-ruby - run a Ruby REPL inside Emacs
 (use-package inf-ruby
   :config
   (add-hook 'ruby-mode-hook #'inf-ruby-minor-mode))
 
 (use-package ruby-mode
   :config
+  ;; Ruby 2.0+ doesn't need the -*- coding: utf-8 -*- magic comment
   (setq ruby-insert-encoding-magic-comment nil)
   (add-hook 'ruby-mode-hook #'subword-mode))
 
@@ -764,18 +791,23 @@ Start `ielm' if it's not already running."
   (add-hook 'clojure-mode-hook #'subword-mode)
   (add-hook 'clojure-mode-hook #'rainbow-delimiters-mode))
 
+;; inf-clojure - basic Clojure REPL interaction (no nREPL required)
 (use-package inf-clojure
   :config
   (add-hook 'inf-clojure-mode-hook #'paredit-mode)
   (add-hook 'inf-clojure-mode-hook #'rainbow-delimiters-mode))
 
+;; cider - full-featured Clojure IDE powered by nREPL
 (use-package cider
   :config
+  ;; log nREPL messages for debugging connection issues
   (setq nrepl-log-messages t)
+  ;; auto-download Java sources for navigation/documentation
   (setq cider-download-java-sources t)
   (add-hook 'cider-repl-mode-hook #'paredit-mode)
   (add-hook 'cider-repl-mode-hook #'rainbow-delimiters-mode))
 
+;; flycheck-joker - Clojure linting via the Joker interpreter
 (use-package flycheck-joker)
 
 (add-hook 'elixir-ts-mode-hook #'subword-mode)
@@ -799,9 +831,11 @@ Start `ielm' if it's not already running."
 
 ;;;; OCaml support
 
+;; neocaml - tree-sitter based OCaml major mode
 (use-package neocaml
   :vc (:url "https://github.com/bbatsov/neocaml" :rev :newest)
   :config
+  ;; register neocaml-mode with eglot so it launches ocamllsp
   (add-to-list 'eglot-server-programs '((neocaml-mode :language-id "ocaml") . ("ocamllsp")))
   (add-hook 'neocaml-mode-hook #'neocaml-repl-minor-mode)
   (setq neocaml--debug nil))
@@ -834,6 +868,7 @@ Start `ielm' if it's not already running."
 
 ;;;; Markup languages support
 
+;; web-mode - major mode for editing web templates (ERB, EJS, Handlebars, etc.)
 (use-package web-mode
   :mode (("\\.html?\\'" . web-mode)
          ("\\.ejs\\'" . web-mode)
@@ -848,7 +883,9 @@ Start `ielm' if it's not already running."
   :mode (("\\.md\\'" . gfm-mode)
          ("\\.markdown\\'" . gfm-mode))
   :config
+  ;; syntax-highlight code inside fenced blocks
   (setq markdown-fontify-code-blocks-natively t)
+  ;; no space between ``` and the language name
   (setq markdown-spaces-after-code-fence 0)
   :preface
   (defun jekyll-insert-image-url ()
@@ -866,6 +903,7 @@ Start `ielm' if it's not already running."
              (selected-file (completing-read "Select article: " files nil t)))
         (insert (format "{%% post_url %s %%}" selected-file))))))
 
+;; asciidoc-mode - tree-sitter based AsciiDoc major mode
 (use-package asciidoc-mode)
 
 
