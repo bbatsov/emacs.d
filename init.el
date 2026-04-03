@@ -99,6 +99,9 @@
 ;; live visual feedback when writing regexps in the minibuffer
 (minibuffer-regexp-mode 1)
 
+;; highlight the current error in compilation/grep buffers
+(setq next-error-message-highlight t)
+
 ;; let's pick a nice font
 (cond
  ((find-font (font-spec :name "Cascadia Code"))
