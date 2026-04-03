@@ -87,6 +87,9 @@
 (when (fboundp 'pixel-scroll-precision-mode)
   (pixel-scroll-precision-mode t))
 
+;; repeat-mode - press the last key to repeat commands without the prefix
+(repeat-mode 1)
+
 ;; let's pick a nice font
 (cond
  ((find-font (font-spec :name "Cascadia Code"))
@@ -408,7 +411,15 @@ are defining or executing a macro."
 (use-package expreg
   :ensure t
   :bind (("C-=" . expreg-expand)
-         ("C--" . expreg-contract)))
+         ("C--" . expreg-contract))
+  :config
+  (defvar expreg-repeat-map
+    (let ((map (make-sparse-keymap)))
+      (define-key map "=" #'expreg-expand)
+      (define-key map "-" #'expreg-contract)
+      map))
+  (put 'expreg-expand 'repeat-map 'expreg-repeat-map)
+  (put 'expreg-contract 'repeat-map 'expreg-repeat-map))
 
 ;; elisp-slime-nav - M-. / M-, navigation for Elisp definitions
 (use-package elisp-slime-nav
