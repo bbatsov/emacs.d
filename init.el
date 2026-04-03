@@ -332,6 +332,9 @@ are defining or executing a macro."
   ;; current subdir, instead of the current subdir of this dired buffer
   (setq dired-dwim-target t)
 
+  ;; drag files from dired to other apps
+  (setq dired-mouse-drag-files t)
+
   ;; enable some really cool extensions like C-x C-j(dired-jump)
   (require 'dired-x))
 
