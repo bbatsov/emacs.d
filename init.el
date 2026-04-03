@@ -148,6 +148,7 @@
       `((".*" ,temporary-file-directory t)))
 
 ;; revert buffers automatically when underlying files are changed externally
+(setq auto-revert-avoid-polling t)
 (global-auto-revert-mode t)
 
 (prefer-coding-system 'utf-8)
