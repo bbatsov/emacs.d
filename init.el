@@ -326,6 +326,12 @@ are defining or executing a macro."
   ;; enable some really cool extensions like C-x C-j(dired-jump)
   (require 'dired-x))
 
+;; which-key - show available keybindings in a popup
+(use-package which-key
+  :ensure nil
+  :config
+  (which-key-mode +1))
+
 (use-package whitespace
   :init
   (dolist (hook '(prog-mode-hook text-mode-hook))
@@ -544,12 +550,6 @@ are defining or executing a macro."
   :config
   (global-diff-hl-mode +1)
   (add-hook 'dired-mode-hook 'diff-hl-dired-mode))
-
-;; which-key - show available keybindings in a popup
-(use-package which-key
-  :config
-  (which-key-mode +1)
-  (diminish 'which-key-mode))
 
 ;; undo-tree - visualize and navigate undo history as a tree
 (use-package undo-tree
