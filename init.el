@@ -791,7 +791,10 @@ Start `ielm' if it's not already running."
 ;; Eask is the successor of Cask
 (use-package eask-mode)
 
-(use-package eglot)
+(use-package eglot
+  :config
+  ;; shut down LSP server when last managed buffer is killed
+  (setq eglot-autoshutdown t))
 
 ;; inf-ruby - run a Ruby REPL inside Emacs
 (use-package inf-ruby
