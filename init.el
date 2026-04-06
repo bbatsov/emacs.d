@@ -373,10 +373,10 @@ are defining or executing a macro."
 (use-package catppuccin-theme
   :defer t)
 
-(use-package tokyo-themes
-  :vc (:url "https://github.com/bbatsov/emacs-tokyo-themes" :rev :newest)
+(use-package tokyo-night
+  :vc (:url "https://github.com/bbatsov/tokyo-night-emacs" :rev :newest)
   :config
-  (load-theme 'tokyo-storm t))
+  (load-theme 'tokyo-night-storm t))
 
 (defun nuke-loaded-themes ()
   "Nuke all loaded themes."
