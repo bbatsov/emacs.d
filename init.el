@@ -609,6 +609,10 @@ are defining or executing a macro."
   (global-undo-tree-mode +1)
   (diminish 'undo-tree-mode))
 
+;; when splitting a window, resize all windows proportionally
+;; instead of just shrinking the current one
+(setq window-combination-resize t)
+
 ;; ace-window - quickly switch between windows using number labels
 (use-package ace-window
   :config
