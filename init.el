@@ -124,6 +124,9 @@
 ;; enable y/n answers
 (setq use-short-answers t)
 
+;; automatically select help windows so you can dismiss them with 'q'
+(setq help-window-select t)
+
 ;; maximize the initial frame automatically
 (add-to-list 'initial-frame-alist '(fullscreen . maximized))
 
