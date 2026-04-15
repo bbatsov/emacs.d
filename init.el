@@ -218,6 +218,11 @@
 ;; make it possible to navigate to the C source of Emacs functions
 (setq find-function-C-source-directory "~/projects/emacs")
 
+;; don't let ffap ping random hostnames -- when point is on something
+;; that looks like a hostname, ffap would attempt a network lookup to
+;; verify it, causing annoying freezes
+(setq ffap-machine-p-known 'reject)
+
 ;; auto-create missing folders
 (defun er-auto-create-missing-dirs ()
   "Make missing parent directories automatically."
