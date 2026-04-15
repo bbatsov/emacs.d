@@ -55,6 +55,11 @@
 ;; don't pop up the *Warnings* buffer during async native compilation
 (setq native-comp-async-report-warnings-errors 'silent)
 
+;; increase the amount of data Emacs reads from subprocesses in a
+;; single chunk (default is 4KB).  This improves throughput for LSP
+;; servers and other processes that produce large output.
+(setq read-process-output-max (* 1024 1024)) ; 1MB
+
 ;; warn when opening files bigger than 100MB
 (setq large-file-warning-threshold 100000000)
 
