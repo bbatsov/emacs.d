@@ -60,6 +60,10 @@
 ;; servers and other processes that produce large output.
 (setq read-process-output-max (* 1024 1024)) ; 1MB
 
+;; defer fontification while there is input pending -- this keeps
+;; typing responsive in large/complex buffers where font-lock is slow
+(setq redisplay-skip-fontification-on-input t)
+
 ;; warn when opening files bigger than 100MB
 (setq large-file-warning-threshold 100000000)
 
