@@ -877,6 +877,13 @@ Start `ielm' if it's not already running."
   (add-hook 'cider-repl-mode-hook #'paredit-mode)
   (add-hook 'cider-repl-mode-hook #'rainbow-delimiters-mode))
 
+(use-package port
+  :vc (:url "https://github.com/clojure-emacs/port" :lisp-dir "lisp" :branch "main" :rev :newest))
+
+(use-package neat
+  :vc (:url "https://github.com/nrepl/neat" :branch "main" :rev :newest)
+  :commands (neat neat-mode))
+
 ;; flycheck-joker - Clojure linting via the Joker interpreter
 (use-package flycheck-joker)
 
