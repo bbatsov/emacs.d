@@ -393,6 +393,14 @@ are defining or executing a macro."
   ;; enable some really cool extensions like C-x C-j(dired-jump)
   (require 'dired-x))
 
+(use-package ediff
+  :ensure nil
+  :config
+  ;; keep the control panel in the same frame instead of a separate one
+  (setq ediff-window-setup-function #'ediff-setup-windows-plain)
+  ;; diff side by side, not stacked
+  (setq ediff-split-window-function #'split-window-horizontally))
+
 ;; which-key - show available keybindings in a popup
 (use-package which-key
   :ensure nil
