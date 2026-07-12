@@ -827,7 +827,17 @@ are defining or executing a macro."
   ;; This is recommended since Dabbrev can be used globally (M-/).
   ;; See also `corfu-excluded-modes'.
   :init
-  (global-corfu-mode))
+  (global-corfu-mode)
+  ;; show candidate documentation in a popup next to the completions
+  (corfu-popupinfo-mode +1))
+
+;; cape - extra completion-at-point backends to feed corfu
+(use-package cape
+  :init
+  ;; complete words from the current buffers and file names everywhere,
+  ;; in addition to whatever the major mode's capf offers
+  (add-hook 'completion-at-point-functions #'cape-dabbrev)
+  (add-hook 'completion-at-point-functions #'cape-file))
 
 
 
