@@ -790,6 +790,13 @@ are defining or executing a macro."
 (use-package embark-consult
   :hook (embark-collect-mode . consult-preview-at-point-mode))
 
+;; wgrep - edit grep/occur buffers and apply the changes to the files
+;; (press C-c C-p in a grep buffer, edit, then C-c C-e to apply)
+(use-package wgrep
+  :config
+  ;; save the affected buffers automatically after applying the edits
+  (setq wgrep-auto-save-buffer t))
+
 (use-package corfu
   ;; Optional customizations
   :custom
