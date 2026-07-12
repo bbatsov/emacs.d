@@ -221,6 +221,14 @@
 ;; instead of having to repeat the C-u prefix each time
 (setq set-mark-command-repeat-pop t)
 
+;; show the current match and the total number of matches (e.g. 3/17)
+;; in the isearch prompt
+(setq isearch-lazy-count t)
+
+;; motion commands like M-<, M-> and C-v move between matches during
+;; isearch instead of quitting the search
+(setq isearch-allow-motion t)
+
 ;; enable some commands that are disabled by default
 (put 'erase-buffer 'disabled nil)
 
