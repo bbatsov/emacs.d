@@ -429,8 +429,6 @@ are defining or executing a macro."
 (use-package diminish
   :config
   (diminish 'abbrev-mode)
-  (diminish 'flyspell-mode)
-  (diminish 'flyspell-prog-mode)
   (diminish 'eldoc-mode))
 
 ;; avy - jump to visible text using a char-based decision tree
@@ -554,15 +552,13 @@ are defining or executing a macro."
   :bind (("M-z" . zop-up-to-char)
          ("M-Z" . zop-to-char)))
 
-(use-package flyspell
-  :config
-  (when (eq system-type 'windows-nt)
-    (add-to-list 'exec-path "C:/Program Files (x86)/Aspell/bin/"))
-  (setq ispell-program-name "aspell" ; use aspell instead of ispell
-        ;; ultra mode trades suggestion quality for speed
-        ispell-extra-args '("--sug-mode=ultra"))
-  (add-hook 'text-mode-hook #'flyspell-mode)
-  (add-hook 'prog-mode-hook #'flyspell-prog-mode))
+;; jinx - enchant-based spell checking; much faster than flyspell as it
+;; only checks the visible portion of the buffer (needs libenchant,
+;; e.g. brew install enchant)
+(use-package jinx
+  :hook (emacs-startup . global-jinx-mode)
+  :bind (("M-$" . jinx-correct)
+         ("C-M-$" . jinx-languages)))
 
 (use-package flycheck
   :config
