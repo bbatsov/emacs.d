@@ -775,6 +775,21 @@ are defining or executing a macro."
          ("M-s k" . consult-keep-lines)
          ("M-s u" . consult-focus-lines)))
 
+;; embark - context actions on minibuffer candidates and things at point
+(use-package embark
+  :bind (("C-." . embark-act)
+         ("C-;" . embark-dwim)
+         ("C-h B" . embark-bindings))
+  :init
+  ;; use embark to browse the available keybindings for a prefix (C-h
+  ;; after the prefix), instead of the bare completing-read
+  (setq prefix-help-command #'embark-prefix-help-command))
+
+;; embark-consult - integration between embark and consult
+;; (e.g. embark-export from consult-ripgrep into a grep buffer)
+(use-package embark-consult
+  :hook (embark-collect-mode . consult-preview-at-point-mode))
+
 (use-package corfu
   ;; Optional customizations
   :custom
