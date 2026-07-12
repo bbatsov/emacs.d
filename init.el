@@ -618,15 +618,19 @@ are defining or executing a macro."
   (global-diff-hl-mode +1)
   (add-hook 'dired-mode-hook 'diff-hl-dired-mode))
 
-;; undo-tree - visualize and navigate undo history as a tree
-(use-package undo-tree
+;; vundo - visualize and navigate the undo history as a tree
+;; unlike undo-tree it doesn't replace Emacs's undo system, just
+;; provides a visual way to move through it
+(use-package vundo
+  :bind (("C-x u" . vundo))
   :config
-  ;; autosave the undo-tree history
-  (setq undo-tree-history-directory-alist
-        `((".*" . ,temporary-file-directory)))
-  (setq undo-tree-auto-save-history t)
-  (global-undo-tree-mode +1)
-  (diminish 'undo-tree-mode))
+  (setq vundo-glyph-alist vundo-unicode-symbols))
+
+;; undo-fu-session - persist undo history across Emacs sessions
+(use-package undo-fu-session
+  :config
+  (setq undo-fu-session-directory (expand-file-name "undo-fu-session" bozhidar-savefile-dir))
+  (undo-fu-session-global-mode +1))
 
 ;; when splitting a window, resize all windows proportionally
 ;; instead of just shrinking the current one
