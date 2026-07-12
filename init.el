@@ -262,7 +262,10 @@ are defining or executing a macro."
 (setq use-package-always-ensure t)
 (setq use-package-verbose t)
 
-;; seems using the built-in transient can mess up magit
+;; The bundled transient can be too old for recent magit/cider/projectile (and
+;; can mess up magit).  Let package.el upgrade built-in packages so the newer
+;; ELPA transient is installed and used instead of the built-in one.
+(setq package-install-upgrade-built-in t)
 (use-package transient)
 
 ;;; built-in packages
