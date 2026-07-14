@@ -276,6 +276,12 @@ are defining or executing a macro."
 (setq package-install-upgrade-built-in t)
 (use-package transient)
 
+;; Emacs 30 pretends compat is built-in (with a fake version), which can
+;; trick package.el into never installing the real thing - even though
+;; vertico, consult, embark & friends now require compat 31.  Install it
+;; explicitly to avoid void-function errors from their newer APIs.
+(use-package compat)
+
 ;;; built-in packages
 (use-package paren
   :config
