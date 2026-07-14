@@ -574,7 +574,12 @@ are defining or executing a macro."
 (use-package jinx
   :hook (emacs-startup . global-jinx-mode)
   :bind (("M-$" . jinx-correct)
-         ("C-M-$" . jinx-languages)))
+         ("C-M-$" . jinx-languages))
+  :custom
+  ;; be explicit about the language, as GUI Emacs on macOS doesn't
+  ;; inherit LANG from the shell and jinx would end up with the "C"
+  ;; locale and no usable dictionaries
+  (jinx-languages "en_US"))
 
 (use-package flycheck
   :config
