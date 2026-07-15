@@ -629,7 +629,12 @@ global one."
   :config
   (setq flycheck-eldev-whitelist
         '("~/projects/cider"
-          "~/projects/projectile")))
+          "~/projects/projectile"
+          "~/projects/adoc-mode"
+          "~/projects/clojure-mode"
+          "~/projects/neocaml"
+          "~/projects/inf-clojure"
+          "~/projects/clojure-ts-mode")))
 
 ;; super-save - auto-save buffers when they lose focus or you switch away
 (use-package super-save
