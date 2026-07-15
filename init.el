@@ -580,12 +580,42 @@ are defining or executing a macro."
 (use-package jinx
   :hook (emacs-startup . global-jinx-mode)
   :bind (("M-$" . jinx-correct)
-         ("C-M-$" . jinx-languages))
+         ("C-M-$" . jinx-languages)
+         ("C-c s" . bozhidar-jinx-correct-then-abbrev))
   :custom
   ;; be explicit about the language, as GUI Emacs on macOS doesn't
   ;; inherit LANG from the shell and jinx would end up with the "C"
   ;; locale and no usable dictionaries
-  (jinx-languages "en_US"))
+  (jinx-languages "en_US")
+  :config
+  ;; jinx-powered version of `crux-ispell-word-then-abbrev'
+  (defun bozhidar-jinx-correct-then-abbrev (p)
+    "Correct a misspelled word with jinx, then save the fix as an abbrev.
+With prefix P, create a local (mode-specific) abbrev, otherwise a
+global one."
+    (interactive "P")
+    (let (bef aft)
+      (letrec ((capture (lambda (overlay word)
+                          (setq bef (buffer-substring-no-properties
+                                     (overlay-start overlay)
+                                     (overlay-end overlay))
+                                aft word))))
+        ;; `jinx--correct-replace' is the single point through which
+        ;; every correction goes, so we tap it to learn what got
+        ;; replaced with what
+        (advice-add 'jinx--correct-replace :before capture)
+        (unwind-protect
+            (jinx-correct)
+          (advice-remove 'jinx--correct-replace capture)))
+      (if (and bef aft (not (string-equal-ignore-case bef aft)))
+          (let ((bef (downcase bef))
+                (aft (downcase aft)))
+            (define-abbrev
+              (if p local-abbrev-table global-abbrev-table)
+              bef aft)
+            (message "\"%s\" now expands to \"%s\" %sally"
+                     bef aft (if p "loc" "glob")))
+        (user-error "No correction made")))))
 
 (use-package flycheck
   :config
@@ -635,8 +665,7 @@ are defining or executing a macro."
          ([remap move-beginning-of-line] . crux-move-beginning-of-line)
          ([(shift return)] . crux-smart-open-line)
          ([(control shift return)] . crux-smart-open-line-above)
-         ([remap kill-whole-line] . crux-kill-whole-line)
-         ("C-c s" . crux-ispell-word-then-abbrev)))
+         ([remap kill-whole-line] . crux-kill-whole-line)))
 
 ;; diff-hl - highlight uncommitted changes in the fringe
 (use-package diff-hl
