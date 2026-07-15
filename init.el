@@ -48,9 +48,8 @@
 ;; Always load newest byte code
 (setq load-prefer-newer t)
 
-;; reduce the frequency of garbage collection by making it happen on
-;; each 50MB of allocated data (the default is on every 0.76MB)
-(setq gc-cons-threshold 50000000)
+;; GC tuning lives in early-init.el (threshold is raised during
+;; startup and restored to a modest value afterwards)
 
 ;; don't pop up the *Warnings* buffer during async native compilation
 (setq native-comp-async-report-warnings-errors 'silent)
@@ -76,11 +75,7 @@
 (unless (file-exists-p bozhidar-savefile-dir)
   (make-directory bozhidar-savefile-dir))
 
-;; the toolbar is just a waste of valuable screen estate
-;; in a tty tool-bar-mode does not properly auto-load, and is
-;; already disabled anyway
-(when (fboundp 'tool-bar-mode)
-  (tool-bar-mode -1))
+;; the toolbar is disabled via frame parameters in early-init.el
 
 ;; the blinking cursor is nothing, but an annoyance
 (blink-cursor-mode -1)
@@ -135,9 +130,6 @@
 
 ;; automatically select help windows so you can dismiss them with 'q'
 (setq help-window-select t)
-
-;; maximize the initial frame automatically
-(add-to-list 'initial-frame-alist '(fullscreen . maximized))
 
 ;; more useful frame title, that show either a file or a
 ;; buffer name (if the buffer isn't visiting a file)
