@@ -896,6 +896,31 @@ global one."
 ;;;;; Programming modes
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
+;; prefer the built-in tree-sitter major modes, but only for the
+;; languages whose grammars are actually installed (see
+;; treesit-install-language-grammar)
+(require 'treesit)
+
+(when (treesit-available-p)
+  (pcase-dolist (`(,mode ,ts-mode ,lang)
+                 '((ruby-mode ruby-ts-mode ruby)
+                   (js-mode js-ts-mode javascript)
+                   (js-json-mode json-ts-mode json)
+                   (python-mode python-ts-mode python)
+                   (sh-mode bash-ts-mode bash)
+                   (yaml-mode yaml-ts-mode yaml)))
+    (when (treesit-language-available-p lang)
+      (add-to-list 'major-mode-remap-alist (cons mode ts-mode))))
+
+  ;; ts modes without a non-ts counterpart to remap
+  (when (treesit-language-available-p 'typescript)
+    (add-to-list 'auto-mode-alist '("\\.ts\\'" . typescript-ts-mode))
+    (add-to-list 'auto-mode-alist '("\\.tsx\\'" . tsx-ts-mode)))
+  (when (treesit-language-available-p 'dockerfile)
+    (add-to-list 'auto-mode-alist
+                 '("\\(?:Dockerfile\\(?:\\..*\\)?\\|\\.[Dd]ockerfile\\)\\'"
+                   . dockerfile-ts-mode))))
+
 ;; copilot - GitHub Copilot integration
 (use-package copilot
   :bind (:map copilot-completion-map
@@ -935,11 +960,12 @@ Start `ielm' if it's not already running."
   (eglot-autoshutdown t))
 
 ;; inf-ruby - run a Ruby REPL inside Emacs
+;; (ruby-base-mode covers both ruby-mode and ruby-ts-mode)
 (use-package inf-ruby
-  :hook (ruby-mode . inf-ruby-minor-mode))
+  :hook (ruby-base-mode . inf-ruby-minor-mode))
 
 (use-package ruby-mode
-  :hook (ruby-mode . subword-mode)
+  :hook (ruby-base-mode . subword-mode)
   :config
   ;; Ruby 2.0+ doesn't need the -*- coding: utf-8 -*- magic comment
   (setq ruby-insert-encoding-magic-comment nil))
