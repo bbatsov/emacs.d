@@ -589,6 +589,9 @@ are defining or executing a macro."
 
 (use-package flycheck
   :config
+  ;; prefer markdownlint-cli2, which reads repo-level .markdownlint-cli2.yaml
+  ;; configs that the older markdownlint-cli checker ignores
+  (setq-default flycheck-disabled-checkers '(markdown-markdownlint-cli))
   (add-hook 'after-init-hook #'global-flycheck-mode))
 
 ;; flycheck-eldev - flycheck support for Eldev-based Emacs Lisp projects
