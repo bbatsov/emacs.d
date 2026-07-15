@@ -286,11 +286,13 @@ are defining or executing a macro."
   (electric-pair-mode +1))
 
 (use-package calendar
+  :defer t
   :config
   ;; weeks in Bulgaria start on Monday
   (setq calendar-week-start-day 1))
 
 (use-package time
+  :defer t
   :config
   ;; TZs to display with `world-clock'
   (setq world-clock-list
@@ -373,6 +375,7 @@ are defining or executing a macro."
 
 (use-package dired
   :ensure nil
+  :defer t
   :config
   ;; dired - reuse current buffer by pressing 'a'
   (put 'dired-find-alternate-file 'disabled nil)
@@ -393,6 +396,7 @@ are defining or executing a macro."
 
 (use-package ediff
   :ensure nil
+  :defer t
   :config
   ;; keep the control panel in the same frame instead of a separate one
   (setq ediff-window-setup-function #'ediff-setup-windows-plain)
@@ -491,23 +495,22 @@ are defining or executing a macro."
 
 ;; elisp-slime-nav - M-. / M-, navigation for Elisp definitions
 (use-package elisp-slime-nav
+  :hook ((emacs-lisp-mode ielm-mode) . elisp-slime-nav-mode)
   :config
-  (dolist (hook '(emacs-lisp-mode-hook ielm-mode-hook))
-    (add-hook hook #'elisp-slime-nav-mode))
   (diminish 'elisp-slime-nav-mode))
 
 ;; paredit - structural editing for s-expressions
+;; (lisp-interaction-mode covers the *scratch* buffer)
 (use-package paredit
+  :hook ((emacs-lisp-mode
+          lisp-interaction-mode
+          ielm-mode
+          lisp-mode
+          eval-expression-minibuffer-setup) . paredit-mode)
   :config
   ;; paredit steals RET for auto-newline-and-indent, which is annoying
   (define-key paredit-mode-map (kbd "RET") nil)
   (add-hook 'paredit-mode-hook (lambda () (electric-pair-local-mode -1)))
-  (add-hook 'emacs-lisp-mode-hook #'paredit-mode)
-  ;; enable in the *scratch* buffer
-  (add-hook 'lisp-interaction-mode-hook #'paredit-mode)
-  (add-hook 'ielm-mode-hook #'paredit-mode)
-  (add-hook 'lisp-mode-hook #'paredit-mode)
-  (add-hook 'eval-expression-minibuffer-setup-hook #'paredit-mode)
   (diminish 'paredit-mode "()"))
 
 ;; anzu - show total search matches and current position in mode line
@@ -519,8 +522,7 @@ are defining or executing a macro."
 
 ;; easy-kill - enhanced M-w with easy selection of nearby things
 (use-package easy-kill
-  :config
-  (global-set-key [remap kill-ring-save] 'easy-kill))
+  :bind ([remap kill-ring-save] . easy-kill))
 
 ;; exec-path-from-shell - sync PATH and env vars from the shell on macOS
 (use-package exec-path-from-shell
@@ -536,12 +538,13 @@ are defining or executing a macro."
    ([(meta shift down)] . move-text-down)))
 
 ;; rainbow-delimiters - colorize nested parentheses by depth
-(use-package rainbow-delimiters)
+(use-package rainbow-delimiters
+  :defer t)
 
 ;; rainbow-mode - colorize color strings like #ff0000 and rgb(...)
 (use-package rainbow-mode
+  :hook prog-mode
   :config
-  (add-hook 'prog-mode-hook #'rainbow-mode)
   (diminish 'rainbow-mode))
 
 (use-package evil
@@ -610,14 +613,15 @@ global one."
         (user-error "No correction made")))))
 
 (use-package flycheck
+  :hook (after-init . global-flycheck-mode)
   :config
   ;; prefer markdownlint-cli2, which reads repo-level .markdownlint-cli2.yaml
   ;; configs that the older markdownlint-cli checker ignores
-  (setq-default flycheck-disabled-checkers '(markdown-markdownlint-cli))
-  (add-hook 'after-init-hook #'global-flycheck-mode))
+  (setq-default flycheck-disabled-checkers '(markdown-markdownlint-cli)))
 
 ;; flycheck-eldev - flycheck support for Eldev-based Emacs Lisp projects
 (use-package flycheck-eldev
+  :after flycheck
   :config
   (setq flycheck-eldev-whitelist
         '("~/projects/cider"
@@ -690,9 +694,8 @@ global one."
 
 ;; ace-window - quickly switch between windows using number labels
 (use-package ace-window
-  :config
-  (global-set-key (kbd "s-w") 'ace-window)
-  (global-set-key [remap other-window] 'ace-window))
+  :bind (("s-w" . ace-window)
+         ([remap other-window] . ace-window)))
 
 ;; FIXME: Figure out why the vterm module stopped compiling properly
 ;; (use-package vterm
@@ -705,10 +708,12 @@ global one."
 ;;   (global-set-key (kbd "C-c v") 'vterm))
 
 ;; keycast - display current command and its keybinding in the mode line
-(use-package keycast)
+(use-package keycast
+  :defer t)
 
 ;; gif-screencast - record GIF screencasts directly from Emacs
 (use-package gif-screencast
+  :defer t
   :config
   ;; To shut up the shutter sound of `screencapture' (see `gif-screencast-command').
   (setq gif-screencast-args '("-x"))
@@ -846,6 +851,7 @@ global one."
 ;; wgrep - edit grep/occur buffers and apply the changes to the files
 ;; (press C-c C-p in a grep buffer, edit, then C-c C-e to apply)
 (use-package wgrep
+  :defer t
   :config
   ;; save the affected buffers automatically after applying the edits
   (setq wgrep-auto-save-buffer t))
@@ -916,56 +922,54 @@ Start `ielm' if it's not already running."
   (define-key emacs-lisp-mode-map (kbd "C-c C-b") #'eval-buffer))
 
 (use-package ielm
-  :config
-  (add-hook 'ielm-mode-hook #'rainbow-delimiters-mode))
+  :hook (ielm-mode . rainbow-delimiters-mode))
 
 ;; Eask is the successor of Cask
-(use-package eask-mode)
+(use-package eask-mode
+  :defer t)
 
 (use-package eglot
-  :config
+  :defer t
+  :custom
   ;; shut down LSP server when last managed buffer is killed
-  (setq eglot-autoshutdown t))
+  (eglot-autoshutdown t))
 
 ;; inf-ruby - run a Ruby REPL inside Emacs
 (use-package inf-ruby
-  :config
-  (add-hook 'ruby-mode-hook #'inf-ruby-minor-mode))
+  :hook (ruby-mode . inf-ruby-minor-mode))
 
 (use-package ruby-mode
+  :hook (ruby-mode . subword-mode)
   :config
   ;; Ruby 2.0+ doesn't need the -*- coding: utf-8 -*- magic comment
-  (setq ruby-insert-encoding-magic-comment nil)
-  (add-hook 'ruby-mode-hook #'subword-mode))
+  (setq ruby-insert-encoding-magic-comment nil))
 
 (use-package clojure-mode
+  :hook ((clojure-mode . paredit-mode)
+         (clojure-mode . subword-mode)
+         (clojure-mode . rainbow-delimiters-mode))
   :config
   ;; teach clojure-mode about some macros that I use on projects like
   ;; nREPL and Orchard
   (define-clojure-indent
     (returning 1)
     (testing-dynamic 1)
-    (testing-print 1))
-
-  (add-hook 'clojure-mode-hook #'paredit-mode)
-  (add-hook 'clojure-mode-hook #'subword-mode)
-  (add-hook 'clojure-mode-hook #'rainbow-delimiters-mode))
+    (testing-print 1)))
 
 ;; inf-clojure - basic Clojure REPL interaction (no nREPL required)
 (use-package inf-clojure
-  :config
-  (add-hook 'inf-clojure-mode-hook #'paredit-mode)
-  (add-hook 'inf-clojure-mode-hook #'rainbow-delimiters-mode))
+  :hook ((inf-clojure-mode . paredit-mode)
+         (inf-clojure-mode . rainbow-delimiters-mode)))
 
 ;; cider - full-featured Clojure IDE powered by nREPL
 (use-package cider
+  :hook ((cider-repl-mode . paredit-mode)
+         (cider-repl-mode . rainbow-delimiters-mode))
   :config
   ;; log nREPL messages for debugging connection issues
   (setq nrepl-log-messages t)
   ;; auto-download Java sources for navigation/documentation
-  (setq cider-download-java-sources t)
-  (add-hook 'cider-repl-mode-hook #'paredit-mode)
-  (add-hook 'cider-repl-mode-hook #'rainbow-delimiters-mode))
+  (setq cider-download-java-sources t))
 
 (use-package port
   :vc (:url "https://github.com/clojure-emacs/port" :lisp-dir "lisp" :branch "main" :rev :newest))
@@ -975,21 +979,22 @@ Start `ielm' if it's not already running."
   :commands (neat neat-mode))
 
 ;; flycheck-joker - Clojure linting via the Joker interpreter
-(use-package flycheck-joker)
+(use-package flycheck-joker
+  :after flycheck)
 
 (add-hook 'elixir-ts-mode-hook #'subword-mode)
 
 (use-package erlang
+  :defer t
   :config
   (when (eq system-type 'windows-nt)
     (setq erlang-root-dir "C:/Program Files/erl7.2")
     (add-to-list 'exec-path "C:/Program Files/erl7.2/bin")))
 
 (use-package haskell-mode
-  :config
-  (add-hook 'haskell-mode-hook #'subword-mode)
-  (add-hook 'haskell-mode-hook #'interactive-haskell-mode)
-  (add-hook 'haskell-mode-hook #'haskell-doc-mode))
+  :hook ((haskell-mode . subword-mode)
+         (haskell-mode . interactive-haskell-mode)
+         (haskell-mode . haskell-doc-mode)))
 
 (use-package fsharp-ts-mode
   :defer t
@@ -1001,10 +1006,11 @@ Start `ielm' if it's not already running."
 ;; neocaml - tree-sitter based OCaml major mode
 (use-package neocaml
   :vc (:url "https://github.com/bbatsov/neocaml" :rev :newest)
+  :hook (neocaml-mode . neocaml-repl-minor-mode)
   :config
   ;; register neocaml-mode with eglot so it launches ocamllsp
-  (add-to-list 'eglot-server-programs '((neocaml-mode :language-id "ocaml") . ("ocamllsp")))
-  (add-hook 'neocaml-mode-hook #'neocaml-repl-minor-mode)
+  (with-eval-after-load 'eglot
+    (add-to-list 'eglot-server-programs '((neocaml-mode :language-id "ocaml") . ("ocamllsp"))))
   (setq neocaml--debug nil))
 
 ;; (use-package tuareg
@@ -1071,7 +1077,8 @@ Start `ielm' if it's not already running."
         (insert (format "{%% post_url %s %%}" selected-file))))))
 
 ;; asciidoc-mode - tree-sitter based AsciiDoc major mode
-(use-package asciidoc-mode)
+(use-package asciidoc-mode
+  :defer t)
 
 
 ;; WSL-specific setup
