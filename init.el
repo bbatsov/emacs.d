@@ -1212,10 +1212,15 @@ Start `ielm' if it's not already running."
     (setq erlang-root-dir "C:/Program Files/erl7.2")
     (add-to-list 'exec-path "C:/Program Files/erl7.2/bin")))
 
+;; Haskell - sticking with the classic haskell-mode here, as
+;; haskell-ts-mode isn't at feature parity with it yet; eglot launches
+;; haskell-language-server-wrapper by default (brew install
+;; haskell-language-server), which picks the right HLS version for
+;; the project's GHC
 (use-package haskell-mode
   :hook ((haskell-mode . subword-mode)
          (haskell-mode . interactive-haskell-mode)
-         (haskell-mode . haskell-doc-mode)))
+         (haskell-mode . eglot-ensure)))
 
 (use-package fsharp-ts-mode
   :defer t
