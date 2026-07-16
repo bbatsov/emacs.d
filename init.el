@@ -969,12 +969,13 @@ global one."
                    (js-mode js-ts-mode javascript)
                    (js-json-mode json-ts-mode json)
                    (python-mode python-ts-mode python)
-                   (sh-mode bash-ts-mode bash)
-                   (yaml-mode yaml-ts-mode yaml)))
+                   (sh-mode bash-ts-mode bash)))
     (when (treesit-language-available-p lang)
       (add-to-list 'major-mode-remap-alist (cons mode ts-mode))))
 
   ;; ts modes without a non-ts counterpart to remap
+  (when (treesit-language-available-p 'yaml)
+    (add-to-list 'auto-mode-alist '("\\.ya?ml\\'" . yaml-ts-mode)))
   (when (treesit-language-available-p 'typescript)
     (add-to-list 'auto-mode-alist '("\\.ts\\'" . typescript-ts-mode))
     (add-to-list 'auto-mode-alist '("\\.tsx\\'" . tsx-ts-mode)))
