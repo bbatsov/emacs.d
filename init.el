@@ -867,7 +867,12 @@ global one."
          ("M-s l" . consult-line)
          ("M-s L" . consult-line-multi)
          ("M-s k" . consult-keep-lines)
-         ("M-s u" . consult-focus-lines)))
+         ("M-s u" . consult-focus-lines))
+  :config
+  ;; press < followed by a group key to narrow the candidates to one
+  ;; group (e.g. in consult-buffer: < b for buffers, < f for files,
+  ;; < p for project buffers); < again removes the narrowing
+  (setq consult-narrow-key "<"))
 
 ;; embark - context actions on minibuffer candidates and things at point
 (use-package embark
