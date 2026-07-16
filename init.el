@@ -1002,6 +1002,26 @@ global one."
 ;; treesit-install-language-grammar)
 (require 'treesit)
 
+;; grammar recipes, so a fresh machine can provision any missing
+;; grammar with M-x treesit-install-language-grammar
+(setq treesit-language-source-alist
+      '((bash "https://github.com/tree-sitter/tree-sitter-bash")
+        (dockerfile "https://github.com/camdencheek/tree-sitter-dockerfile")
+        (elixir "https://github.com/elixir-lang/tree-sitter-elixir")
+        (go "https://github.com/tree-sitter/tree-sitter-go")
+        (gomod "https://github.com/camdencheek/tree-sitter-go-mod")
+        (heex "https://github.com/phoenixframework/tree-sitter-heex")
+        (javascript "https://github.com/tree-sitter/tree-sitter-javascript")
+        (json "https://github.com/tree-sitter/tree-sitter-json")
+        (python "https://github.com/tree-sitter/tree-sitter-python")
+        (ruby "https://github.com/tree-sitter/tree-sitter-ruby")
+        (rust "https://github.com/tree-sitter/tree-sitter-rust")
+        ;; the default branch doesn't include the generated parser
+        (swift "https://github.com/alex-pinkus/tree-sitter-swift" "with-generated-files")
+        (tsx "https://github.com/tree-sitter/tree-sitter-typescript" "master" "tsx/src")
+        (typescript "https://github.com/tree-sitter/tree-sitter-typescript" "master" "typescript/src")
+        (yaml "https://github.com/ikatyang/tree-sitter-yaml")))
+
 (when (treesit-available-p)
   (pcase-dolist (`(,mode ,ts-mode ,lang)
                  '((ruby-mode ruby-ts-mode ruby)
