@@ -1019,7 +1019,11 @@ Start `ielm' if it's not already running."
   :defer t
   :custom
   ;; shut down LSP server when last managed buffer is killed
-  (eglot-autoshutdown t))
+  (eglot-autoshutdown t)
+  ;; don't log every LSP event to the events buffer - the logging adds
+  ;; overhead with chatty servers; set :size back to nil (unlimited)
+  ;; temporarily when you need to debug an LSP session
+  (eglot-events-buffer-config '(:size 0 :format full)))
 
 ;; flycheck-eglot - route eglot's diagnostics through flycheck instead
 ;; of flymake, so LSP-managed buffers get the same diagnostics UI (and
