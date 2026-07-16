@@ -595,8 +595,14 @@ are defining or executing a macro."
 ;; e.g. brew install enchant)
 (use-package jinx
   :hook (emacs-startup . global-jinx-mode)
+  ;; jinx binds M-n/M-p only on the misspelled words themselves (via
+  ;; overlay keymaps), so bind global keys for jumping to the
+  ;; next/previous misspelling from anywhere; they share a repeat map,
+  ;; so after the first jump plain n/p keep navigating and $ corrects
   :bind (("M-$" . jinx-correct)
          ("C-M-$" . jinx-languages)
+         ("C-," . jinx-next)
+         ("C-<" . jinx-previous)
          ("C-c s" . bozhidar-jinx-correct-then-abbrev))
   :custom
   ;; be explicit about the language, as GUI Emacs on macOS doesn't
