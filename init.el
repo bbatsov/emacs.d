@@ -1203,7 +1203,25 @@ Start `ielm' if it's not already running."
   :hook ((rust-ts-mode . eglot-ensure)
          (rust-ts-mode . subword-mode)))
 
-(add-hook 'elixir-ts-mode-hook #'subword-mode)
+;; Elixir - built-in tree-sitter modes for Elixir and HEEx templates.
+;; eglot's default entry expects elixir-ls's language_server.sh
+;; startup script, but Homebrew installs it as a plain elixir-ls
+;; executable, so point eglot at that instead.
+(with-eval-after-load 'eglot
+  (add-to-list 'eglot-server-programs
+               '((elixir-ts-mode heex-ts-mode) . ("elixir-ls"))))
+
+(use-package elixir-ts-mode
+  :ensure nil
+  :mode (("\\.exs?\\'" . elixir-ts-mode)
+         ("/mix\\.lock\\'" . elixir-ts-mode))
+  :hook ((elixir-ts-mode . eglot-ensure)
+         (elixir-ts-mode . subword-mode)))
+
+(use-package heex-ts-mode
+  :ensure nil
+  :mode "\\.[hl]?eex\\'"
+  :hook (heex-ts-mode . eglot-ensure))
 
 ;; Erlang - the official erlang-mode plus erlang_ls via eglot (brew
 ;; install erlang_ls), which is eglot's default server for it.
