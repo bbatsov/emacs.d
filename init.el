@@ -425,10 +425,19 @@ are defining or executing a macro."
   :init
   (dolist (hook '(prog-mode-hook text-mode-hook))
     (add-hook hook #'whitespace-mode))
-  (add-hook 'before-save-hook #'whitespace-cleanup)
   :config
   (setq whitespace-line-column 80) ;; limit line length
   (setq whitespace-style '(face tabs empty trailing lines-tail)))
+
+;; ws-butler - trim trailing whitespace on save, but only on the lines
+;; you actually edited; unlike a blanket whitespace-cleanup on
+;; before-save it never touches the rest of the file, so saving a file
+;; in someone else's project doesn't produce noisy whitespace-only diffs
+(use-package ws-butler
+  :hook ((prog-mode . ws-butler-mode)
+         (text-mode . ws-butler-mode))
+  :config
+  (diminish 'ws-butler-mode))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; third-party packages
