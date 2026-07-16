@@ -409,6 +409,15 @@ are defining or executing a macro."
   :config
   (which-key-mode +1))
 
+;; editorconfig - honor .editorconfig files (built-in since Emacs 30);
+;; automatically adjusts indentation style/size, line endings, final
+;; newlines, etc. to match the conventions of the project at hand
+(use-package editorconfig
+  :ensure nil
+  :config
+  (editorconfig-mode +1)
+  (diminish 'editorconfig-mode))
+
 (use-package whitespace
   :init
   (dolist (hook '(prog-mode-hook text-mode-hook))
