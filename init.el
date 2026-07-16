@@ -1033,6 +1033,10 @@ global one."
       (add-to-list 'major-mode-remap-alist (cons mode ts-mode))))
 
   ;; ts modes without a non-ts counterpart to remap
+  (when (treesit-language-available-p 'go)
+    (add-to-list 'auto-mode-alist '("\\.go\\'" . go-ts-mode)))
+  (when (treesit-language-available-p 'gomod)
+    (add-to-list 'auto-mode-alist '("/go\\.mod\\'" . go-mod-ts-mode)))
   (when (treesit-language-available-p 'rust)
     (add-to-list 'auto-mode-alist '("\\.rs\\'" . rust-ts-mode)))
   (when (treesit-language-available-p 'yaml)
@@ -1143,6 +1147,17 @@ Start `ielm' if it's not already running."
 ;; flycheck-joker - Clojure linting via the Joker interpreter
 (use-package flycheck-joker
   :after flycheck)
+
+;; Go - built-in tree-sitter modes for Go source and go.mod files;
+;; gopls is eglot's default server (brew install gopls)
+(use-package go-ts-mode
+  :ensure nil
+  :hook ((go-ts-mode . eglot-ensure)
+         (go-ts-mode . subword-mode))
+  :custom
+  ;; go uses tabs, and the mode's default indent of 4 fights our
+  ;; tab-width of 8 - keep the two aligned
+  (go-ts-mode-indent-offset 8))
 
 ;; Rust - the built-in tree-sitter mode is solid these days, so we use
 ;; it instead of the rust-mode package; rust-analyzer is eglot's
