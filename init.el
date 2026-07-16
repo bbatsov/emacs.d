@@ -736,15 +736,16 @@ global one."
   :bind (("s-w" . ace-window)
          ([remap other-window] . ace-window)))
 
-;; FIXME: Figure out why the vterm module stopped compiling properly
-;; (use-package vterm
-;;   :ensure t
-;;   :config
-;;   (setq vterm-shell "/bin/bash")
-;;   ;; macOS
-;;   (global-set-key (kbd "s-v") 'vterm)
-;;   ;; Linux
-;;   (global-set-key (kbd "C-c v") 'vterm))
+;; mistty - a shell/comint hybrid on top of term.el: full terminal
+;; emulation for TUI programs, but regular Emacs editing and motion
+;; on the command line; unlike vterm it's pure elisp, so there's no
+;; native module to compile.  C-c C-j/C-c C-q toggle between the
+;; terminal and Emacs input modes.
+(use-package mistty
+  :bind (;; macOS
+         ("s-v" . mistty)
+         ;; Linux
+         ("C-c v" . mistty)))
 
 ;; keycast - display current command and its keybinding in the mode line
 (use-package keycast
