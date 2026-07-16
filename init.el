@@ -1113,32 +1113,6 @@ Start `ielm' if it's not already running."
     (add-to-list 'eglot-server-programs '((neocaml-mode :language-id "ocaml") . ("ocamllsp"))))
   (setq neocaml--debug nil))
 
-;; (use-package tuareg
-;;   :mode (("\\.ocamlinit\\'" . tuareg-mode)))
-
-;; (use-package dune)
-
-;; ;; Merlin configuration
-;; (use-package merlin
-;;   :config
-;;   (add-hook 'tuareg-mode-hook #'merlin-mode)
-;;   ;; (add-hook 'merlin-mode-hook #'company-mode)
-;;   ;; we're using flycheck instead
-;;   (setq merlin-error-after-save nil))
-
-;; (use-package merlin-eldoc
-;;   :hook ((tuareg-mode) . merlin-eldoc-setup))
-
-;; ;; This uses Merlin internally
-;; (use-package flycheck-ocaml
-;;   :config
-;;   (flycheck-ocaml-setup))
-
-;; ;; utop configuration
-;; (use-package utop
-;;   :config
-;;   (add-hook 'tuareg-mode-hook #'utop-minor-mode))
-
 ;;;; Markup languages support
 
 ;; web-mode - major mode for editing web templates (ERB, EJS, Handlebars, etc.)
