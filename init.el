@@ -1205,8 +1205,15 @@ Start `ielm' if it's not already running."
 
 (add-hook 'elixir-ts-mode-hook #'subword-mode)
 
+;; Erlang - the official erlang-mode plus erlang_ls via eglot (brew
+;; install erlang_ls), which is eglot's default server for it.
+;; WhatsApp's ELP (brew install erlang-language-platform) is the newer
+;; alternative if erlang_ls ever falls short - swap the server with:
+;; (add-to-list 'eglot-server-programs '(erlang-mode "elp" "server"))
 (use-package erlang
   :defer t
+  :hook ((erlang-mode . eglot-ensure)
+         (erlang-mode . subword-mode))
   :config
   (when (eq system-type 'windows-nt)
     (setq erlang-root-dir "C:/Program Files/erl7.2")
