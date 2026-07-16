@@ -51,9 +51,6 @@
 ;; GC tuning lives in early-init.el (threshold is raised during
 ;; startup and restored to a modest value afterwards)
 
-;; don't pop up the *Warnings* buffer during async native compilation
-(setq native-comp-async-report-warnings-errors 'silent)
-
 ;; increase the amount of data Emacs reads from subprocesses in a
 ;; single chunk (default is 4KB).  This improves throughput for LSP
 ;; servers and other processes that produce large output.
