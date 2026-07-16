@@ -84,12 +84,17 @@
 (setq inhibit-startup-screen t)
 
 ;; nice scrolling
-(setq scroll-margin 0
+(setq scroll-margin 0 ; ultra-scroll requires 0 for glitch-free scrolling
       scroll-conservatively 100000
       scroll-preserve-screen-position 1)
 
-(when (fboundp 'pixel-scroll-precision-mode)
-  (pixel-scroll-precision-mode t))
+;; ultra-scroll - buttery-smooth pixel-precision scrolling; a better
+;; take on the built-in pixel-scroll-precision-mode (which it enables
+;; and builds upon internally): faster, handles images taller than
+;; the window and hides the cursor while scrolling
+(use-package ultra-scroll
+  :config
+  (ultra-scroll-mode +1))
 
 ;; repeat-mode - press the last key to repeat commands without the prefix
 (repeat-mode 1)
