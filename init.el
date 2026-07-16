@@ -994,6 +994,14 @@ Start `ielm' if it's not already running."
   ;; shut down LSP server when last managed buffer is killed
   (eglot-autoshutdown t))
 
+;; flycheck-eglot - route eglot's diagnostics through flycheck instead
+;; of flymake, so LSP-managed buffers get the same diagnostics UI (and
+;; consult-flycheck integration) as every other buffer
+(use-package flycheck-eglot
+  :after (flycheck eglot)
+  :config
+  (global-flycheck-eglot-mode +1))
+
 ;; inf-ruby - run a Ruby REPL inside Emacs
 ;; (ruby-base-mode covers both ruby-mode and ruby-ts-mode)
 (use-package inf-ruby
