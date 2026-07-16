@@ -890,6 +890,20 @@ global one."
   (add-hook 'completion-at-point-functions #'cape-dabbrev)
   (add-hook 'completion-at-point-functions #'cape-file))
 
+;; completion-preview - built-in (Emacs 30+) inline "ghost text"
+;; preview of the top completion candidate as you type; a lightweight
+;; complement to corfu's popup.  While a preview is visible TAB
+;; accepts it and M-i completes up to the longest common prefix of
+;; all candidates.
+(use-package completion-preview
+  :ensure nil
+  :config
+  ;; cycle through the other candidates (these commands exist, but
+  ;; have no default bindings)
+  (define-key completion-preview-active-mode-map (kbd "M-n") #'completion-preview-next-candidate)
+  (define-key completion-preview-active-mode-map (kbd "M-p") #'completion-preview-prev-candidate)
+  (global-completion-preview-mode +1))
+
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
