@@ -1033,6 +1033,8 @@ global one."
       (add-to-list 'major-mode-remap-alist (cons mode ts-mode))))
 
   ;; ts modes without a non-ts counterpart to remap
+  (when (treesit-language-available-p 'rust)
+    (add-to-list 'auto-mode-alist '("\\.rs\\'" . rust-ts-mode)))
   (when (treesit-language-available-p 'yaml)
     (add-to-list 'auto-mode-alist '("\\.ya?ml\\'" . yaml-ts-mode)))
   (when (treesit-language-available-p 'typescript)
@@ -1141,6 +1143,15 @@ Start `ielm' if it's not already running."
 ;; flycheck-joker - Clojure linting via the Joker interpreter
 (use-package flycheck-joker
   :after flycheck)
+
+;; Rust - the built-in tree-sitter mode is solid these days, so we use
+;; it instead of the rust-mode package; rust-analyzer is eglot's
+;; default server for it (install it with rustup component add
+;; rust-analyzer)
+(use-package rust-ts-mode
+  :ensure nil
+  :hook ((rust-ts-mode . eglot-ensure)
+         (rust-ts-mode . subword-mode)))
 
 (add-hook 'elixir-ts-mode-hook #'subword-mode)
 
