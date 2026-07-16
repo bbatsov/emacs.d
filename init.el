@@ -905,6 +905,29 @@ global one."
   ;; save the affected buffers automatically after applying the edits
   (setq wgrep-auto-save-buffer t))
 
+;; casual - transient (magit-style) menus for a bunch of built-in
+;; modes, so you can drive them without remembering their keybindings;
+;; C-o pops the menu in each supported mode (in dired and ibuffer this
+;; shadows the "display in other window" commands, which I never use)
+(use-package casual
+  :defer t
+  :init
+  (keymap-set isearch-mode-map "C-o" #'casual-isearch-tmenu)
+  (with-eval-after-load 'dired
+    (keymap-set dired-mode-map "C-o" #'casual-dired-tmenu))
+  (with-eval-after-load 'ibuffer
+    (keymap-set ibuffer-mode-map "C-o" #'casual-ibuffer-tmenu))
+  (with-eval-after-load 'info
+    (keymap-set Info-mode-map "C-o" #'casual-info-tmenu))
+  (with-eval-after-load 'calc
+    (keymap-set calc-mode-map "C-o" #'casual-calc-tmenu))
+  (with-eval-after-load 're-builder
+    (keymap-set reb-mode-map "C-o" #'casual-re-builder-tmenu))
+  (with-eval-after-load 'bookmark
+    (keymap-set bookmark-bmenu-mode-map "C-o" #'casual-bookmarks-tmenu))
+  (with-eval-after-load 'help-mode
+    (keymap-set help-mode-map "C-o" #'casual-help-tmenu)))
+
 (use-package corfu
   ;; Optional customizations
   :custom
