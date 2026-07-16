@@ -1153,6 +1153,18 @@ Start `ielm' if it's not already running."
 (use-package flycheck-joker
   :after flycheck)
 
+;; Swift - tree-sitter based major mode; there's no built-in one and
+;; the classic swift-mode is in maintenance mode.  sourcekit-lsp comes
+;; with the Xcode command line tools, but eglot doesn't know about it,
+;; so we register it ourselves.
+(use-package swift-ts-mode
+  :mode "\\.swift\\'"
+  :hook ((swift-ts-mode . eglot-ensure)
+         (swift-ts-mode . subword-mode))
+  :config
+  (with-eval-after-load 'eglot
+    (add-to-list 'eglot-server-programs '(swift-ts-mode . ("sourcekit-lsp")))))
+
 ;; JavaScript/TypeScript - built-in tree-sitter modes; eglot launches
 ;; typescript-language-server for both by default (brew install
 ;; typescript-language-server).  js-base-mode covers js-mode and
