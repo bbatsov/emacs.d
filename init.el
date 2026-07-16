@@ -206,6 +206,9 @@
 (global-set-key (kbd "s-q") #'fill-paragraph)
 (global-set-key (kbd "s-x") #'execute-extended-command)
 
+;; duplicate the current line, or the region if it's active (Emacs 29+)
+(global-set-key (kbd "C-c d") #'duplicate-dwim)
+
 ;; smart tab behavior - indent or complete
 (setq tab-always-indent 'complete)
 
