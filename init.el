@@ -916,7 +916,11 @@ global one."
   :init
   (global-corfu-mode)
   ;; show candidate documentation in a popup next to the completions
-  (corfu-popupinfo-mode +1))
+  (corfu-popupinfo-mode +1)
+  ;; sort candidates by recency of selection, so frequently used
+  ;; completions bubble up to the top (part of corfu; the history
+  ;; persists across sessions automatically via our savehist-mode)
+  (corfu-history-mode +1))
 
 ;; cape - extra completion-at-point backends to feed corfu
 (use-package cape
