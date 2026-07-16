@@ -783,6 +783,21 @@ global one."
   ;; (setq vertico-cycle t)
   )
 
+;; vertico-directory - smarter path editing in file prompts (ships as
+;; part of vertico): RET descends into the selected directory instead
+;; of visiting it in dired, DEL deletes a whole directory component at
+;; once and M-DEL deletes just a word of it
+(use-package vertico-directory
+  :ensure nil ; comes with vertico
+  :after vertico
+  :bind (:map vertico-map
+              ("RET" . vertico-directory-enter)
+              ("DEL" . vertico-directory-delete-char)
+              ("M-DEL" . vertico-directory-delete-word))
+  ;; clean up the shadowed part of the file path when you re-root it
+  ;; (e.g. type ~/ or / in the middle of a path)
+  :hook (rfn-eshadow-update-overlay . vertico-directory-tidy))
+
 ;; A few more useful configurations for Vertico
 (use-package emacs
   :init
