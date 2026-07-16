@@ -1026,6 +1026,9 @@ global one."
   (pcase-dolist (`(,mode ,ts-mode ,lang)
                  '((ruby-mode ruby-ts-mode ruby)
                    (js-mode js-ts-mode javascript)
+                   ;; .js files resolve to the javascript-mode alias,
+                   ;; which needs its own remap entry
+                   (javascript-mode js-ts-mode javascript)
                    (js-json-mode json-ts-mode json)
                    (python-mode python-ts-mode python)
                    (sh-mode bash-ts-mode bash)))
@@ -1043,7 +1046,9 @@ global one."
     (add-to-list 'auto-mode-alist '("\\.ya?ml\\'" . yaml-ts-mode)))
   (when (treesit-language-available-p 'typescript)
     (add-to-list 'auto-mode-alist '("\\.ts\\'" . typescript-ts-mode))
-    (add-to-list 'auto-mode-alist '("\\.tsx\\'" . tsx-ts-mode)))
+    (add-to-list 'auto-mode-alist '("\\.tsx\\'" . tsx-ts-mode))
+    ;; tsx-ts-mode handles plain JSX just fine as well
+    (add-to-list 'auto-mode-alist '("\\.jsx\\'" . tsx-ts-mode)))
   (when (treesit-language-available-p 'dockerfile)
     (add-to-list 'auto-mode-alist
                  '("\\(?:Dockerfile\\(?:\\..*\\)?\\|\\.[Dd]ockerfile\\)\\'"
@@ -1147,6 +1152,24 @@ Start `ielm' if it's not already running."
 ;; flycheck-joker - Clojure linting via the Joker interpreter
 (use-package flycheck-joker
   :after flycheck)
+
+;; JavaScript/TypeScript - built-in tree-sitter modes; eglot launches
+;; typescript-language-server for both by default (brew install
+;; typescript-language-server).  js-base-mode covers js-mode and
+;; js-ts-mode; typescript-ts-base-mode covers typescript-ts-mode and
+;; tsx-ts-mode.
+(use-package js
+  :ensure nil
+  :hook ((js-base-mode . eglot-ensure)
+         (js-base-mode . subword-mode))
+  :custom
+  ;; the JS world settled on 2-space indentation long ago
+  (js-indent-level 2))
+
+(use-package typescript-ts-mode
+  :ensure nil
+  :hook ((typescript-ts-base-mode . eglot-ensure)
+         (typescript-ts-base-mode . subword-mode)))
 
 ;; Go - built-in tree-sitter modes for Go source and go.mod files;
 ;; gopls is eglot's default server (brew install gopls)
