@@ -491,6 +491,16 @@ are defining or executing a macro."
   :bind (("C-c g" . git-timemachine)
          ("s-g" . git-timemachine)))
 
+;; difftastic - structural (syntax-aware) diffs via the difft CLI
+;; tool (brew install difftastic); difftastic-bindings-mode adds the
+;; commands to magit's diff (M-d / M-c) and blame transients.  We load
+;; only the lightweight difftastic-bindings entry point - loading the
+;; full difftastic feature would drag magit in at startup
+(use-package difftastic-bindings
+  :ensure difftastic
+  :config
+  (difftastic-bindings-mode +1))
+
 (use-package projectile
   :init
   (setq projectile-project-search-path '("~/projects/" "~/work/" "~/playground"))
