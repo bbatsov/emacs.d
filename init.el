@@ -591,16 +591,137 @@ are defining or executing a macro."
   :config
   (diminish 'rainbow-mode))
 
-(use-package evil
-  :config
-  (evil-set-leader 'normal (kbd "SPC"))
-  (evil-define-key 'normal 'global (kbd "<leader>ff") 'projectile-find-file)
-  (evil-define-key 'normal 'global (kbd "<leader>fd") 'projectile-find-dir)
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;; evil
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;
+;; Evil is opt-in here: `s-z' toggles `evil-local-mode' in the current
+;; buffer.  Swap that for `(evil-mode +1)' below to go all in.
 
-  (evil-define-key 'normal 'global (kbd "<leader>pp") 'projectile-switch-project)
-  (evil-define-key 'normal 'global (kbd "<leader>pd") 'projectile-discover-projects-in-search-path)
+(use-package evil
+  ;; these have to be set before evil loads - it reads them at load
+  ;; time, so setting them in :config is too late
+  :init
+  (setq evil-want-keybinding nil     ; required by evil-collection
+        evil-want-integration t
+        ;; without this u/C-r don't redo the way Vim does; undo-redo is
+        ;; the built-in Emacs 28+ system (we don't use undo-fu)
+        evil-undo-system 'undo-redo
+        evil-want-C-u-scroll t
+        evil-want-Y-yank-to-eol t
+        ;; j/k move by visual line in wrapped prose (see visual-line-mode)
+        evil-respect-visual-line-mode t
+        ;; Vim-style / and ? with n/N, instead of Emacs isearch
+        evil-search-module 'evil-search)
+  :config
+  (evil-set-leader '(normal visual) (kbd "SPC"))
   ;(evil-mode +1)
   :bind (("s-z" . evil-local-mode)))
+
+;; evil-collection - Vim keys in the ~100 modes evil doesn't cover
+;; itself (magit, dired, ibuffer, help, vundo, ...).  Without it evil
+;; only feels right in code buffers, which is the worst of both worlds
+(use-package evil-collection
+  :after evil
+  :config
+  (evil-collection-init)
+  (diminish 'evil-collection-unimpaired-mode))
+
+;; evil-surround - cs"' , ysiw) , ds( and friends
+(use-package evil-surround
+  :after evil
+  :config
+  (global-evil-surround-mode +1))
+
+;; evil-commentary - gcc / gc{motion} to toggle comments
+(use-package evil-commentary
+  :after evil
+  :config
+  (evil-commentary-mode +1)
+  (diminish 'evil-commentary-mode))
+
+;; evil-goggles - briefly flash the region an operator acted on, so
+;; you can see what that d/y/p actually did
+(use-package evil-goggles
+  :after evil
+  :config
+  (setq evil-goggles-duration 0.1)
+  (evil-goggles-mode +1)
+  (evil-goggles-use-diff-faces)
+  (diminish 'evil-goggles-mode))
+
+;; evil-numbers - C-a / C-x to increment and decrement the number at
+;; point, one of the few Vim staples Emacs has no equivalent for
+(use-package evil-numbers
+  :after evil
+  :config
+  (evil-define-key '(normal visual) 'global (kbd "C-a") #'evil-numbers/inc-at-pt)
+  (evil-define-key '(normal visual) 'global (kbd "C-x") #'evil-numbers/dec-at-pt))
+
+;;; Leader keymap
+;;
+;; Prefix keymaps rather than flat bindings, so which-key can present
+;; SPC as a labelled menu the way LazyVim does.
+
+(defvar bozhidar-leader-file-map
+  (let ((map (make-sparse-keymap)))
+    (define-key map (kbd "f") #'projectile-find-file)
+    (define-key map (kbd "d") #'projectile-find-dir)
+    (define-key map (kbd "r") #'crux-recentf-find-file)
+    (define-key map (kbd "s") #'save-buffer)
+    (define-key map (kbd "R") #'crux-rename-buffer-and-file)
+    (define-key map (kbd "D") #'crux-delete-file-and-buffer)
+    map)
+  "Leader keymap for file commands.")
+
+(defvar bozhidar-leader-project-map
+  (let ((map (make-sparse-keymap)))
+    (define-key map (kbd "p") #'projectile-switch-project)
+    (define-key map (kbd "d") #'projectile-discover-projects-in-search-path)
+    (define-key map (kbd "b") #'projectile-switch-to-buffer)
+    (define-key map (kbd "k") #'projectile-kill-buffers)
+    map)
+  "Leader keymap for project commands.")
+
+(defvar bozhidar-leader-search-map
+  (let ((map (make-sparse-keymap)))
+    (define-key map (kbd "s") #'consult-line)
+    (define-key map (kbd "g") #'consult-ripgrep)
+    (define-key map (kbd "i") #'consult-imenu)
+    (define-key map (kbd "f") #'consult-flycheck)
+    map)
+  "Leader keymap for search commands.")
+
+(defvar bozhidar-leader-buffer-map
+  (let ((map (make-sparse-keymap)))
+    (define-key map (kbd "b") #'consult-buffer)
+    (define-key map (kbd "k") #'kill-current-buffer)
+    (define-key map (kbd "K") #'crux-kill-other-buffers)
+    map)
+  "Leader keymap for buffer commands.")
+
+(defvar bozhidar-leader-git-map
+  (let ((map (make-sparse-keymap)))
+    (define-key map (kbd "g") #'magit-status)
+    (define-key map (kbd "b") #'magit-blame)
+    (define-key map (kbd "t") #'git-timemachine)
+    map)
+  "Leader keymap for git commands.")
+
+(with-eval-after-load 'evil
+  (evil-define-key '(normal visual) 'global (kbd "<leader>f") bozhidar-leader-file-map)
+  (evil-define-key '(normal visual) 'global (kbd "<leader>p") bozhidar-leader-project-map)
+  (evil-define-key '(normal visual) 'global (kbd "<leader>s") bozhidar-leader-search-map)
+  (evil-define-key '(normal visual) 'global (kbd "<leader>b") bozhidar-leader-buffer-map)
+  (evil-define-key '(normal visual) 'global (kbd "<leader>g") bozhidar-leader-git-map)
+
+  ;; label the prefixes in the which-key popup
+  (which-key-add-keymap-based-replacements evil-normal-state-map
+    "SPC f" "file"
+    "SPC p" "project"
+    "SPC s" "search"
+    "SPC b" "buffer"
+    "SPC g" "git"))
 
 ;; hl-todo - highlight TODO, FIXME, etc. in comments
 (use-package hl-todo
