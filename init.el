@@ -360,8 +360,8 @@ are defining or executing a macro."
 (use-package savehist
   :config
   (setq savehist-additional-variables
-        ;; search entries and kill ring
-        '(search-ring regexp-search-ring kill-ring)
+        ;; search entries, kill ring and vertico's session history
+        '(search-ring regexp-search-ring kill-ring vertico-repeat-history)
         ;; save every minute
         savehist-autosave-interval 60
         ;; keep the home clean
@@ -827,6 +827,16 @@ global one."
   ;; clean up the shadowed part of the file path when you re-root it
   ;; (e.g. type ~/ or / in the middle of a path)
   :hook (rfn-eshadow-update-overlay . vertico-directory-tidy))
+
+;; vertico-repeat - resume the last minibuffer session with its input
+;; and candidate intact (also ships with vertico).  Handy after you
+;; abort a consult-ripgrep to check something and want it back.  The
+;; history is persisted via `savehist-additional-variables'
+(use-package vertico-repeat
+  :ensure nil ; comes with vertico
+  :after vertico
+  :hook (minibuffer-setup . vertico-repeat-save)
+  :bind ("M-R" . vertico-repeat))
 
 ;; A few more useful configurations for Vertico
 (use-package emacs
