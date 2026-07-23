@@ -102,6 +102,11 @@
 ;; wrapped lines respect the indentation of the original line
 (global-visual-wrap-prefix-mode 1)
 
+;; wrap prose at word boundaries instead of mid-word at the window
+;; edge; `visual-wrap-prefix-mode' above then indents the continuation
+;; lines properly.  Only for text modes - code should stay unwrapped
+(add-hook 'text-mode-hook #'visual-line-mode)
+
 ;; live visual feedback when writing regexps in the minibuffer
 (minibuffer-regexp-mode 1)
 
@@ -124,8 +129,14 @@
 (column-number-mode t)
 (size-indication-mode t)
 
-;; built-in and fastest option these days
-(global-display-line-numbers-mode 1)
+;; built-in and fastest option these days.  Only in buffers where the
+;; numbers mean something - the global mode also turns them on in
+;; magit, dired, ibuffer, REPLs and the like, where they're just noise
+(dolist (hook '(prog-mode-hook text-mode-hook conf-mode-hook))
+  (add-hook hook #'display-line-numbers-mode))
+
+;; relative numbers make evil's counts (5j, 3dd) readable at a glance
+(setq display-line-numbers-type 'relative)
 
 ;; enable y/n answers
 (setq use-short-answers t)
