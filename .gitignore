@@ -18,5 +18,10 @@ projectile-bookmarks.eld
 session*
 .cask
 tramp
-/var/pcache
+/var
 custom.el
+.emacs.desktop
+projectile.cache
+/projects
+transient/
+tree-sitter/
