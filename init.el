@@ -889,7 +889,6 @@ global one."
          ("M-y" . consult-yank-pop)                ;; orig. yank-pop
          ;; M-g bindings (goto-map)
          ("M-g e" . consult-compile-error)
-         ("M-g f" . consult-flycheck)
          ("M-g g" . consult-goto-line)             ;; orig. goto-line
          ("M-g M-g" . consult-goto-line)           ;; orig. goto-line
          ("M-g o" . consult-outline)               ;; Alternative: consult-org-heading
@@ -913,6 +912,12 @@ global one."
   ;; group (e.g. in consult-buffer: < b for buffers, < f for files,
   ;; < p for project buffers); < again removes the narrowing
   (setq consult-narrow-key "<"))
+
+;; consult-flycheck - jump to a flycheck diagnostic through consult,
+;; with live preview.  It's a separate package from consult, so it
+;; needs its own declaration
+(use-package consult-flycheck
+  :bind ("M-g f" . consult-flycheck))
 
 ;; embark - context actions on minibuffer candidates and things at point
 (use-package embark
