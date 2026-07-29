@@ -784,11 +784,17 @@ global one."
         (user-error "No correction made")))))
 
 (use-package flycheck
-  :hook (after-init . global-flycheck-mode)
+  :hook ((after-init . global-flycheck-mode)
+         ;; show diagnostics inline, next to the code, like VS Code's Error Lens
+         ;; (on Flycheck 38+ this can be just (global-flycheck-annotate-mode))
+         (flycheck-mode . flycheck-annotate-mode))
   :config
   ;; prefer markdownlint-cli2, which reads repo-level .markdownlint-cli2.yaml
   ;; configs that the older markdownlint-cli checker ignores
-  (setq-default flycheck-disabled-checkers '(markdown-markdownlint-cli)))
+  (setq-default flycheck-disabled-checkers '(markdown-markdownlint-cli))
+  ;; route eglot's LSP diagnostics through flycheck instead of flymake; built
+  ;; into Flycheck 38, so it replaces the third-party flycheck-eglot package
+  (global-flycheck-eglot-mode +1))
 
 ;; flycheck-eldev - flycheck support for Eldev-based Emacs Lisp projects
 (use-package flycheck-eldev
@@ -1243,13 +1249,10 @@ Start `ielm' if it's not already running."
   ;; temporarily when you need to debug an LSP session
   (eglot-events-buffer-config '(:size 0 :format full)))
 
-;; flycheck-eglot - route eglot's diagnostics through flycheck instead
-;; of flymake, so LSP-managed buffers get the same diagnostics UI (and
-;; consult-flycheck integration) as every other buffer
-(use-package flycheck-eglot
-  :after (flycheck eglot)
-  :config
-  (global-flycheck-eglot-mode +1))
+;; NOTE: the third-party flycheck-eglot package is now obsolete - Flycheck 38
+;; bridges eglot's diagnostics itself (enabled in the flycheck block above via
+;; global-flycheck-eglot-mode).  Run M-x package-delete flycheck-eglot to drop
+;; the old package, whose autoloads otherwise shadow the built-in.
 
 ;; inf-ruby - run a Ruby REPL inside Emacs
 ;; (ruby-base-mode covers both ruby-mode and ruby-ts-mode)
