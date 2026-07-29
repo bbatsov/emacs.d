@@ -25,3 +25,4 @@ projectile.cache
 /projects
 transient/
 tree-sitter/
+forge-database.sqlite
