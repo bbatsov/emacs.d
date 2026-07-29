@@ -1286,6 +1286,7 @@ Start `ielm' if it's not already running."
   :config
   ;; log nREPL messages for debugging connection issues
   (setq nrepl-log-messages t)
+  (setq cider-use-completing-read-for-symbol t)
   ;; auto-download Java sources for navigation/documentation
   (setq cider-download-java-sources t))
 
